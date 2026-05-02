@@ -1,0 +1,156 @@
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  shortDesc: string;
+  brandId: string;
+  brandName: string;
+  categoryId: string;
+  categoryName: string;
+  price: number;
+  salePrice?: number;
+  currency: string;
+  images: string[];
+  ingredients?: string;
+  howToUse?: string;
+  skinTypes: string[];
+  concerns: string[];
+  ratingAvg: number;
+  ratingCount: number;
+  isBestseller: boolean;
+  isNew: boolean;
+  tags: string[];
+  weightGrams?: number;
+  variants?: ProductVariant[];
+  stockQuantity: number;
+}
+
+export interface ProductVariant {
+  id: string;
+  name: string;
+  price?: number;
+  salePrice?: number;
+  stockQuantity: number;
+  colorHex?: string;
+  size?: string;
+  imageUrl?: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  imageUrl: string;
+  icon: string;
+  parentId?: string;
+  productCount: number;
+}
+
+export interface Brand {
+  id: string;
+  name: string;
+  slug: string;
+  logoUrl?: string;
+  description?: string;
+  isPremium: boolean;
+}
+
+export interface Review {
+  id: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  productId: string;
+  rating: number;
+  title: string;
+  body: string;
+  images?: string[];
+  isVerified: boolean;
+  helpfulCount: number;
+  skinType?: string;
+  createdAt: string;
+}
+
+export interface CartItem {
+  id: string;
+  product: Product;
+  variantId?: string;
+  quantity: number;
+}
+
+export interface WishlistItem {
+  id: string;
+  product: Product;
+  addedAt: string;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  items: OrderItem[];
+  subtotal: number;
+  discount: number;
+  shippingFee: number;
+  tax: number;
+  total: number;
+  paymentMethod: string;
+  paymentStatus: string;
+  shippingAddress: Address;
+  createdAt: string;
+}
+
+export interface OrderItem {
+  id: string;
+  productId: string;
+  productName: string;
+  productImage: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
+export interface Address {
+  fullName: string;
+  phone: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  phone?: string;
+  avatarUrl?: string;
+  skinType?: string;
+  skinConcerns?: string[];
+  loyaltyPoints: number;
+  dateOfBirth?: string;
+  gender?: string;
+}
+
+export interface FilterState {
+  categories: string[];
+  brands: string[];
+  skinTypes: string[];
+  concerns: string[];
+  priceRange: [number, number];
+  rating: number;
+  sortBy: 'relevance' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
+  search: string;
+}
+
+export interface AIMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  products?: Product[];
+}
