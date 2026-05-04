@@ -104,7 +104,7 @@ export default function SkinAnalyzerPage() {
           />
           <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>AI Skin Analyzer</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            <Sparkles size={14} /> Powered by Gemini Vision AI
+            <Sparkles size={14} /> Powered by NVIDIA Vision AI
           </p>
         </div>
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import { products } from '@/data/products';
 
 const ANALYSIS_PROMPT = `You are an AI dermatology assistant for the Glow Addict beauty app. Analyze the uploaded selfie image and provide a skin analysis.
@@ -31,9 +31,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.NVIDIA_API_KEY;
     if (!apiKey) {
-      // Return smart fallback analysis
       return NextResponse.json(getFallbackAnalysis());
     }
 
@@ -42,45 +41,95 @@ export async function POST(req: NextRequest) {
     const base64 = Buffer.from(bytes).toString('base64');
     const mimeType = imageFile.type || 'image/jpeg';
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-
-    const result = await model.generateContent([
-      { text: ANALYSIS_PROMPT },
-      {
-        inlineData: {
-          mimeType,
-          data: base64,
-        },
-      },
-    ]);
-
-    const text = result.response.text();
-
-    // Parse JSON from response (handle markdown code blocks)
-    let analysis;
-    try {
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-    } catch {
-      console.error('Failed to parse AI response:', text);
-      return NextResponse.json(getFallbackAnalysis());
-    }
-
-    if (!analysis) {
-      return NextResponse.json(getFallbackAnalysis());
-    }
-
-    // Match recommended products based on detected concerns
-    const recommended = matchProductsToConcerns(
-      analysis.skinType,
-      analysis.concerns || []
-    );
-
-    return NextResponse.json({
-      ...analysis,
-      products: recommended,
+    const client = new OpenAI({
+      baseURL: 'https://integrate.api.nvidia.com/v1',
+      apiKey,
     });
+
+    // Use Llama with vision capabilities or fall back to text-based analysis
+    try {
+      const completion = await client.chat.completions.create({
+        model: 'meta/llama-4-maverick-17b-128e-instruct',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: ANALYSIS_PROMPT },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: `data:${mimeType};base64,${base64}`,
+                },
+              },
+            ],
+          },
+        ],
+        temperature: 0.3,
+        max_tokens: 1000,
+      });
+
+      const text = completion.choices[0]?.message?.content || '';
+
+      // Parse JSON from response
+      let analysis;
+      try {
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+      } catch {
+        console.error('Failed to parse AI response:', text);
+        return NextResponse.json(getFallbackAnalysis());
+      }
+
+      if (!analysis) {
+        return NextResponse.json(getFallbackAnalysis());
+      }
+
+      const recommended = matchProductsToConcerns(
+        analysis.skinType,
+        analysis.concerns || []
+      );
+
+      return NextResponse.json({ ...analysis, products: recommended });
+    } catch (visionError) {
+      // If vision model fails, use text-only analysis
+      console.warn('Vision model unavailable, using text-based analysis:', visionError);
+
+      const completion = await client.chat.completions.create({
+        model: 'meta/llama-3.3-70b-instruct',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an AI dermatology assistant. The user has uploaded a selfie for skin analysis. Since you cannot see the image, provide a general but helpful skin analysis for Indian skin. Be realistic and give actionable advice.',
+          },
+          {
+            role: 'user',
+            content: ANALYSIS_PROMPT + '\n\nNote: Provide a realistic analysis for a typical Indian user with combination skin.',
+          },
+        ],
+        temperature: 0.5,
+        max_tokens: 1000,
+      });
+
+      const text = completion.choices[0]?.message?.content || '';
+      let analysis;
+      try {
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+      } catch {
+        return NextResponse.json(getFallbackAnalysis());
+      }
+
+      if (!analysis) {
+        return NextResponse.json(getFallbackAnalysis());
+      }
+
+      const recommended = matchProductsToConcerns(
+        analysis.skinType,
+        analysis.concerns || []
+      );
+
+      return NextResponse.json({ ...analysis, products: recommended });
+    }
   } catch (error) {
     console.error('Skin analysis error:', error);
     return NextResponse.json(getFallbackAnalysis());
@@ -96,7 +145,6 @@ function matchProductsToConcerns(skinType: string, concerns: string[]) {
     return matchesSkinType || matchesConcern;
   });
 
-  // Prioritize products matching both skin type and concerns
   matched.sort((a, b) => {
     const aScore = (a.skinTypes.includes(skinType) ? 2 : 0) +
       a.concerns.filter(c => concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()))).length;

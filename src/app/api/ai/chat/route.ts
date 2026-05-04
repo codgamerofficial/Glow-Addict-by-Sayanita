@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import { products } from '@/data/products';
 
 const SYSTEM_PROMPT = `You are "Glow", the AI Beauty Assistant for Glow Addict by Sayanita — India's smartest beauty platform.
@@ -26,28 +26,44 @@ export async function POST(req: NextRequest) {
   try {
     const { messages, message } = await req.json();
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.NVIDIA_API_KEY;
     if (!apiKey) {
       // Fallback to smart mock response
       return NextResponse.json(getFallbackResponse(message));
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-
-    // Build conversation history
-    const history = (messages || []).map((m: { role: string; content: string }) => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
-    }));
-
-    const chat = model.startChat({
-      history,
-      systemInstruction: SYSTEM_PROMPT,
+    const client = new OpenAI({
+      baseURL: 'https://integrate.api.nvidia.com/v1',
+      apiKey,
     });
 
-    const result = await chat.sendMessage(message);
-    const text = result.response.text();
+    // Build conversation history
+    const chatHistory: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
+      { role: 'system', content: SYSTEM_PROMPT },
+    ];
+
+    // Add previous messages for context
+    if (messages && Array.isArray(messages)) {
+      for (const m of messages) {
+        chatHistory.push({
+          role: m.role === 'assistant' ? 'assistant' : 'user',
+          content: m.content,
+        });
+      }
+    }
+
+    // Add current message
+    chatHistory.push({ role: 'user', content: message });
+
+    const completion = await client.chat.completions.create({
+      model: 'meta/llama-3.3-70b-instruct',
+      messages: chatHistory,
+      temperature: 0.7,
+      top_p: 0.9,
+      max_tokens: 800,
+    });
+
+    const text = completion.choices[0]?.message?.content || '';
 
     // Match product recommendations from the response
     const recommendedProducts = matchProducts(text);
@@ -60,7 +76,7 @@ export async function POST(req: NextRequest) {
     console.error('AI Chat error:', error);
     return NextResponse.json(
       getFallbackResponse('general'),
-      { status: 200 } // Don't error — show fallback
+      { status: 200 }
     );
   }
 }
@@ -69,7 +85,6 @@ function matchProducts(aiText: string): typeof products {
   const text = aiText.toLowerCase();
   const matched: typeof products = [];
 
-  // Match by keywords in the AI response
   const keywordMap: Record<string, string[]> = {
     'vitamin c': ['vitamin-c', 'brightening'],
     'niacinamide': ['niacinamide', 'pore-control'],
@@ -90,6 +105,13 @@ function matchProducts(aiText: string): typeof products {
     'body': ['body-butter'],
     'perfume': ['perfume'],
     'toner': ['toner', 'exfoliant'],
+    'spf': ['sunscreen', 'spf'],
+    'acne': ['acne', 'salicylic-acid'],
+    'pore': ['pore-control', 'niacinamide'],
+    'dark spot': ['brightening', 'vitamin-c'],
+    'anti-aging': ['retinol', 'anti-aging'],
+    'oil control': ['oil-control', 'niacinamide'],
+    'exfoli': ['exfoliant', 'aha', 'bha'],
   };
 
   for (const [keyword, tags] of Object.entries(keywordMap)) {

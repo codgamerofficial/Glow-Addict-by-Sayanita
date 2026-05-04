@@ -106,7 +106,7 @@ export default function AIAssistantPage() {
             AI Beauty Assistant
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            <Sparkles size={14} /> Powered by Gemini AI
+            <Sparkles size={14} /> Powered by NVIDIA AI
           </p>
         </div>
 
