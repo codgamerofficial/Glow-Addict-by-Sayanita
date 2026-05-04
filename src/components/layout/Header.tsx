@@ -45,14 +45,6 @@ export default function Header() {
         boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.28, 0.11, 0.32, 1)',
       }}>
-        {/* Top banner */}
-        <div style={{
-          background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
-          padding: '6px 16px', textAlign: 'center', fontSize: '12px',
-          fontWeight: 600, color: 'white', letterSpacing: '0.05em',
-        }}>
-          🎉 FLAT 30% OFF on your first order! Use code: <span style={{ textDecoration: 'underline' }}>GLOW30</span> &nbsp;|&nbsp; Free shipping above ₹499
-        </div>
 
         {/* Main nav */}
         <div className="container-main" style={{
@@ -245,7 +237,7 @@ export default function Header() {
       </header>
 
       {/* Spacer */}
-      <div style={{ height: '94px' }} />
+      <div style={{ height: '68px' }} />
 
       <style jsx global>{`
         @media (min-width: 768px) {
