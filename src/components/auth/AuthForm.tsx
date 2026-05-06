@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, Chrome, ArrowRight, Github, Sparkles } from 'lucide-react';
+import { Mail, Lock, Globe, ArrowRight, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export function AuthForm() {
@@ -97,7 +97,7 @@ export function AuthForm() {
             onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent-gold)'}
             onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-glass)'}
           >
-            <Chrome size={18} />
+            <Globe size={18} />
             <span style={{ fontWeight: 600, fontSize: '14px' }}>Continue with Gmail</span>
           </button>
         </div>
