@@ -1,20 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ToastProvider } from "@/components/shared/Toast";
 
 export const metadata: Metadata = {
-  title: "Glow Addict by Sayanita — AI-Powered Beauty Shopping",
-  description: "India's most advanced AI-powered beauty e-commerce platform. Skincare, Makeup, Hair Care — personalized for you.",
-  keywords: "beauty, skincare, makeup, AI beauty, Glow Addict, Sayanita, Nykaa alternative",
-  icons: {
-    icon: "/images/logo.png",
-    apple: "/images/logo.png",
-  },
+  title: "Glow Addict by Sayanita | AI-Powered Beauty & Personalization",
+  description: "Discover India's premier AI-powered beauty destination. Shop 10,000+ skincare, makeup, and hair care products with expert AI recommendations tailored to your unique skin profile.",
+  keywords: "beauty, skincare, makeup, hair care, AI beauty assistant, personalized beauty, Glow Addict, Sayanita, premium beauty, k-beauty india",
+  authors: [{ name: "Sayanita" }],
   openGraph: {
     title: "Glow Addict by Sayanita",
+    description: "Your personalized AI beauty companion. Shop smart, glow brighter.",
+    url: "https://glowaddict.com",
+    siteName: "Glow Addict",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Glow Addict by Sayanita",
     description: "India's smartest beauty destination. AI-powered skincare & makeup recommendations.",
-    images: ["/images/logo.png"],
   },
 };
 
@@ -32,7 +38,9 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <AuthProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

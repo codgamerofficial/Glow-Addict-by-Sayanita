@@ -66,12 +66,13 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0', flexShrink: 0 }}>
-            <motion.img
-              src="/images/logo.png"
-              alt="Glow Addict by Sayanita"
-              style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
+            <motion.div
+              style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '22px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '4px' }}
               whileTap={{ scale: 0.95 }}
-            />
+            >
+              <span className="gradient-text">GLOW</span>
+              <span style={{ color: 'var(--text-primary)' }}>ADDICT</span>
+            </motion.div>
           </Link>
 
           {/* Desktop nav links */}

@@ -7,6 +7,8 @@ import ProductCard from '@/components/product/ProductCard';
 import { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
+import Image from 'next/image';
+
 /* ============ SCROLL SECTION WRAPPER ============ */
 function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -123,15 +125,22 @@ function HeroBanner() {
                 borderRadius: '16px', overflow: 'hidden',
                 height: i % 2 === 0 ? '200px' : '160px',
                 border: '1px solid var(--border-glass)',
+                position: 'relative',
               }}
             >
-              <img src={src} alt="Beauty" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
+              <Image 
+                src={src} 
+                alt="Beauty" 
+                fill
+                sizes="200px"
+                style={{ objectFit: 'cover', transition: 'transform 0.4s' }}
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
               />
             </motion.div>
           ))}
         </motion.div>
+
       </div>
     </section>
   );

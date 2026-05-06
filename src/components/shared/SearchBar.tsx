@@ -32,7 +32,7 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
           style={{ paddingLeft: '42px', paddingRight: '40px', fontSize: '15px' }}
         />
         {onClose && (
-          <button onClick={onClose} style={{
+          <button aria-label="Close search" onClick={onClose} style={{
             position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
             background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px',
           }}>

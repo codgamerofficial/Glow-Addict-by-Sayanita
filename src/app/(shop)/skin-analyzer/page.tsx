@@ -108,7 +108,7 @@ export default function SkinAnalyzerPage() {
           </p>
         </div>
 
-        <input ref={fileRef} type="file" accept="image/*" capture="user" onChange={onFileChange} style={{ display: 'none' }} />
+        <input aria-label="Upload skin photo" ref={fileRef} type="file" accept="image/*" capture="user" onChange={onFileChange} style={{ display: 'none' }} />
 
         <AnimatePresence mode="wait">
           {!result ? (

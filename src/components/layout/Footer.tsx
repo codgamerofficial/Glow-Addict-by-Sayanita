@@ -40,14 +40,13 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ marginBottom: '16px' }}>
-              <img
-                src="/images/logo.png"
-                alt="Glow Addict by Sayanita"
-                style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
-              />
+              <div style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '24px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span className="gradient-text">GLOW</span>
+                <span style={{ color: 'var(--text-primary)' }}>ADDICT</span>
+              </div>
             </div>
             <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
-              Glow Addict by Sayanita
+              By Sayanita
             </p>
             <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '16px' }}>
               India&apos;s smartest beauty destination. AI-powered skincare &amp; makeup recommendations, just for you.

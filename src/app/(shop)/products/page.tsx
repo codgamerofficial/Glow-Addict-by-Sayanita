@@ -15,6 +15,25 @@ const sortOptions = [
   { value: 'newest', label: 'Newest First' },
 ];
 
+const FilterSection = ({ title, items, selected, onToggle }: { title: string; items: string[]; selected: string[]; onToggle: (v: string) => void }) => (
+  <div style={{ marginBottom: '20px' }}>
+    <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</h4>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+      {items.map(item => {
+        const active = selected.includes(item);
+        return (
+          <button key={item} onClick={() => onToggle(item)} style={{
+            padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', border: '1px solid',
+            background: active ? 'rgba(233,30,140,0.15)' : 'transparent',
+            borderColor: active ? 'var(--primary)' : 'var(--border-glass)',
+            color: active ? 'var(--primary)' : 'var(--text-secondary)',
+          }}>{item}</button>
+        );
+      })}
+    </div>
+  </div>
+);
+
 export default function ProductsPageWrapper() {
   return <Suspense fallback={<div className="container-main" style={{ padding: '40px', textAlign: 'center' }}><div className="skeleton" style={{ width: '100%', height: '400px' }} /></div>}><ProductsPage /></Suspense>;
 }
@@ -56,24 +75,6 @@ function ProductsPage() {
 
   const activeFilterCount = selectedCategories.length + selectedBrands.length + selectedSkinTypes.length + selectedConcerns.length;
 
-  const FilterSection = ({ title, items, selected, onToggle }: { title: string; items: string[]; selected: string[]; onToggle: (v: string) => void }) => (
-    <div style={{ marginBottom: '20px' }}>
-      <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</h4>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-        {items.map(item => {
-          const active = selected.includes(item);
-          return (
-            <button key={item} onClick={() => onToggle(item)} style={{
-              padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', border: '1px solid',
-              background: active ? 'rgba(233,30,140,0.15)' : 'transparent',
-              borderColor: active ? 'var(--primary)' : 'var(--border-glass)',
-              color: active ? 'var(--primary)' : 'var(--text-secondary)',
-            }}>{item}</button>
-          );
-        })}
-      </div>
-    </div>
-  );
 
   return (
     <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
@@ -91,7 +92,7 @@ function ProductsPage() {
             {activeFilterCount > 0 && <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{activeFilterCount}</span>}
           </button>
           <div style={{ position: 'relative' }}>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-glass" style={{ paddingRight: '32px', fontSize: '13px', cursor: 'pointer', appearance: 'none', minWidth: '160px' }}>
+            <select aria-label="Sort products" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-glass" style={{ paddingRight: '32px', fontSize: '13px', cursor: 'pointer', appearance: 'none', minWidth: '160px' }}>
               {sortOptions.map(o => <option key={o.value} value={o.value} style={{ background: 'var(--bg-surface)' }}>{o.label}</option>)}
             </select>
             <ChevronDown size={16} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }} />

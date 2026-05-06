@@ -122,7 +122,157 @@ ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
 -- Public read policies
+DROP POLICY IF EXISTS "Public read products" ON products;
 CREATE POLICY "Public read products" ON products FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read brands" ON brands;
 CREATE POLICY "Public read brands" ON brands FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read categories" ON categories;
 CREATE POLICY "Public read categories" ON categories FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read reviews" ON reviews;
 CREATE POLICY "Public read reviews" ON reviews FOR SELECT USING (true);
+
+-- ============================================================
+-- Admin Specific Tables
+-- ============================================================
+
+-- Admin Roles
+CREATE TABLE IF NOT EXISTS admin_roles (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  permissions TEXT[] DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Admin Users
+CREATE TABLE IF NOT EXISTS admin_users (
+  id TEXT PRIMARY KEY,
+  role_id TEXT REFERENCES admin_roles(id),
+  name TEXT,
+  email TEXT UNIQUE NOT NULL,
+  status TEXT DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'suspended')),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Coupons
+CREATE TABLE IF NOT EXISTS coupons (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  code TEXT UNIQUE NOT NULL,
+  description TEXT,
+  type TEXT CHECK (type IN ('percentage', 'fixed', 'free_shipping')),
+  value NUMERIC NOT NULL,
+  min_order_amount NUMERIC,
+  usage_limit INT,
+  used_count INT DEFAULT 0,
+  starts_at TIMESTAMPTZ DEFAULT now(),
+  expires_at TIMESTAMPTZ,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Influencers
+CREATE TABLE IF NOT EXISTS influencers (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  name TEXT NOT NULL,
+  handle TEXT NOT NULL,
+  platform TEXT CHECK (platform IN ('instagram', 'youtube', 'other')),
+  status TEXT DEFAULT 'active',
+  followers INT DEFAULT 0,
+  engagement_rate NUMERIC DEFAULT 0,
+  commission_rate NUMERIC DEFAULT 0,
+  total_sales INT DEFAULT 0,
+  total_earnings NUMERIC DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- AI Recommendations
+CREATE TABLE IF NOT EXISTS ai_recommendations (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  product_id TEXT REFERENCES products(id),
+  routine_type TEXT,
+  skin_types TEXT[] DEFAULT '{}',
+  confidence NUMERIC NOT NULL,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Audit Logs
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  admin_id TEXT REFERENCES admin_users(id),
+  action TEXT NOT NULL,
+  entity TEXT NOT NULL,
+  entity_id TEXT,
+  details JSONB,
+  timestamp TIMESTAMPTZ DEFAULT now()
+);
+
+-- CMS Banners
+CREATE TABLE IF NOT EXISTS cms_banners (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  title TEXT NOT NULL,
+  subtitle TEXT,
+  image_url TEXT NOT NULL,
+  link_url TEXT,
+  is_active BOOLEAN DEFAULT true,
+  display_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- CMS Collections
+CREATE TABLE IF NOT EXISTS cms_collections (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  description TEXT,
+  is_active BOOLEAN DEFAULT true,
+  display_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Notifications (Push/Email Campaigns)
+CREATE TABLE IF NOT EXISTS notifications (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  target_segment TEXT DEFAULT 'all',
+  status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'scheduled', 'sent')),
+  scheduled_at TIMESTAMPTZ,
+  sent_at TIMESTAMPTZ,
+  open_rate NUMERIC DEFAULT 0,
+  click_rate NUMERIC DEFAULT 0,
+  created_by TEXT REFERENCES admin_users(id),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Store Settings
+CREATE TABLE IF NOT EXISTS settings (
+  id TEXT PRIMARY KEY DEFAULT 'global',
+  store_name TEXT DEFAULT 'Glow Addict',
+  store_description TEXT,
+  contact_email TEXT,
+  contact_phone TEXT,
+  currency TEXT DEFAULT 'INR',
+  logo_url TEXT,
+  maintenance_mode BOOLEAN DEFAULT false,
+  social_links JSONB DEFAULT '{}',
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- RLS for CMS & Settings
+ALTER TABLE cms_banners ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cms_collections ENABLE ROW LEVEL SECURITY;
+ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
+
+-- Public Read for CMS (needed for homepage)
+DROP POLICY IF EXISTS "Public read banners" ON cms_banners;
+CREATE POLICY "Public read banners" ON cms_banners FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read collections" ON cms_collections;
+CREATE POLICY "Public read collections" ON cms_collections FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read settings" ON settings;
+CREATE POLICY "Public read settings" ON settings FOR SELECT USING (true);

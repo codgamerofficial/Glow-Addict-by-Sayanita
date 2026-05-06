@@ -15,18 +15,17 @@ const paymentMethods = [
 
 /* ============ CONFETTI COMPONENT ============ */
 function Confetti() {
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; color: string; delay: number; size: number }>>([]);
-
-  useEffect(() => {
-    const items = Array.from({ length: 40 }, (_, i) => ({
+  const [particles] = useState<Array<{ id: number; x: number; color: string; delay: number; size: number; rotate: number; duration: number }>>(() => 
+    Array.from({ length: 40 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       color: ['#E91E8C', '#7C3AED', '#F59E0B', '#10B981', '#3B82F6', '#EC4899'][Math.floor(Math.random() * 6)],
       delay: Math.random() * 0.5,
       size: 6 + Math.random() * 8,
-    }));
-    setParticles(items);
-  }, []);
+      rotate: 720 + Math.random() * 360,
+      duration: 2.5 + Math.random() * 2,
+    }))
+  );
 
   return (
     <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 200, overflow: 'hidden' }}>
@@ -34,8 +33,8 @@ function Confetti() {
         <motion.div
           key={p.id}
           initial={{ y: -20, x: `${p.x}vw`, opacity: 1, rotate: 0 }}
-          animate={{ y: '110vh', opacity: 0, rotate: 720 + Math.random() * 360 }}
-          transition={{ duration: 2.5 + Math.random() * 2, delay: p.delay, ease: 'easeIn' }}
+          animate={{ y: '110vh', opacity: 0, rotate: p.rotate }}
+          transition={{ duration: p.duration, delay: p.delay, ease: 'easeIn' }}
           style={{
             position: 'absolute',
             width: `${p.size}px`,

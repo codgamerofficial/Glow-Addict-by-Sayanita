@@ -1,4 +1,6 @@
 'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { User, Heart, ShoppingBag, Star, Gift, Settings, LogOut, ChevronRight, Sparkles, Camera } from 'lucide-react';
 import Link from 'next/link';
 import { useAuthStore } from '@/features/auth/authStore';
@@ -6,9 +8,16 @@ import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 
 export default function ProfilePage() {
-  const user = useAuthStore(s => s.user);
+  const router = useRouter();
+  const { user, isAuthenticated, logout, isInitialized } = useAuthStore();
   const cartCount = useCartStore(s => s.getItemCount());
   const wishlistCount = useWishlistStore(s => s.items.length);
+
+  useEffect(() => {
+    if (isInitialized && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isInitialized, isAuthenticated, router]);
 
   const orders = [
     { id: 'GA847291', date: 'Apr 28, 2026', status: 'Delivered', total: 1899, items: 3 },
@@ -17,6 +26,8 @@ export default function ProfilePage() {
   ];
 
   const statusColor: Record<string, string> = { Delivered: 'var(--success)', Shipped: 'var(--accent-gold)', Processing: 'var(--primary)', Cancelled: 'var(--error)' };
+
+  if (!isAuthenticated) return null;
 
   return (
     <div className="container-main animate-fade-in" style={{ padding: '24px 16px', maxWidth: '900px' }}>
@@ -28,8 +39,13 @@ export default function ProfilePage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: '28px', fontWeight: 700, color: 'white', fontFamily: 'Outfit',
           position: 'relative', flexShrink: 0,
+          overflow: 'hidden'
         }}>
-          {user?.name?.[0] || 'S'}
+          {user?.avatarUrl ? (
+            <img src={user.avatarUrl} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'
+          )}
           <div style={{
             position: 'absolute', bottom: 0, right: 0, width: '24px', height: '24px', borderRadius: '50%',
             background: 'var(--bg-surface)', border: '2px solid var(--primary)',
@@ -41,7 +57,7 @@ export default function ProfilePage() {
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '8px' }}>{user?.email}</p>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {user?.skinType && <span className="badge badge-primary">{user.skinType} Skin</span>}
-            <span className="badge badge-gold"><Gift size={12} /> {user?.loyaltyPoints?.toLocaleString()} Points</span>
+            <span className="badge badge-gold"><Gift size={12} /> {user?.loyaltyPoints?.toLocaleString() || 0} Points</span>
           </div>
         </div>
         <Link href="/skin-analyzer" className="btn-outline" style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -54,8 +70,8 @@ export default function ProfilePage() {
         {[
           { icon: ShoppingBag, label: 'Orders', value: orders.length, href: '#orders' },
           { icon: Heart, label: 'Wishlist', value: wishlistCount, href: '/wishlist' },
-          { icon: Star, label: 'Reviews', value: 8, href: '#' },
-          { icon: Gift, label: 'Rewards', value: `${user?.loyaltyPoints}`, href: '#' },
+          { icon: Star, label: 'Reviews', value: 0, href: '#' },
+          { icon: Gift, label: 'Rewards', value: `${user?.loyaltyPoints || 0}`, href: '#' },
         ].map(({ icon: Icon, label, value, href }) => (
           <Link key={label} href={href} className="glass-card" style={{ padding: '16px', textAlign: 'center', textDecoration: 'none', color: 'var(--text-primary)' }}>
             <Icon size={22} style={{ color: 'var(--primary)', marginBottom: '8px' }} />
@@ -89,20 +105,28 @@ export default function ProfilePage() {
 
       {/* Menu */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        {[
-          { icon: Settings, label: 'Account Settings', href: '#' },
-          { icon: Gift, label: 'Rewards & Offers', href: '#' },
-          { icon: LogOut, label: 'Logout', href: '/', color: 'var(--error)' },
-        ].map(({ icon: Icon, label, href, color }) => (
-          <Link key={label} href={href} className="glass-card" style={{
-            padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px',
-            textDecoration: 'none', color: color || 'var(--text-primary)', borderRadius: '12px',
-          }}>
-            <Icon size={18} />
-            <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>{label}</span>
-            <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
-          </Link>
-        ))}
+        <Link href="#" className="glass-card" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-primary)', borderRadius: '12px' }}>
+          <Settings size={18} />
+          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Account Settings</span>
+          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+        </Link>
+        <Link href="#" className="glass-card" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-primary)', borderRadius: '12px' }}>
+          <Gift size={18} />
+          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Rewards & Offers</span>
+          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+        </Link>
+        <button 
+          onClick={logout}
+          className="glass-card" 
+          style={{ 
+            width: '100%', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', 
+            textDecoration: 'none', color: 'var(--error)', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left'
+          }}
+        >
+          <LogOut size={18} />
+          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Logout</span>
+          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+        </button>
       </div>
     </div>
   );

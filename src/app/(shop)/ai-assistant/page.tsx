@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, Bot, User, ShoppingBag, Sparkles } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useToast } from '@/components/shared/Toast';
@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageTransition from '@/components/shared/PageTransition';
 import type { Product } from '@/types/product';
+import Image from 'next/image';
 
 interface Msg {
   id: string;
@@ -42,19 +43,18 @@ export default function AIAssistantPage() {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  const send = async (text?: string) => {
+  const send = useCallback(async (text?: string) => {
     const msgText = text || input.trim();
     if (!msgText) return;
 
-    const userMsg: Msg = { id: Date.now().toString(), role: 'user', content: msgText };
+    const userMsg: Msg = { id: `user-${Date.now()}`, role: 'user', content: msgText };
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
 
     try {
-      // Build conversation history for context
       const history = messages
-        .filter((m) => m.id !== '1') // Skip initial greeting
+        .filter((m) => m.id !== '1')
         .map((m) => ({ role: m.role, content: m.content }));
 
       const res = await fetch('/api/ai/chat', {
@@ -66,7 +66,7 @@ export default function AIAssistantPage() {
       const data = await res.json();
 
       const aiMsg: Msg = {
-        id: (Date.now() + 1).toString(),
+        id: `ai-${Date.now()}`,
         role: 'assistant',
         content: data.content || 'Sorry, I couldn\'t generate a response. Try again!',
         products: data.products || [],
@@ -77,7 +77,7 @@ export default function AIAssistantPage() {
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: `error-${Date.now()}`,
           role: 'assistant',
           content: '😅 Oops! Something went wrong. Let me try again — ask me anything about skincare, makeup, or beauty!',
         },
@@ -86,22 +86,21 @@ export default function AIAssistantPage() {
       setIsTyping(false);
       inputRef.current?.focus();
     }
-  };
+  }, [input, messages]);
 
-  const handleAddToCart = (product: Product) => {
+  const handleAddToCart = useCallback((product: Product) => {
     addToCart(product);
     showToast(`${product.name} added to bag! 🛍️`);
-  };
+  }, [addToCart, showToast]);
 
   return (
     <PageTransition>
       <div className="container-main" style={{ padding: '24px 16px', maxWidth: '800px' }}>
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <img
-            src="/images/logo.png"
-            alt="Glow Addict"
-            style={{ height: '64px', width: 'auto', objectFit: 'contain', margin: '0 auto 12px', display: 'block' }}
-          />
+          <div style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '28px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center', marginBottom: '8px' }}>
+            <span className="gradient-text">GLOW</span>
+            <span style={{ color: 'var(--text-primary)' }}>ADDICT</span>
+          </div>
           <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>
             AI Beauty Assistant
           </h1>
@@ -201,11 +200,14 @@ export default function AIAssistantPage() {
                           }}
                         >
                           <Link href={`/products/${p.slug}`}>
-                            <img
-                              src={p.images[0]}
-                              alt={p.name}
-                              style={{ width: '100%', height: '120px', objectFit: 'cover' }}
-                            />
+                            <div style={{ position: 'relative', height: '120px', width: '100%' }}>
+                              <Image
+                                src={p.images[0]}
+                                alt={p.name}
+                                fill
+                                style={{ objectFit: 'cover' }}
+                              />
+                            </div>
                           </Link>
                           <div style={{ padding: '10px' }}>
                             <div

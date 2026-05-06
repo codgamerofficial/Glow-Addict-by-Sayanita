@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Heart, ShoppingBag, Star, Check } from 'lucide-react';
 import { Product } from '@/types/product';
@@ -38,8 +39,12 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* Image */}
       <Link href={`/products/${product.slug}`} style={{ textDecoration: 'none' }}>
         <div style={{ position: 'relative', paddingTop: '110%', overflow: 'hidden' }} className="product-image-wrap">
-          <img src={product.images[0]} alt={product.name}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          <Image 
+            src={product.images[0]} 
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: 'cover' }}
           />
           {/* Badges */}
           <div style={{ position: 'absolute', top: '8px', left: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>

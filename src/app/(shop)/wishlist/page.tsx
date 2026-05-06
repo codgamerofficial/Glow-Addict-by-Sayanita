@@ -45,7 +45,7 @@ export default function WishlistPage() {
                 <button onClick={() => { addToCart(product); removeItem(product.id); }} className="btn-gradient" style={{ flex: 1, padding: '10px', fontSize: '13px' }}>
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><ShoppingBag size={14} /> Move to Cart</span>
                 </button>
-                <button onClick={() => removeItem(product.id)} style={{ background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', borderRadius: '12px', padding: '10px', cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.2s' }}
+                <button aria-label="Remove item" onClick={() => removeItem(product.id)} style={{ background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', borderRadius: '12px', padding: '10px', cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.2s' }}
                   onMouseEnter={e => (e.currentTarget.style.color = 'var(--error)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}>
                   <Trash2 size={16} />

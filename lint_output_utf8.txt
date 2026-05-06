@@ -1,0 +1,141 @@
+﻿
+> glow-addict@0.1.0 lint
+> eslint
+
+
+D:\Glow Addict\glow-addict\src\actions\admin.ts
+   79:9   warning  'supabase' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  148:25  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+D:\Glow Addict\glow-addict\src\app\(shop)\about\page.tsx
+  13:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\ai-assistant\page.tsx
+   99:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  203:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\cart\page.tsx
+  72:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\checkout\page.tsx
+   30:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Glow Addict\glow-addict\src\app\(shop)\checkout\page.tsx:30:5
+  28 |       duration: 2.5 + Math.random() * 2,
+  29 |     }));
+> 30 |     setParticles(items);
+     |     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  31 |   }, []);
+  32 |
+  33 |   return (  react-hooks/set-state-in-effect
+  274:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\page.tsx
+  128:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\products\[slug]\page.tsx
+  54:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  64:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\products\page.tsx
+   4:29  warning  'X' is defined but never used                       @typescript-eslint/no-unused-vars
+  51:22  warning  'setPriceRange' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\(shop)\profile\page.tsx
+   2:10  warning  'User' is defined but never used                @typescript-eslint/no-unused-vars
+  10:9   warning  'cartCount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\(shop)\skin-analyzer\page.tsx
+  101:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  152:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  337:29  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\(shop)\track-order\page.tsx
+  3:27  warning  'Truck' is defined but never used   @typescript-eslint/no-unused-vars
+  3:47  warning  'MapPin' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\(shop)\wishlist\page.tsx
+  34:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\DashboardClient.tsx
+  130:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\ai\AIClient.tsx
+  75:29  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\admin\cms\CMSClient.tsx
+  30:126  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                              jsx-a11y/alt-text
+  38:15   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\customers\[id]\page.tsx
+  5:34  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\admin\influencers\InfluencersClient.tsx
+  30:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\inventory\page.tsx
+  57:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\notifications\NotificationsClient.tsx
+  4:36  warning  'Filter' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\admin\orders\[id]\page.tsx
+  5:39  warning  'Truck' is defined but never used      @typescript-eslint/no-unused-vars
+  5:59  warning  'XCircle' is defined but never used    @typescript-eslint/no-unused-vars
+  5:68  warning  'RotateCcw' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\admin\products\ProductsClient.tsx
+   5:34  warning  'Filter' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  27:9   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\products\[id]\page.tsx
+   5:40  warning  'ExternalLink' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  61:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\products\categories\page.tsx
+   4:30  warning  'Folder' is defined but never used                                     @typescript-eslint/no-unused-vars
+   4:38  warning  'FolderOpen' is defined but never used                                 @typescript-eslint/no-unused-vars
+  23:5   warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+D:\Glow Addict\glow-addict\src\app\admin\products\import\page.tsx
+  4:10  warning  'Upload' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\admin\products\new\page.tsx
+  101:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\app\admin\settings\SettingsClient.tsx
+  4:47  warning  'CheckCircle2' is defined but never used   @typescript-eslint/no-unused-vars
+  4:61  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\app\layout.tsx
+  31:9  warning  Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+D:\Glow Addict\glow-addict\src\components\admin\layout\AdminSidebar.tsx
+  5:73  warning  'Megaphone' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\components\layout\Footer.tsx
+  43:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\components\product\ProductCard.tsx
+  41:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\components\shared\SearchBar.tsx
+  68:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\Glow Addict\glow-addict\src\components\shared\Toast.tsx
+  4:20  warning  'AlertCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\lib\supabase-server.ts
+  20:20  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Glow Addict\glow-addict\src\middleware.ts
+  18:48  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 51 problems (2 errors, 49 warnings)
+

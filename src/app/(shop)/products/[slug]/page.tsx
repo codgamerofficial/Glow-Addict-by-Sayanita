@@ -56,7 +56,7 @@ export default function ProductDetailPage() {
           {product.images.length > 1 && (
             <div style={{ display: 'flex', gap: '8px' }}>
               {product.images.map((img, i) => (
-                <button key={i} onClick={() => setSelectedImage(i)} style={{
+                <button key={i} aria-label={`Select image ${i + 1}`} onClick={() => setSelectedImage(i)} style={{
                   width: '64px', height: '64px', borderRadius: '10px', overflow: 'hidden', cursor: 'pointer',
                   border: `2px solid ${i === selectedImage ? 'var(--primary)' : 'var(--border-glass)'}`,
                   opacity: i === selectedImage ? 1 : 0.6, transition: 'all 0.2s',
@@ -121,14 +121,14 @@ export default function ProductDetailPage() {
           {/* Quantity + Actions */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0', border: '1px solid var(--border-glass)', borderRadius: '12px', overflow: 'hidden' }}>
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Minus size={16} /></button>
+              <button aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Minus size={16} /></button>
               <span style={{ padding: '12px 18px', fontWeight: 600, minWidth: '40px', textAlign: 'center' }}>{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Plus size={16} /></button>
+              <button aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Plus size={16} /></button>
             </div>
             <button onClick={() => addItem(product, quantity)} className="btn-gradient" style={{ flex: 1, padding: '14px', fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShoppingBag size={18} /> Add to Cart</span>
             </button>
-            <button onClick={() => toggleItem(product)} style={{
+            <button aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"} onClick={() => toggleItem(product)} style={{
               padding: '14px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s',
               background: wishlisted ? 'rgba(233,30,140,0.15)' : 'var(--bg-glass)',
               border: `1px solid ${wishlisted ? 'var(--primary)' : 'var(--border-glass)'}`,
