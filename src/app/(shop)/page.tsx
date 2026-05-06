@@ -1,187 +1,34 @@
-'use client';
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Star, Zap, Gift, TrendingUp, Clock } from 'lucide-react';
 import { products } from '@/data/products';
 import { categories } from '@/data/categories';
 import ProductCard from '@/components/product/ProductCard';
-import { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-
+import { HeroBanner } from '@/components/shop/HeroBanner';
+import { CategoryGrid } from '@/components/shop/CategoryGrid';
+import { getAdminBanners, getAdminCollections } from '@/actions/admin';
+import { ScrollReveal } from '@/components/shared/ScrollReveal';
 import Image from 'next/image';
 
-/* ============ SCROLL SECTION WRAPPER ============ */
-function ScrollReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+export default async function HomePage() {
+  const [liveBanners, liveCollections] = await Promise.all([
+    getAdminBanners(),
+    getAdminCollections()
+  ]);
+
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
-      {children}
-    </motion.div>
+    <div>
+      <HeroBanner banners={liveBanners} />
+      <CategoryGrid collections={liveCollections} />
+      <TrendingSection />
+      <FlashDeal />
+      <AIRecommendations />
+      <NewArrivals />
+      <LoyaltyBanner />
+    </div>
   );
 }
 
-/* ============ HERO ============ */
-function HeroBanner() {
-  return (
-    <section style={{
-      position: 'relative', overflow: 'hidden',
-      background: 'linear-gradient(135deg, #0A0A0F 0%, #1A0A20 30%, #0F0A1A 60%, #0A0A0F 100%)',
-      padding: '60px 0 80px',
-    }}>
-      {/* Animated orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], x: [0, 20, 0], y: [0, -15, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ position: 'absolute', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(233,30,140,0.15), transparent)', top: '-100px', right: '-100px', filter: 'blur(60px)' }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.3, 1], x: [0, -20, 0], y: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        style={{ position: 'absolute', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.12), transparent)', bottom: '-50px', left: '-50px', filter: 'blur(50px)' }}
-      />
 
-      <div className="container-main" style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '48px', flexWrap: 'wrap' }}>
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ flex: '1 1 400px' }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="badge badge-primary"
-            style={{ marginBottom: '16px', fontSize: '13px' }}
-          >
-            <Sparkles size={14} /> AI-Powered Beauty
-          </motion.div>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, lineHeight: 1.1, marginBottom: '20px' }}>
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} style={{ display: 'block', color: 'white' }}>Your Skin.</motion.span>
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} style={{ display: 'block' }} className="gradient-text">Your Glow.</motion.span>
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} style={{ display: 'block', color: 'white' }}>Your Rules.</motion.span>
-          </h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} style={{ fontSize: '17px', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: '480px', marginBottom: '32px' }}>
-            Discover 10,000+ beauty products personalized by AI for your unique skin. Get expert recommendations, build custom routines, and glow like never before.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link href="/products" className="btn-gradient" style={{ padding: '14px 32px', fontSize: '15px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Shop Now <ArrowRight size={18} /></span>
-            </Link>
-            <Link href="/ai-assistant" className="btn-outline" style={{ padding: '14px 32px', fontSize: '15px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-              ✨ Try AI Beauty Assistant
-            </Link>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            style={{ display: 'flex', gap: '32px', marginTop: '40px' }}
-          >
-            {[
-              { num: '10K+', label: 'Products' },
-              { num: '500+', label: 'Brands' },
-              { num: '2M+', label: 'Happy Customers' },
-            ].map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + i * 0.15 }}
-              >
-                <div style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }} className="gradient-text">{s.num}</div>
-                <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{s.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Hero image grid */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ flex: '0 1 380px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}
-        >
-          {[
-            'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=380&fit=crop',
-            'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=300&h=280&fit=crop',
-            'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=280&fit=crop',
-            'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&h=380&fit=crop',
-          ].map((src, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-              style={{
-                borderRadius: '16px', overflow: 'hidden',
-                height: i % 2 === 0 ? '200px' : '160px',
-                border: '1px solid var(--border-glass)',
-                position: 'relative',
-              }}
-            >
-              <Image 
-                src={src} 
-                alt="Beauty" 
-                fill
-                sizes="200px"
-                style={{ objectFit: 'cover', transition: 'transform 0.4s' }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-      </div>
-    </section>
-  );
-}
-
-/* ============ CATEGORIES ============ */
-function CategoryGrid() {
-  return (
-    <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
-        <div className="container-main">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }}>Shop by Category</h2>
-            <Link href="/products" style={{ color: 'var(--primary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              View All <ArrowRight size={16} />
-            </Link>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '12px' }}>
-            {categories.map((cat, i) => (
-              <motion.div
-                key={cat.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-              >
-                <Link href={`/products?category=${cat.slug}`} style={{ textDecoration: 'none' }}>
-                  <motion.div whileTap={{ scale: 0.95 }} whileHover={{ y: -4 }} className="glass-card" style={{ textAlign: 'center', padding: '20px 12px', cursor: 'pointer' }}>
-                    <div style={{ fontSize: '32px', marginBottom: '8px' }}>{cat.icon}</div>
-                    <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>{cat.name}</div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{cat.productCount} Products</div>
-                  </motion.div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </ScrollReveal>
-  );
-}
 
 /* ============ TRENDING ============ */
 function TrendingSection() {
