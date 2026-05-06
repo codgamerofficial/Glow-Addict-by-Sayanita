@@ -37,28 +37,42 @@ export const useAuthStore = create<AuthState>()(
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
           set({ 
             user: {
               id: session.user.id,
               email: session.user.email || '',
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-              avatarUrl: session.user.user_metadata?.avatar_url,
-              loyaltyPoints: 0, // In real app, fetch from profiles table
+              name: profile?.name || session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+              avatarUrl: profile?.avatar_url || session.user.user_metadata?.avatar_url,
+              loyaltyPoints: profile?.loyalty_points || 0,
+              skinType: profile?.skin_type,
             }, 
             isAuthenticated: true 
           });
         }
 
         // Listen for changes
-        supabase.auth.onAuthStateChange((event, session) => {
+        supabase.auth.onAuthStateChange(async (event, session) => {
           if (session?.user) {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', session.user.id)
+              .single();
+
             set({ 
               user: {
                 id: session.user.id,
                 email: session.user.email || '',
-                name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-                avatarUrl: session.user.user_metadata?.avatar_url,
-                loyaltyPoints: 0,
+                name: profile?.name || session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+                avatarUrl: profile?.avatar_url || session.user.user_metadata?.avatar_url,
+                loyaltyPoints: profile?.loyalty_points || 0,
+                skinType: profile?.skin_type,
               }, 
               isAuthenticated: true 
             });

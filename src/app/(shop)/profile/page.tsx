@@ -6,24 +6,30 @@ import Link from 'next/link';
 import { useAuthStore } from '@/features/auth/authStore';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
+import { getUserOrders } from '@/actions/shop';
+import { useState } from 'react';
 
 export default function ProfilePage() {
   const router = useRouter();
   const { user, isAuthenticated, logout, isInitialized } = useAuthStore();
   const cartCount = useCartStore(s => s.getItemCount());
   const wishlistCount = useWishlistStore(s => s.items.length);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(true);
 
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
       router.push('/login');
     }
+    
+    if (isAuthenticated) {
+      getUserOrders().then(o => {
+        setOrders(o);
+        setIsLoadingOrders(false);
+      });
+    }
   }, [isInitialized, isAuthenticated, router]);
 
-  const orders = [
-    { id: 'GA847291', date: 'Apr 28, 2026', status: 'Delivered', total: 1899, items: 3 },
-    { id: 'GA832156', date: 'Apr 15, 2026', status: 'Shipped', total: 2499, items: 5 },
-    { id: 'GA819843', date: 'Mar 30, 2026', status: 'Delivered', total: 799, items: 1 },
-  ];
 
   const statusColor: Record<string, string> = { Delivered: 'var(--success)', Shipped: 'var(--accent-gold)', Processing: 'var(--primary)', Cancelled: 'var(--error)' };
 
@@ -85,21 +91,33 @@ export default function ProfilePage() {
       <div id="orders">
         <h2 style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 700, marginBottom: '16px' }}>Recent Orders</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
-          {orders.map(order => (
-            <div key={order.id} className="glass-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
-              <div>
-                <div style={{ fontSize: '14px', fontWeight: 600 }}>#{order.id}</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{order.date} • {order.items} items</div>
-              </div>
-              <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {isLoadingOrders ? (
+            Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="glass-card animate-pulse" style={{ padding: '16px', height: '64px' }}></div>
+            ))
+          ) : orders.length > 0 ? (
+            orders.map(order => (
+              <div key={order.id} className="glass-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
                 <div>
-                  <div style={{ fontFamily: 'Outfit', fontSize: '15px', fontWeight: 600 }}>₹{order.total.toLocaleString()}</div>
-                  <span className="badge" style={{ background: `${statusColor[order.status]}20`, color: statusColor[order.status], fontSize: '11px' }}>{order.status}</span>
+                  <div style={{ fontSize: '14px', fontWeight: 600 }}>#{order.id}</div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{order.date} • {order.items} items</div>
                 </div>
-                <ChevronRight size={18} style={{ color: 'var(--text-muted)' }} />
+                <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div>
+                    <div style={{ fontFamily: 'Outfit', fontSize: '15px', fontWeight: 600 }}>₹{order.total.toLocaleString()}</div>
+                    <span className="badge" style={{ background: `${statusColor[order.status] || 'var(--primary)'}20`, color: statusColor[order.status] || 'var(--primary)', fontSize: '11px' }}>{order.status}</span>
+                  </div>
+                  <ChevronRight size={18} style={{ color: 'var(--text-muted)' }} />
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="glass-card" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
+              <ShoppingBag size={32} style={{ margin: '0 auto 12px', opacity: 0.5 }} />
+              <p style={{ fontSize: '14px' }}>No orders yet. Start your beauty journey today!</p>
+              <Link href="/products" style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 600, textDecoration: 'none', display: 'block', marginTop: '8px' }}>Shop Products</Link>
             </div>
-          ))}
+          )}
         </div>
       </div>
 

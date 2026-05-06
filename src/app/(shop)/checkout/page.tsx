@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCartStore } from '@/features/cart/cartStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageTransition from '@/components/shared/PageTransition';
+import { placeOrder as placeOrderAction } from '@/actions/shop';
 
 const paymentMethods = [
   { id: 'upi', label: 'UPI', desc: 'Google Pay, PhonePe, Paytm', icon: Smartphone },
@@ -61,14 +62,44 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState('upi');
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState('');
+  const [isPlacing, setIsPlacing] = useState(false);
+  const [address, setAddress] = useState({
+    fullName: 'Sayanita',
+    phone: '+91 98765 43210',
+    email: 'sayanita@email.com',
+    line1: '123, MG Road',
+    city: 'Bangalore',
+    state: 'Karnataka',
+    pincode: '560001',
+    country: 'India'
+  });
+
   const subtotal = getSubtotal();
   const total = getTotal();
 
-  const placeOrder = useCallback(() => {
-    setOrderId(`GA${Math.floor(100000 + Math.random() * 900000)}`);
-    setOrderPlaced(true);
-    clearCart();
-  }, [clearCart]);
+  const handlePlaceOrder = useCallback(async () => {
+    setIsPlacing(true);
+    try {
+      const res = await placeOrderAction({
+        items,
+        subtotal,
+        total,
+        paymentMethod: payment,
+        shippingAddress: address
+      });
+      
+      if (res.success) {
+        setOrderId(res.orderId);
+        setOrderPlaced(true);
+        clearCart();
+      }
+    } catch (err) {
+      console.error('Failed to place order:', err);
+      alert('Failed to place order. Please try again.');
+    } finally {
+      setIsPlacing(false);
+    }
+  }, [items, subtotal, total, payment, address, clearCart]);
 
   if (orderPlaced) {
     return (
@@ -292,9 +323,15 @@ export default function CheckoutPage() {
                 <Shield size={14} style={{ color: 'var(--success)' }} /> Your payment is secured with 256-bit encryption
               </div>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <motion.button whileTap={{ scale: 0.97 }} onClick={() => setStep(2)} className="btn-outline" style={{ padding: '14px 24px' }}>Back</motion.button>
-                <motion.button whileTap={{ scale: 0.97 }} onClick={placeOrder} className="btn-gradient" style={{ flex: 1, padding: '14px', fontSize: '15px' }}>
-                  <span>Place Order — ₹{total.toLocaleString()}</span>
+                <motion.button whileTap={{ scale: 0.97 }} onClick={() => setStep(2)} className="btn-outline" style={{ padding: '14px 24px' }} disabled={isPlacing}>Back</motion.button>
+                <motion.button 
+                  whileTap={{ scale: 0.97 }} 
+                  onClick={handlePlaceOrder} 
+                  className="btn-gradient" 
+                  style={{ flex: 1, padding: '14px', fontSize: '15px' }}
+                  disabled={isPlacing}
+                >
+                  <span>{isPlacing ? 'Processing...' : `Place Order — ₹${total.toLocaleString()}`}</span>
                 </motion.button>
               </div>
             </motion.div>
