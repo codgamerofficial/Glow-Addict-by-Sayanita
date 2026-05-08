@@ -3,14 +3,18 @@ import { createClient } from '@supabase/supabase-js';
 import { products } from '@/data/products';
 import { adminOrders, adminInfluencers, adminCoupons, adminNotifications, adminAIRecommendations, adminBanners } from '@/data/admin-seed';
 
-// Initialize a Supabase client with the service role key to bypass RLS for seeding
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
-
 export async function POST() {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Supabase configuration missing');
+    }
+
+    // Initialize a Supabase client with the service role key to bypass RLS for seeding
+    const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
+
     // 1. Seed Products (upsert to avoid duplicates if run multiple times)
     const formattedProducts = products.map((p) => ({
       id: p.id,
