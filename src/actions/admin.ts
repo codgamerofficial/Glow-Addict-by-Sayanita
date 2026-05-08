@@ -20,41 +20,51 @@ async function createAuditLog(action: string, entity: string, entityId?: string,
 
 // -- Dashboard Stats --
 export async function getDashboardStats() {
-  const supabase = await createClient();
-  
-  // Real implementation would calculate these from tables
-  // For now, we'll fetch basic counts to demonstrate backend connection
-  const [
-    { count: totalOrders },
-    { count: totalProducts },
-    { count: totalCustomers },
-  ] = await Promise.all([
-    supabase.from('orders').select('*', { count: 'exact', head: true }),
-    supabase.from('products').select('*', { count: 'exact', head: true }),
-    supabase.from('admin_users').select('*', { count: 'exact', head: true }), // Using admin_users as a proxy for customers if real customers aren't separated
-  ]);
+  try {
+    const supabase = await createClient();
+    
+    // Real implementation would calculate these from tables
+    // For now, we'll fetch basic counts to demonstrate backend connection
+    const [
+      { count: totalOrders },
+      { count: totalProducts },
+      { count: totalCustomers },
+    ] = await Promise.all([
+      supabase.from('orders').select('*', { count: 'exact', head: true }),
+      supabase.from('products').select('*', { count: 'exact', head: true }),
+      supabase.from('admin_users').select('*', { count: 'exact', head: true }), // Using admin_users as a proxy for customers if real customers aren't separated
+    ]);
 
-  return {
-    totalOrders: totalOrders || 0,
-    totalProducts: totalProducts || 0,
-    totalCustomers: totalCustomers || 0,
-    // Add other mocked or calculated stats here...
-  };
+    return {
+      totalOrders: totalOrders || 0,
+      totalProducts: totalProducts || 0,
+      totalCustomers: totalCustomers || 0,
+      // Add other mocked or calculated stats here...
+    };
+  } catch (error) {
+    console.warn('Supabase not configured or error fetching stats:', error);
+    return { totalOrders: 0, totalProducts: 0, totalCustomers: 0 };
+  }
 }
 
 // -- Products --
 export async function getAdminProducts() {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('created_at', { ascending: false });
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Failed to fetch admin products:', error);
+    if (error) {
+      console.error('Failed to fetch admin products:', error);
+      return [];
+    }
+    return data;
+  } catch (error) {
+    console.warn('Supabase not configured or error fetching products:', error);
     return [];
   }
-  return data;
 }
 
 export async function createProduct(product: Record<string, unknown>) {
@@ -223,10 +233,18 @@ export async function getAdminAIRecommendations() {
 
 // -- CMS Banners --
 export async function getAdminBanners() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('cms_banners').select('*').order('display_order', { ascending: true });
-  if (error) console.error('Failed to fetch CMS banners:', error);
-  return data || [];
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.from('cms_banners').select('*').order('display_order', { ascending: true });
+    if (error) {
+      console.error('Failed to fetch CMS banners:', error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.warn('Supabase not configured or error fetching banners:', error);
+    return [];
+  }
 }
 
 export async function createBanner(banner: Record<string, unknown>) {
@@ -261,10 +279,18 @@ export async function deleteBanner(id: string) {
 
 // -- CMS Collections --
 export async function getAdminCollections() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('cms_collections').select('*').order('display_order', { ascending: true });
-  if (error) console.error('Failed to fetch CMS collections:', error);
-  return data || [];
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.from('cms_collections').select('*').order('display_order', { ascending: true });
+    if (error) {
+      console.error('Failed to fetch CMS collections:', error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.warn('Supabase not configured or error fetching collections:', error);
+    return [];
+  }
 }
 
 export async function createCollection(collection: Record<string, unknown>) {
