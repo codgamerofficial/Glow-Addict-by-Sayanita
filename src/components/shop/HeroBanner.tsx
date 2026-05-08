@@ -10,7 +10,8 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
   const activeBanner = banners.find(b => b.is_active || b.isActive) || {
     title: 'Your Skin. Your Glow. Your Rules.',
     subtitle: 'Discover 10,000+ beauty products personalized by AI for your unique skin.',
-    image_url: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop'
+    image_url: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=600&fit=crop'
   };
 
   return (

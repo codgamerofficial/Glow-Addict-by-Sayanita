@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
       // Production site domain - always HTTPS
       { protocol: 'https', hostname: siteDomain },
       // Localhost development - HTTP only
-      ...(isLocalhost ? [{ protocol: 'http', hostname: 'localhost', port: '3000' }] : []),
+      ...(isLocalhost ? [{ protocol: 'http' as const, hostname: 'localhost', port: '3000' }] : []),
     ],
   },
   // Only set basePath if there's an actual path (subdirectory deployment)

@@ -162,7 +162,7 @@ export default function InventoryClient({ initialInventory }: InventoryClientPro
                         >−</button>
                         <input
                           type="number"
-                          value={editStock}
+                          value={editStock ?? 0}
                           onChange={e => setEditStock(parseInt(e.target.value) || 0)}
                           disabled={isSaving}
                           style={{ width: 70, padding: '4px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-primary)', fontSize: 13, textAlign: 'center', opacity: isSaving ? 0.5 : 1 }}
@@ -188,7 +188,7 @@ export default function InventoryClient({ initialInventory }: InventoryClientPro
                         <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: `${color}15`, color, textTransform: 'capitalize' }}>{level}</span>
                         <input
                           type="number"
-                          value={editThreshold}
+                          value={editThreshold ?? 0}
                           onChange={e => setEditThreshold(parseInt(e.target.value) || 0)}
                           placeholder="Alert at"
                           disabled={isSaving}
