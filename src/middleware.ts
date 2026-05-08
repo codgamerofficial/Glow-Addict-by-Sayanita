@@ -2,48 +2,73 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
+  const response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
   });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
-          supabaseResponse = NextResponse.next({
-            request,
+          cookiesToSet.forEach(cookie => {
+            response.cookies.set(cookie.name, cookie.value, cookie.options);
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
         },
       },
     }
   );
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
+  // Refresh the session if necessary
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
+  if (session?.access_token && session?.refresh_token) {
+    const { data, error } = await supabase.auth.refreshSession();
+
+    if (data?.session && !error) {
+      const { access_token, refresh_token } = data.session;
+      const expiresAt = data.session.expires_at;
+      const maxAge = expiresAt ? expiresAt - Math.floor(Date.now() / 1000) : 0;
+
+      response.cookies.set('sb-access-token', access_token, {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge,
+      });
+
+      response.cookies.set('sb-refresh-token', refresh_token, {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 30,
+      });
+    }
+  }
+
+  // Get current user
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Admin route protection
   if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
     if (!user) {
-      // no user, redirect to login
       const url = request.nextUrl.clone();
       url.pathname = '/admin/login';
       return NextResponse.redirect(url);
     }
 
-    // Check if user is an admin by querying admin_users table
     const { data: adminUser, error } = await supabase
       .from('admin_users')
       .select('status')
@@ -51,15 +76,13 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (error || !adminUser || adminUser.status !== 'active') {
-      // User is not an active admin, redirect to store home or unauthorized page
-      // For now, redirecting to store home
       const url = request.nextUrl.clone();
       url.pathname = '/';
       return NextResponse.redirect(url);
     }
   }
 
-  // Redirect authenticated admins away from login page to dashboard
+  // Redirect authenticated admins away from login page
   if (user && request.nextUrl.pathname === '/admin/login') {
     const { data: adminUser } = await supabase
       .from('admin_users')
@@ -74,18 +97,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return supabaseResponse;
+  return response;
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\..*$|public).*)',
   ],
 };

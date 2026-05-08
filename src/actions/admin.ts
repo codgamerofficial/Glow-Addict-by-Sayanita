@@ -2,9 +2,10 @@
 
 import { createClient } from '@/lib/supabase-server';
 import { revalidatePath } from 'next/cache';
+import type { AdminRole, AdminUserWithRole } from '@/types/admin';
 
 // -- Helpers --
-async function createAuditLog(action: string, entity: string, entityId?: string, details?: any) {
+async function createAuditLog(action: string, entity: string, entityId?: string, details?: Record<string, unknown>) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -56,7 +57,7 @@ export async function getAdminProducts() {
   return data;
 }
 
-export async function createProduct(product: any) {
+export async function createProduct(product: Record<string, unknown>) {
   const supabase = await createClient();
   const { data, error } = await supabase.from('products').insert(product).select().single();
   if (error) throw new Error(error.message);
@@ -66,7 +67,7 @@ export async function createProduct(product: any) {
   return { success: true, data };
 }
 
-export async function updateProduct(id: string, updates: any) {
+export async function updateProduct(id: string, updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('products').update(updates).eq('id', id);
   if (error) throw new Error(error.message);
@@ -144,7 +145,7 @@ export async function getAdminCoupons() {
   return data || [];
 }
 
-export async function createCoupon(coupon: any) {
+export async function createCoupon(coupon: Record<string, unknown>) {
   const supabase = await createClient();
   const { data, error } = await supabase.from('coupons').insert(coupon).select().single();
   if (error) throw new Error(error.message);
@@ -154,7 +155,7 @@ export async function createCoupon(coupon: any) {
   return { success: true, data };
 }
 
-export async function updateCoupon(id: string, updates: any) {
+export async function updateCoupon(id: string, updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('coupons').update(updates).eq('id', id);
   if (error) throw new Error(error.message);
@@ -182,7 +183,7 @@ export async function getAdminInfluencers() {
   return data || [];
 }
 
-export async function createInfluencer(influencer: any) {
+export async function createInfluencer(influencer: Record<string, unknown>) {
   const supabase = await createClient();
   const { data, error } = await supabase.from('influencers').insert(influencer).select().single();
   if (error) throw new Error(error.message);
@@ -192,7 +193,7 @@ export async function createInfluencer(influencer: any) {
   return { success: true, data };
 }
 
-export async function updateInfluencer(id: string, updates: any) {
+export async function updateInfluencer(id: string, updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('influencers').update(updates).eq('id', id);
   if (error) throw new Error(error.message);
@@ -228,7 +229,7 @@ export async function getAdminBanners() {
   return data || [];
 }
 
-export async function createBanner(banner: any) {
+export async function createBanner(banner: Record<string, unknown>) {
   const supabase = await createClient();
   const { data, error } = await supabase.from('cms_banners').insert(banner).select().single();
   if (error) throw new Error(error.message);
@@ -238,7 +239,7 @@ export async function createBanner(banner: any) {
   return { success: true, data };
 }
 
-export async function updateBanner(id: string, updates: any) {
+export async function updateBanner(id: string, updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('cms_banners').update(updates).eq('id', id);
   if (error) throw new Error(error.message);
@@ -266,7 +267,7 @@ export async function getAdminCollections() {
   return data || [];
 }
 
-export async function createCollection(collection: any) {
+export async function createCollection(collection: Record<string, unknown>) {
   const supabase = await createClient();
   const { data, error } = await supabase.from('cms_collections').insert(collection).select().single();
   if (error) throw new Error(error.message);
@@ -276,7 +277,7 @@ export async function createCollection(collection: any) {
   return { success: true, data };
 }
 
-export async function updateCollection(id: string, updates: any) {
+export async function updateCollection(id: string, updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('cms_collections').update(updates).eq('id', id);
   if (error) throw new Error(error.message);
@@ -304,7 +305,7 @@ export async function getStoreSettings() {
   return data;
 }
 
-export async function updateStoreSettings(updates: any) {
+export async function updateStoreSettings(updates: Record<string, unknown>) {
   const supabase = await createClient();
   const { error } = await supabase.from('settings').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', 'global');
   if (error) throw new Error(error.message);
@@ -338,10 +339,154 @@ export async function getAdminAuditLogs() {
   // Format to match the frontend shape
   return data.map((log) => ({
     id: log.id,
-    adminName: (log.admin_users as any)?.name || log.admin_id || 'Unknown',
+    adminName: (log.admin_users as Record<string, unknown>)?.name || log.admin_id || 'Unknown',
     action: log.action,
     entity: log.entity,
     entityId: log.entity_id,
     timestamp: log.timestamp,
   }));
+}
+
+// -- Inventory Management --
+export async function getAdminInventory() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('products')
+    .select('id, name, brand_name, category_name, images, stock_quantity, low_stock_threshold, sku')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to fetch admin inventory:', error);
+    return [];
+  }
+  return (data || []).map(p => ({
+    id: p.id,
+    name: p.name,
+    brandName: p.brand_name || '—',
+    categoryName: p.category_name || '—',
+    images: p.images || [],
+    stockQuantity: p.stock_quantity,
+    lowStockThreshold: p.low_stock_threshold || 100,
+    sku: p.sku || `GA-${p.id.replace('p', '').padStart(3, '0')}`,
+  }));
+}
+
+export async function updateStockQuantity(id: string, quantity: number) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('products').update({ stock_quantity: quantity }).eq('id', id);
+  if (error) throw new Error(error.message);
+
+  await createAuditLog('update_stock', 'product', id, { stock_quantity: quantity });
+  revalidatePath('/admin/inventory');
+  revalidatePath('/admin/products');
+  return { success: true };
+}
+
+export async function updateLowStockAlert(id: string, threshold: number) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('products').update({ low_stock_threshold: threshold }).eq('id', id);
+  if (error) throw new Error(error.message);
+
+  await createAuditLog('update_low_stock_threshold', 'product', id, { low_stock_threshold: threshold });
+  revalidatePath('/admin/inventory');
+  return { success: true };
+}
+
+export async function getLowStockProducts() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('products')
+    .select('id, name, stock_quantity, low_stock_threshold, sku')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to fetch low stock products:', error);
+    return [];
+  }
+  return (data || []).filter(p => p.stock_quantity <= (p.low_stock_threshold || 100));
+}
+
+// -- Role Management --
+export async function getAdminRoles(): Promise<AdminRole[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('admin_roles')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to fetch admin roles:', error);
+    return [];
+  }
+  return data;
+}
+
+export async function createRole(role: Record<string, unknown>) {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('admin_roles').insert(role).select().single();
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('create', 'admin_role', data.id, role);
+  revalidatePath('/admin/settings/roles');
+  return { success: true, data };
+}
+
+export async function updateRole(id: string, updates: Record<string, unknown>) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('admin_roles').update(updates).eq('id', id);
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('update', 'admin_role', id, updates);
+  revalidatePath('/admin/settings/roles');
+  return { success: true };
+}
+
+export async function deleteRole(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('admin_roles').delete().eq('id', id);
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('delete', 'admin_role', id);
+  revalidatePath('/admin/settings/roles');
+  return { success: true };
+}
+
+export async function getAdminUsersWithRoles(): Promise<AdminUserWithRole[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('admin_users')
+    .select(`
+      *,
+      admin_roles ( id, name, permissions )
+    `)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to fetch admin users with roles:', error);
+    return [];
+  }
+  
+  // Format to match expected shape
+  return data.map(user => ({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    status: user.status,
+    role: user.admin_roles ? {
+      id: user.admin_roles.id,
+      name: user.admin_roles.name,
+      permissions: user.admin_roles.permissions
+    } : null,
+    created_at: user.created_at
+  }));
+}
+
+export async function updateUserRole(userId: string, roleId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('admin_users').update({ role_id: roleId }).eq('id', userId);
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('update_user_role', 'admin_user', userId, { role_id: roleId });
+  revalidatePath('/admin/settings/roles');
+  return { success: true };
 }

@@ -105,6 +105,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </motion.button>
           <motion.button
             onClick={handleToggleWishlist}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
             whileTap={{ scale: 0.85 }}
             transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             style={{

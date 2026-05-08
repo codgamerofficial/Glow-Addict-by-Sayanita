@@ -93,22 +93,30 @@ export default function Header() {
 
           {/* Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <motion.button whileTap={{ scale: 0.85 }} onClick={() => setSearchOpen(!searchOpen)} style={{
-              background: 'none', border: 'none', color: 'var(--text-secondary)',
-              cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--primary)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+            <motion.button 
+              whileTap={{ scale: 0.85 }} 
+              onClick={() => setSearchOpen(!searchOpen)} 
+              aria-label="Search"
+              style={{
+                background: 'none', border: 'none', color: 'var(--text-secondary)',
+                cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--primary)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
             >
               <Search size={20} />
             </motion.button>
 
-            <motion.button whileTap={{ scale: 0.85 }} onClick={toggleTheme} style={{
-              background: 'none', border: 'none', color: 'var(--text-secondary)',
-              cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--accent-gold)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+            <motion.button 
+              whileTap={{ scale: 0.85 }} 
+              onClick={toggleTheme} 
+              aria-label="Toggle theme"
+              style={{
+                background: 'none', border: 'none', color: 'var(--text-secondary)',
+                cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--accent-gold)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
             >
               <motion.div
                 key={hydrated ? theme : 'default'}
@@ -120,7 +128,7 @@ export default function Header() {
               </motion.div>
             </motion.button>
 
-            <Link href="/wishlist" style={{
+            <Link href="/wishlist" aria-label={`Wishlist (${wishlistCount})`} style={{
               position: 'relative', color: 'var(--text-secondary)', padding: '8px',
               borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
             }}
@@ -145,7 +153,7 @@ export default function Header() {
               )}
             </Link>
 
-            <Link href="/cart" style={{
+            <Link href="/cart" aria-label={`Cart (${itemCount})`} style={{
               position: 'relative', color: 'var(--text-secondary)', padding: '8px',
               borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
             }}
@@ -171,7 +179,7 @@ export default function Header() {
               )}
             </Link>
 
-            <Link href="/profile" style={{
+            <Link href="/profile" aria-label="Profile" style={{
               color: 'var(--text-secondary)', padding: '8px',
               borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
             }}

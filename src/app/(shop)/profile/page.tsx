@@ -1,20 +1,27 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { User, Heart, ShoppingBag, Star, Gift, Settings, LogOut, ChevronRight, Sparkles, Camera } from 'lucide-react';
+import { Heart, ShoppingBag, Star, Gift, Settings, LogOut, ChevronRight, Sparkles, Camera } from 'lucide-react';
 import Link from 'next/link';
 import { useAuthStore } from '@/features/auth/authStore';
-import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import { getUserOrders } from '@/actions/shop';
 import { useState } from 'react';
+import Image from 'next/image';
+
+interface Order {
+  id: string;
+  date: string;
+  items: number;
+  total: number;
+  status: string;
+}
 
 export default function ProfilePage() {
   const router = useRouter();
   const { user, isAuthenticated, logout, isInitialized } = useAuthStore();
-  const cartCount = useCartStore(s => s.getItemCount());
   const wishlistCount = useWishlistStore(s => s.items.length);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
 
   useEffect(() => {
@@ -24,14 +31,18 @@ export default function ProfilePage() {
     
     if (isAuthenticated) {
       getUserOrders().then(o => {
-        setOrders(o);
+        setOrders(o as Order[]);
         setIsLoadingOrders(false);
       });
     }
   }, [isInitialized, isAuthenticated, router]);
 
-
-  const statusColor: Record<string, string> = { Delivered: 'var(--success)', Shipped: 'var(--accent-gold)', Processing: 'var(--primary)', Cancelled: 'var(--error)' };
+  const statusColor: Record<string, string> = { 
+    Delivered: 'var(--success)', 
+    Shipped: 'var(--accent-gold)', 
+    Processing: 'var(--primary)', 
+    Cancelled: 'var(--error)' 
+  };
 
   if (!isAuthenticated) return null;
 
@@ -48,7 +59,13 @@ export default function ProfilePage() {
           overflow: 'hidden'
         }}>
           {user?.avatarUrl ? (
-            <img src={user.avatarUrl} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <Image 
+              src={user.avatarUrl} 
+              alt={user.name || 'User Avatar'} 
+              width={80}
+              height={80}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           ) : (
             user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'
           )}

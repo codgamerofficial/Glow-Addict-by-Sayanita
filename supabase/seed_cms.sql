@@ -18,6 +18,7 @@ INSERT INTO cms_collections (name, slug, description, display_order) VALUES
 ON CONFLICT (slug) DO NOTHING;
 
 -- Initial Settings
+-- Note: contact_email should match NEXT_PUBLIC_CONTACT_EMAIL environment variable
 INSERT INTO settings (id, store_name, contact_email, contact_phone) VALUES
 ('global', 'Glow Addict', 'hello@glowaddict.com', '+91 98765 43210')
 ON CONFLICT (id) DO NOTHING;

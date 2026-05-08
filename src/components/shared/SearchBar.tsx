@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Search, TrendingUp, X } from 'lucide-react';
 import { products } from '@/data/products';
 
+import Image from 'next/image';
+
 export function SearchBar({ onClose }: { onClose?: () => void }) {
   const [query, setQuery] = useState('');
 
@@ -18,14 +20,16 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
     ).slice(0, 6);
   }, [query]);
 
-  const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacinamide', 'Lipstick', 'Retinol'];
+  const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacidamide', 'Lipstick', 'Retinol'];
 
   return (
     <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto', padding: '8px 0' }}>
       <div style={{ position: 'relative' }}>
         <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
         <input
-          type="text" placeholder="Search for products, brands, concerns..."
+          type="text" 
+          aria-label="Search products"
+          placeholder="Search for products, brands, concerns..."
           value={query} onChange={(e) => setQuery(e.target.value)}
           autoFocus
           className="input-glass"
@@ -42,7 +46,7 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Results / Trending */}
-      {(query.trim() || true) && (
+      {query.trim() && (
         <div style={{
           position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
           background: 'var(--bg-surface)', border: '1px solid var(--border-glass)',
@@ -63,9 +67,14 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
                 >
                   <div style={{
                     width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden',
-                    background: 'var(--bg-glass)', flexShrink: 0,
+                    background: 'var(--bg-glass)', flexShrink: 0, position: 'relative'
                   }}>
-                    <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <Image 
+                      src={p.images[0]} 
+                      alt={p.name} 
+                      fill
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: '14px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

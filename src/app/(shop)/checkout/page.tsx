@@ -14,6 +14,8 @@ const paymentMethods = [
   { id: 'cod', label: 'Cash on Delivery', desc: '₹30 COD charges apply', icon: Banknote },
 ];
 
+import Image from 'next/image';
+
 /* ============ CONFETTI COMPONENT ============ */
 function Confetti() {
   const [particles] = useState<Array<{ id: number; x: number; color: string; delay: number; size: number; rotate: number; duration: number }>>(() => 
@@ -106,12 +108,14 @@ export default function CheckoutPage() {
       <PageTransition>
         <Confetti />
         <div className="container-main" style={{ textAlign: 'center', padding: '80px 20px' }}>
-          <motion.img
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            src="/images/logo.png" alt="Glow Addict"
-            style={{ height: '56px', width: 'auto', objectFit: 'contain', margin: '0 auto 20px', display: 'block' }}
-          />
+          <div style={{ position: 'relative', height: '56px', width: '200px', margin: '0 auto 20px' }}>
+            <Image
+              src="/images/logo.png" 
+              alt="Glow Addict"
+              fill
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -298,8 +302,13 @@ export default function CheckoutPage() {
                   transition={{ delay: i * 0.05 }}
                   style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid var(--border-glass)' }}
                 >
-                  <div style={{ width: '48px', height: '48px', borderRadius: '8px', overflow: 'hidden' }}>
-                    <img src={item.product.images[0]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div style={{ width: '48px', height: '48px', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+                    <Image 
+                      src={item.product.images[0]} 
+                      alt={item.product.name} 
+                      fill
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '13px', fontWeight: 500 }}>{item.product.name}</div>

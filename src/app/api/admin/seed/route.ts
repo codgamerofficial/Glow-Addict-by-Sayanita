@@ -151,7 +151,7 @@ export async function POST() {
     await supabaseAdmin.from('cms_collections').upsert(collections, { onConflict: 'slug' });
 
     // 9. Seed Settings
-    await supabaseAdmin.from('settings').upsert({ id: 'global', store_name: 'Glow Addict', contact_email: 'hello@glowaddict.com' });
+    await supabaseAdmin.from('settings').upsert({ id: 'global', store_name: 'Glow Addict', contact_email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@glowaddict.com' });
 
     return NextResponse.json({ success: true, message: 'Database successfully seeded with the full Glow Addict ecosystem!' });
   } catch (error: unknown) {

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Glow Addict by Sayanita",
     description: "Your personalized AI beauty companion. Shop smart, glow brighter.",
-    url: "https://glowaddict.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://glowaddict.com",
     siteName: "Glow Addict",
     locale: "en_IN",
     type: "website",

@@ -153,7 +153,13 @@ export default function CMSClient({ initialBanners, initialCollections }: { init
       {showBannerModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: 20 }}>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card" style={{ width: '100%', maxWidth: 500, padding: 32, position: 'relative' }}>
-            <button onClick={() => setShowBannerModal(false)} style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}><X size={20} /></button>
+            <button 
+              onClick={() => setShowBannerModal(false)} 
+              aria-label="Close modal"
+              style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+            >
+              <X size={20} />
+            </button>
             <h3 style={{ fontFamily: 'Outfit', fontSize: 20, fontWeight: 700, marginBottom: 24 }}>Add New Banner</h3>
             <form onSubmit={handleAddBanner} style={{ display: 'grid', gap: 16 }}>
               <div>
@@ -184,7 +190,13 @@ export default function CMSClient({ initialBanners, initialCollections }: { init
       {showCollectionModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: 20 }}>
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass-card" style={{ width: '100%', maxWidth: 500, padding: 32, position: 'relative' }}>
-            <button onClick={() => setShowCollectionModal(false)} style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}><X size={20} /></button>
+            <button 
+              onClick={() => setShowCollectionModal(false)} 
+              aria-label="Close modal"
+              style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+            >
+              <X size={20} />
+            </button>
             <h3 style={{ fontFamily: 'Outfit', fontSize: 20, fontWeight: 700, marginBottom: 24 }}>New Featured Collection</h3>
             <form onSubmit={handleAddCollection} style={{ display: 'grid', gap: 16 }}>
               <div>

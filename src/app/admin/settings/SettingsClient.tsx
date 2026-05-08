@@ -1,18 +1,17 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Users, Key, Database, Globe, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-react';
-import { adminAuditLogs } from '@/data/admin-seed';
+import { Shield, Users, Key, Database, Globe, ShieldAlert } from 'lucide-react';
 
 import { AuditLog } from '@/types/admin';
 import { updateStoreSettings } from '@/actions/admin';
 import { useState } from 'react';
 
-export default function SettingsClient({ initialLogs, initialSettings }: { initialLogs?: AuditLog[], initialSettings?: any }) {
+export default function SettingsClient({ initialLogs, initialSettings }: { initialLogs?: AuditLog[], initialSettings?: Record<string, string | boolean | unknown> }) {
   const [activeTab, setActiveTab] = useState('general');
   const [settings, setSettings] = useState(initialSettings || {
     store_name: 'Glow Addict',
-    contact_email: 'hello@glowaddict.com',
+    contact_email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@glowaddict.com',
     contact_phone: '+91 98765 43210',
     currency: 'INR',
     maintenance_mode: false
@@ -34,7 +33,7 @@ export default function SettingsClient({ initialLogs, initialSettings }: { initi
     try {
       await updateStoreSettings(settings);
       alert('Settings saved successfully!');
-    } catch (e) {
+    } catch {
       alert('Failed to save settings');
     } finally {
       setIsSaving(false);
@@ -76,20 +75,20 @@ export default function SettingsClient({ initialLogs, initialSettings }: { initi
               <h3 style={{ fontFamily: 'Outfit', fontSize: 16, fontWeight: 600, marginBottom: 20 }}>General Store Settings</h3>
               <div style={{ display: 'grid', gap: 16, maxWidth: 500 }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Store Name</label>
-                  <input className="input-glass" value={settings.store_name} onChange={e => setSettings({...settings, store_name: e.target.value})} />
+                  <label htmlFor="store_name" style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Store Name</label>
+                  <input id="store_name" className="input-glass" value={settings.store_name as string} onChange={e => setSettings({...settings, store_name: e.target.value})} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Contact Email</label>
-                  <input className="input-glass" value={settings.contact_email} onChange={e => setSettings({...settings, contact_email: e.target.value})} />
+                  <label htmlFor="contact_email" style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Contact Email</label>
+                  <input id="contact_email" className="input-glass" value={settings.contact_email as string} onChange={e => setSettings({...settings, contact_email: e.target.value})} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Contact Phone</label>
-                  <input className="input-glass" value={settings.contact_phone} onChange={e => setSettings({...settings, contact_phone: e.target.value})} />
+                  <label htmlFor="contact_phone" style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>Contact Phone</label>
+                  <input id="contact_phone" className="input-glass" value={settings.contact_phone as string} onChange={e => setSettings({...settings, contact_phone: e.target.value})} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
-                  <input type="checkbox" checked={settings.maintenance_mode} onChange={e => setSettings({...settings, maintenance_mode: e.target.checked})} style={{ width: 16, height: 16, accentColor: 'var(--primary)' }} />
-                  <span style={{ fontSize: 13 }}>Maintenance Mode</span>
+                  <input id="maintenance_mode" type="checkbox" checked={settings.maintenance_mode as boolean} onChange={e => setSettings({...settings, maintenance_mode: e.target.checked})} style={{ width: 16, height: 16, accentColor: 'var(--primary)' }} />
+                  <label htmlFor="maintenance_mode" style={{ fontSize: 13 }}>Maintenance Mode</label>
                 </div>
                 <button 
                   disabled={isSaving}
@@ -153,7 +152,7 @@ export default function SettingsClient({ initialLogs, initialSettings }: { initi
                       const data = await res.json();
                       if (data.success) alert('Database successfully reset! 🚀');
                       else alert('Reset failed: ' + data.error);
-                    } catch (e) {
+                    } catch {
                       alert('Network error during reset');
                     } finally {
                       setIsSaving(false);

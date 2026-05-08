@@ -139,7 +139,7 @@ export interface AuditLog {
   action: string;
   entity: string;
   entityId?: string;
-  changes?: Record<string, { old: any; new: any }>;
+  changes?: Record<string, { old: unknown; new: unknown }>;
   timestamp: string;
 }
 
@@ -273,4 +273,31 @@ export interface AdminRecommendation {
   createdAt?: string;
   timestamp?: string;
   tags?: string[];
+}
+
+export interface AdminInventoryItem {
+  id: string;
+  name: string;
+  brandName: string;
+  categoryName: string;
+  images: string[];
+  stockQuantity: number;
+  lowStockThreshold?: number;
+  sku: string;
+}
+
+export interface AdminRole {
+  id: string;
+  name: string;
+  permissions: string[];
+  created_at?: string;
+}
+
+export interface AdminUserWithRole {
+  id: string;
+  name: string;
+  email: string;
+  status: 'active' | 'inactive' | 'suspended';
+  role: AdminRole | null;
+  created_at?: string;
 }

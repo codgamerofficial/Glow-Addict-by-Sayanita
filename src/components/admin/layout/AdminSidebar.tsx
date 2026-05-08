@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Tag, Megaphone, Bot, Bell, Settings, ChevronLeft, ChevronRight, Sparkles, Layers, UserCheck, FileText, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Tag, Megaphone, Bot, Bell, Settings, ChevronLeft, ChevronRight, Sparkles, Layers, UserCheck, FileText, TrendingUp, ScrollText, Shield } from 'lucide-react';
 
 const navSections = [
   { label: 'Main', items: [
@@ -28,9 +28,11 @@ const navSections = [
     { href: '/admin/ai', icon: Bot, label: 'AI Engine' },
     { href: '/admin/ai', icon: Sparkles, label: 'Routines' },
   ]},
-  { label: 'System', items: [
-    { href: '/admin/settings', icon: Settings, label: 'Settings' },
-  ]},
+   { label: 'System', items: [
+      { href: '/admin/settings', icon: Settings, label: 'Settings' },
+      { href: '/admin/settings/roles', icon: Shield, label: 'Roles & Permissions' },
+      { href: '/admin/audit', icon: ScrollText, label: 'Audit Logs' },
+   ]},
 ];
 
 interface Props { open: boolean; onToggle: () => void; }

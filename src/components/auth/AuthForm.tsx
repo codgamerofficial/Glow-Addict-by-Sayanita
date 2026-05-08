@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Mail, Lock, Globe, ArrowRight, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -33,8 +33,9 @@ export function AuthForm() {
         if (error) throw error;
         setMessage('Check your email for the confirmation link!');
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during authentication');
+    } catch (err: unknown) {
+      const error = err as Error;
+      setError(error.message || 'An error occurred during authentication');
     } finally {
       setLoading(false);
     }
@@ -50,8 +51,9 @@ export function AuthForm() {
         }
       });
       if (error) throw error;
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const error = err as Error;
+      setError(error.message);
       setLoading(false);
     }
   };
@@ -110,10 +112,11 @@ export function AuthForm() {
 
         <form onSubmit={handleEmailAuth} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px', display: 'block' }}>Email Address</label>
+            <label htmlFor="email" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px', display: 'block' }}>Email Address</label>
             <div style={{ position: 'relative' }}>
               <Mail size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input 
+                id="email"
                 type="email" 
                 required
                 className="input-glass" 
@@ -127,12 +130,13 @@ export function AuthForm() {
 
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-              <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Password</label>
+              <label htmlFor="password" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Password</label>
               {isLogin && <button type="button" style={{ fontSize: '12px', color: 'var(--primary)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500 }}>Forgot?</button>}
             </div>
             <div style={{ position: 'relative' }}>
               <Lock size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input 
+                id="password"
                 type="password" 
                 required
                 className="input-glass" 

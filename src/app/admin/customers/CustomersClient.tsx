@@ -2,12 +2,12 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { DataTable } from '@/components/admin/shared/DataTable';
+import { DataTable, Column } from '@/components/admin/shared/DataTable';
 import { AdminCustomer } from '@/types/admin';
 
 export default function CustomersClient({ initialCustomers }: { initialCustomers: AdminCustomer[] }) {
   const router = useRouter();
-  const columns = [
+  const columns: Column<AdminCustomer>[] = [
     { key: 'name', label: 'Customer', sortable: true, render: (item: AdminCustomer) => (
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #E91E8C20, #7C3AED20)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#E91E8C' }}>
@@ -38,10 +38,10 @@ export default function CustomersClient({ initialCustomers }: { initialCustomers
         ))}
       </div>
       <DataTable 
-        data={initialCustomers as any} 
-        columns={columns as any} 
+        data={initialCustomers as unknown as Record<string, unknown>[]} 
+        columns={columns as unknown as Column<Record<string, unknown>>[]} 
         searchPlaceholder="Search by name, email..."
-        onRowClick={item => router.push(`/admin/customers/${(item as any).id}`)} 
+        onRowClick={item => router.push(`/admin/customers/${item.id}`)} 
       />
     </div>
   );

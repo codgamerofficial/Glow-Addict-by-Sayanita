@@ -68,7 +68,7 @@ export default function AdminLogin() {
                   type="email" 
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="admin@glowaddict.com"
+                   placeholder={process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'admin@glowaddict.com'}
                   style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: 12, fontSize: 14, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-primary)', outline: 'none', transition: 'border 0.2s' }} 
                   onFocus={e => e.target.style.borderColor = '#E91E8C'}
                   onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}

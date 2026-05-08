@@ -4,6 +4,8 @@ import { Heart, ShoppingBag, Trash2 } from 'lucide-react';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import { useCartStore } from '@/features/cart/cartStore';
 
+import Image from 'next/image';
+
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore();
   const addToCart = useCartStore(s => s.addItem);
@@ -30,8 +32,13 @@ export default function WishlistPage() {
         {items.map(product => (
           <div key={product.id} className="glass-card" style={{ overflow: 'hidden' }}>
             <Link href={`/products/${product.slug}`}>
-              <div style={{ aspectRatio: '1', overflow: 'hidden' }} className="product-image-wrap">
-                <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ aspectRatio: '1', overflow: 'hidden', position: 'relative' }} className="product-image-wrap">
+                <Image 
+                  src={product.images[0]} 
+                  alt={product.name} 
+                  fill
+                  style={{ objectFit: 'cover' }} 
+                />
               </div>
             </Link>
             <div style={{ padding: '14px' }}>
