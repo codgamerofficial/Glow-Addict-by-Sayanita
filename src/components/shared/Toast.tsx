@@ -47,11 +47,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
 
       {/* Toast container */}
-      <div style={{
-        position: 'fixed', top: '100px', left: '50%', transform: 'translateX(-50%)',
-        zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '8px',
-        pointerEvents: 'none', width: '90%', maxWidth: '400px',
-      }}>
+      <div className="fixed top-[100px] left-1/2 -translate-x-1/2 z-[9999] flex flex-col gap-2 pointer-events-none w-[90%] max-w-[400px]">
         <AnimatePresence>
           {toasts.map(toast => (
             <motion.div
@@ -60,28 +56,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              style={{
-                background: colors[toast.type],
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                borderRadius: '14px',
-                padding: '14px 20px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                color: 'white',
-                fontSize: '14px',
-                fontWeight: 500,
-                boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                pointerEvents: 'auto',
-              }}
+              className="backdrop-blur-[20px] rounded-[14px] p-3.5 px-5 flex items-center gap-2.5 text-white text-sm font-medium shadow-[0_8px_32px_rgba(0,0,0,0.3)] pointer-events-auto"
+              style={{ background: colors[toast.type] }}
             >
-              <div style={{
-                width: '28px', height: '28px', borderRadius: '50%',
-                background: 'rgba(255,255,255,0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
-              }}>
+              <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0">
                 {icons[toast.type]}
               </div>
               {toast.message}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase'; // Using the client for client-side auth flow
+import { supabase } from '@/lib/supabase';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -18,19 +18,17 @@ export default function AdminLogin() {
     setError(null);
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-
-      if (signInError) throw signInError;
-
-      // The middleware will handle checking if the user is an admin.
-      // If they are, it will allow access, otherwise redirect.
+      if (error) throw error;
+      
+      // The middleware or client-side check will handle role verification
       router.push('/admin');
-      router.refresh(); // Force refresh to ensure middleware runs
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to sign in. Please check your credentials.';
+      router.refresh(); 
+    } catch (err: any) {
+      const message = err.message || 'Failed to sign in. Please check your credentials.';
       setError(message);
     } finally {
       setIsLoading(false);
@@ -68,7 +66,7 @@ export default function AdminLogin() {
                   type="email" 
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                   placeholder={process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'admin@glowaddict.com'}
+                  placeholder="admin@glowaddict.com"
                   style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: 12, fontSize: 14, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-primary)', outline: 'none', transition: 'border 0.2s' }} 
                   onFocus={e => e.target.style.borderColor = '#E91E8C'}
                   onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}

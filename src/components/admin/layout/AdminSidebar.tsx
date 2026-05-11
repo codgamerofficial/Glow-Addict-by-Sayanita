@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Tag, Megaphone, Bot, Bell, Settings, ChevronLeft, ChevronRight, Sparkles, Layers, UserCheck, FileText, TrendingUp, ScrollText, Shield } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Tag, Bot, Bell, Settings, ChevronLeft, ChevronRight, Sparkles, Layers, UserCheck, FileText, TrendingUp, ScrollText, Shield } from 'lucide-react';
 
 const navSections = [
   { label: 'Main', items: [
@@ -43,8 +43,8 @@ export function AdminSidebar({ open, onToggle }: Props) {
     <aside data-admin-sidebar="" style={{
       position: 'fixed', top: 0, left: 0, bottom: 0,
       width: open ? 260 : 72, overflow: 'hidden',
-      background: 'linear-gradient(180deg, rgba(20,10,30,0.98) 0%, rgba(15,8,25,0.99) 100%)',
-      borderRight: '1px solid rgba(255,255,255,0.06)',
+      background: 'linear-gradient(180deg, rgba(62,24,98,0.98) 0%, rgba(54,19,84,0.99) 38%, rgba(34,15,64,0.99) 100%)',
+      borderRight: '1px solid rgba(255,255,255,0.15)',
       transition: 'width 0.3s cubic-bezier(0.4,0,0.2,1)',
       zIndex: 50, display: 'flex', flexDirection: 'column',
       backdropFilter: 'blur(20px)',
@@ -72,8 +72,8 @@ export function AdminSidebar({ open, onToggle }: Props) {
                   padding: open ? '10px 12px' : '10px 0',
                   justifyContent: open ? 'flex-start' : 'center',
                   borderRadius: 10, marginBottom: 2, textDecoration: 'none',
-                  background: active ? 'linear-gradient(135deg, rgba(233,30,140,0.15), rgba(124,58,237,0.1))' : 'transparent',
-                  color: active ? '#F5B7C5' : 'rgba(255,255,255,0.5)',
+                  background: active ? 'linear-gradient(135deg, rgba(236,72,153,0.28), rgba(168,85,247,0.24), rgba(56,189,248,0.2))' : 'transparent',
+                  color: active ? '#ffffff' : 'rgba(255,255,255,0.78)',
                   transition: 'all 0.2s ease',
                   position: 'relative',
                 }}>

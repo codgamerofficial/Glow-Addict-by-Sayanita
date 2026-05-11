@@ -12,11 +12,11 @@ export default function WishlistPage() {
 
   if (items.length === 0) {
     return (
-      <div className="container-main animate-fade-in" style={{ textAlign: 'center', padding: '80px 20px' }}>
-        <Heart size={64} style={{ color: 'var(--text-muted)', marginBottom: '20px' }} />
-        <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', marginBottom: '8px' }}>Your wishlist is empty</h2>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>Save your favorite products here</p>
-        <Link href="/products" className="btn-gradient" style={{ textDecoration: 'none', padding: '14px 32px', fontSize: '15px' }}>
+      <div className="container-main animate-fade-in text-center py-20 px-5">
+        <Heart size={64} className="text-[var(--text-muted)] mb-5" />
+        <h2 className="font-outfit text-2xl mb-2">Your wishlist is empty</h2>
+        <p className="text-[var(--text-muted)] mb-6">Save your favorite products here</p>
+        <Link href="/products" className="btn-gradient no-underline p-3.5 px-8 text-[15px]">
           <span>Explore Products</span>
         </Link>
       </div>
@@ -24,37 +24,35 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
-      <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '24px' }}>
-        My Wishlist <span style={{ fontSize: '16px', color: 'var(--text-muted)', fontWeight: 400 }}>({items.length} items)</span>
+    <div className="container-main animate-fade-in p-6 px-4">
+      <h1 className="font-outfit text-[28px] font-bold mb-6">
+        My Wishlist <span className="text-base text-[var(--text-muted)] font-normal">({items.length} items)</span>
       </h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
         {items.map(product => (
-          <div key={product.id} className="glass-card" style={{ overflow: 'hidden' }}>
+          <div key={product.id} className="glass-card overflow-hidden">
             <Link href={`/products/${product.slug}`}>
-              <div style={{ aspectRatio: '1', overflow: 'hidden', position: 'relative' }} className="product-image-wrap">
+              <div className="aspect-square overflow-hidden relative product-image-wrap">
                 <Image 
                   src={product.images[0]} 
                   alt={product.name} 
                   fill
-                  style={{ objectFit: 'cover' }} 
+                  className="object-cover" 
                 />
               </div>
             </Link>
-            <div style={{ padding: '14px' }}>
-              <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--primary)', textTransform: 'uppercase' }}>{product.brandName}</div>
-              <h3 style={{ fontSize: '14px', fontWeight: 500, margin: '4px 0 8px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{product.name}</h3>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <span style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 700 }}>₹{(product.salePrice || product.price).toLocaleString()}</span>
-                {product.salePrice && <span style={{ fontSize: '13px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>₹{product.price.toLocaleString()}</span>}
+            <div className="p-3.5">
+              <div className="text-[11px] font-semibold text-[var(--primary)] uppercase">{product.brandName}</div>
+              <h3 className="text-sm font-medium my-1 mb-2 truncate">{product.name}</h3>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="font-outfit text-base font-bold">₹{(product.salePrice || product.price).toLocaleString()}</span>
+                {product.salePrice && <span className="text-[13px] text-[var(--text-muted)] line-through">₹{product.price.toLocaleString()}</span>}
               </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => { addToCart(product); removeItem(product.id); }} className="btn-gradient" style={{ flex: 1, padding: '10px', fontSize: '13px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><ShoppingBag size={14} /> Move to Cart</span>
+              <div className="flex gap-2">
+                <button onClick={() => { addToCart(product); removeItem(product.id); }} className="btn-gradient flex-1 p-2.5 text-[13px]">
+                  <span className="flex items-center justify-center gap-1.5"><ShoppingBag size={14} /> Move to Cart</span>
                 </button>
-                <button aria-label="Remove item" onClick={() => removeItem(product.id)} style={{ background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', borderRadius: '12px', padding: '10px', cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.2s' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--error)')}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}>
+                <button aria-label="Remove item" onClick={() => removeItem(product.id)} className="bg-[var(--bg-glass)] border border-[var(--border-glass)] rounded-xl p-2.5 cursor-pointer text-[var(--text-muted)] transition-colors duration-200 hover:text-[var(--error)]">
                   <Trash2 size={16} />
                 </button>
               </div>

@@ -16,6 +16,8 @@ export default function Header() {
   const hydrated = useHydrated();
   const itemCount = useCartStore((s) => s.getItemCount());
   const wishlistCount = useWishlistStore((s) => s.items.length);
+  const stableItemCount = hydrated ? itemCount : 0;
+  const stableWishlistCount = hydrated ? wishlistCount : 0;
   const { theme, toggleTheme } = useThemeStore();
 
   // Track scroll for enhanced blur/shadow
@@ -31,7 +33,7 @@ export default function Header() {
     { href: '/products?category=hair-care', label: 'Hair' },
     { href: '/products?category=fragrances', label: 'Fragrances' },
     { href: '/products', label: 'All Products' },
-    { href: '/ai-assistant', label: '✨ AI Beauty' },
+    { href: '/ai-assistant', label: 'AI Beauty', featured: true },
   ];
 
   return (
@@ -45,6 +47,18 @@ export default function Header() {
         boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.28, 0.11, 0.32, 1)',
       }}>
+
+        <div style={{
+          background: 'linear-gradient(90deg, rgba(168,85,247,0.95), rgba(236,72,153,0.95), rgba(251,191,36,0.95))',
+          color: '#fff',
+          textAlign: 'center',
+          fontWeight: 700,
+          fontSize: '12px',
+          padding: '6px 10px',
+          letterSpacing: '0.02em',
+        }}>
+          Fresh Drop Week: Up to 30% off curated routines + AI skin match in 30 seconds.
+        </div>
 
         {/* Main nav */}
         <div className="container-main" style={{
@@ -86,7 +100,7 @@ export default function Header() {
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--primary)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
               >
-                {link.label}
+                {link.featured ? <span className="vibrant-pill">{link.label}</span> : link.label}
               </Link>
             ))}
           </nav>
@@ -128,7 +142,7 @@ export default function Header() {
               </motion.div>
             </motion.button>
 
-            <Link href="/wishlist" aria-label={`Wishlist (${wishlistCount})`} style={{
+            <Link href="/wishlist" aria-label={`Wishlist (${stableWishlistCount})`} style={{
               position: 'relative', color: 'var(--text-secondary)', padding: '8px',
               borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
             }}
@@ -153,7 +167,7 @@ export default function Header() {
               )}
             </Link>
 
-            <Link href="/cart" aria-label={`Cart (${itemCount})`} style={{
+            <Link href="/cart" aria-label={`Cart (${stableItemCount})`} style={{
               position: 'relative', color: 'var(--text-secondary)', padding: '8px',
               borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
             }}
@@ -246,7 +260,7 @@ export default function Header() {
       </header>
 
       {/* Spacer */}
-      <div style={{ height: '68px' }} />
+      <div style={{ height: '96px' }} />
 
       <style jsx global>{`
         @media (min-width: 768px) {

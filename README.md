@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Glow Addict by Sayanita
 
-## Getting Started
+Glow Addict is a production-grade beauty commerce platform built with Next.js App Router, Supabase, Zustand, and Framer Motion.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Supabase (auth + data)
+- Zustand (state)
+- Framer Motion (animations)
+- Tailwind CSS 4
+
+## Project Scripts
+
+- `npm run dev` - start development server
+- `npm run typecheck` - run TypeScript checks
+- `npm run lint` - run ESLint
+- `npm run build` - production build
+- `npm run start` - start production server
+- `npm run check` - full pre-deploy check (`typecheck + lint + build`)
+
+## Local Setup
+
+1. Install dependencies:
+
+```bash
+npm ci
+```
+
+2. Create environment file:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Fill all required keys in `.env.local`.
+
+4. Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Required Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See `.env.example` for full template.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
 
-## Learn More
+Optional AI keys:
 
-To learn more about Next.js, take a look at the following resources:
+- `NVIDIA_API_KEY`
+- `OPENAI_API_KEY`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Health Endpoint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Production health check endpoint:
 
-## Deploy on Vercel
+- `/api/health`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Returns JSON status for uptime and monitoring checks.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## CI Pipeline
+
+GitHub Actions workflow is included in `.github/workflows/ci.yml`.
+
+It runs on push/PR:
+
+1. `npm ci`
+2. `npm run typecheck`
+3. `npm run lint`
+4. `npm run build`
+
+## Deployment (Vercel Recommended)
+
+1. Import repository in Vercel.
+2. Set all environment variables from `.env.example`.
+3. Deploy preview branch.
+4. Run smoke tests on preview.
+5. Promote to production.
+
+## Release Readiness
+
+Use the full production runbook:
+
+- `PRODUCTION_CHECKLIST.md`
+
+## Repository Structure
+
+- `src/app/(shop)` - storefront routes
+- `src/app/admin` - admin dashboard routes
+- `src/components` - UI components
+- `src/features` - Zustand stores and feature state
+- `src/actions` - server actions
+- `supabase` - schema and seed scripts

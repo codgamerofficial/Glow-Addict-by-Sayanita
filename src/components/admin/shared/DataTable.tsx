@@ -64,10 +64,10 @@ export function DataTable<T extends Record<string, unknown>>({ data, columns, se
   const cellStyle: React.CSSProperties = { padding: '12px 16px', fontSize: 13, borderBottom: '1px solid rgba(255,255,255,0.04)' };
 
   return (
-    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, overflow: 'hidden' }}>
+    <div style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 18, overflow: 'hidden', boxShadow: '0 14px 30px rgba(0,0,0,0.2)' }}>
       {/* Search bar */}
-      <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: '0 12px', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.13)', borderRadius: 12, padding: '0 12px', border: '1px solid rgba(255,255,255,0.2)' }}>
           <Search size={14} style={{ color: 'var(--text-muted)' }} />
           <input value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder={searchPlaceholder} style={{ flex: 1, padding: '9px 0', background: 'none', border: 'none', outline: 'none', color: 'var(--text-primary)', fontSize: 13 }} />
         </div>
@@ -131,7 +131,7 @@ export function DataTable<T extends Record<string, unknown>>({ data, columns, se
         <div style={{ display: 'flex', gap: 4 }}>
           <button aria-label="Previous page" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} style={{
             width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)',
+            background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.22)',
             color: page === 0 ? 'var(--text-muted)' : 'var(--text-primary)', cursor: page === 0 ? 'not-allowed' : 'pointer',
           }}>
             <ChevronLeft size={14} />
@@ -139,8 +139,8 @@ export function DataTable<T extends Record<string, unknown>>({ data, columns, se
           {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => (
             <button key={i} onClick={() => setPage(i)} style={{
               width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: page === i ? 'linear-gradient(135deg, #E91E8C, #7C3AED)' : 'rgba(255,255,255,0.04)',
-              border: page === i ? 'none' : '1px solid rgba(255,255,255,0.06)',
+              background: page === i ? 'linear-gradient(135deg, #E91E8C, #7C3AED)' : 'rgba(255,255,255,0.14)',
+              border: page === i ? 'none' : '1px solid rgba(255,255,255,0.22)',
               color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: page === i ? 600 : 400,
             }}>
               {i + 1}
@@ -148,7 +148,7 @@ export function DataTable<T extends Record<string, unknown>>({ data, columns, se
           ))}
           <button aria-label="Next page" onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} style={{
             width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)',
+            background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.22)',
             color: page >= totalPages - 1 ? 'var(--text-muted)' : 'var(--text-primary)', cursor: page >= totalPages - 1 ? 'not-allowed' : 'pointer',
           }}>
             <ChevronRight size={14} />

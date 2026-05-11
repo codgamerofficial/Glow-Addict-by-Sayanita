@@ -5,32 +5,32 @@ import PageTransition from '@/components/shared/PageTransition';
 export default function ReturnsPage() {
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '40px 16px', maxWidth: '800px' }}>
-        <h1 style={{ fontFamily: 'Outfit', fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Returns & Refunds</h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '32px' }}>We want you to love what you buy</p>
+      <div className="container-main p-10 px-4 max-w-[800px]">
+        <h1 className="font-outfit text-3xl font-bold mb-2">Returns & Refunds</h1>
+        <p className="text-[var(--text-muted)] text-[15px] mb-8">We want you to love what you buy</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 mb-8">
           {[
             { icon: RotateCcw, title: '7-Day Returns', desc: 'Return eligible products within 7 days of delivery.' },
             { icon: Shield, title: 'Quality Guarantee', desc: 'If you receive a damaged or defective product, we replace it free of charge.' },
             { icon: Clock, title: 'Fast Refunds', desc: 'Refunds are processed within 5-7 business days to your original payment method.' },
             { icon: CheckCircle, title: 'Easy Process', desc: 'Initiate returns through your account or contact our support team.' },
           ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="glass-card" style={{ padding: '24px' }}>
-              <Icon size={24} style={{ color: 'var(--primary)', marginBottom: '12px' }} />
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600, marginBottom: '8px' }}>{title}</h3>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{desc}</p>
+            <div key={title} className="glass-card p-6">
+              <Icon size={24} className="text-[var(--primary)] mb-3" />
+              <h3 className="font-outfit text-base font-semibold mb-2">{title}</h3>
+              <p className="text-[13px] text-[var(--text-secondary)] leading-[1.6]">{desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="glass-card" style={{ padding: '24px' }}>
-          <h2 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>Return Policy Details</h2>
-          <div style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-            <p style={{ marginBottom: '12px' }}>• Products must be unused, in original packaging, and in the same condition as received.</p>
-            <p style={{ marginBottom: '12px' }}>• Skincare and makeup products that have been opened or used cannot be returned for hygiene reasons.</p>
-            <p style={{ marginBottom: '12px' }}>• Sale items and gift cards are final sale and cannot be returned or exchanged.</p>
-            <p style={{ marginBottom: '12px' }}>• For damaged or wrong items, contact us within 48 hours of delivery with photos.</p>
+        <div className="glass-card p-6">
+          <h2 className="font-outfit text-lg font-semibold mb-4">Return Policy Details</h2>
+          <div className="text-sm text-[var(--text-secondary)] leading-[1.8]">
+            <p className="mb-3">• Products must be unused, in original packaging, and in the same condition as received.</p>
+            <p className="mb-3">• Skincare and makeup products that have been opened or used cannot be returned for hygiene reasons.</p>
+            <p className="mb-3">• Sale items and gift cards are final sale and cannot be returned or exchanged.</p>
+            <p className="mb-3">• For damaged or wrong items, contact us within 48 hours of delivery with photos.</p>
             <p>• Return shipping costs are borne by the customer unless the product is defective or incorrect.</p>
           </div>
         </div>

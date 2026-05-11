@@ -1,8 +1,30 @@
 import type { Metadata } from "next";
+import { Manrope, Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ToastProvider } from "@/components/shared/Toast";
+import { validateEnv } from "@/lib/validate-env";
+
+validateEnv();
+
+const fontSans = Manrope({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fontHeading = Outfit({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const fontSerif = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Glow Addict by Sayanita | AI-Powered Beauty & Personalization",
@@ -31,12 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-      </head>
-      <body>
+      <body className={`${fontSans.variable} ${fontHeading.variable} ${fontSerif.variable}`}>
         <ThemeProvider>
           <AuthProvider>
             <ToastProvider>{children}</ToastProvider>

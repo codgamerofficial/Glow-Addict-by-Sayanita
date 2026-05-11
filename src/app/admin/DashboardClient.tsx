@@ -22,57 +22,57 @@ export default function DashboardClient({ stats, recentOrders }: { stats: AdminD
 
   return (
     <div>
-      {/* Header */}
-      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ marginBottom: 28 }}>
-        <h1 style={{ fontFamily: 'Outfit', fontSize: 28, fontWeight: 700, marginBottom: 4 }}>Dashboard</h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>Welcome back, Sayanita! Here&apos;s your store overview.</p>
+      {/* Vibrant Header */}
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 rounded-3xl p-8 text-white">
+        <h1 className="font-outfit text-4xl font-black mb-2">ADMIN DASHBOARD</h1>
+        <p className="text-white/90 text-lg">Welcome back, Sayanita! Here&apos;s your store overview. 📊</p>
       </motion.div>
 
-      {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 28 }}>
-        <StatCard icon={<DollarSign size={20} />} label="Total Revenue" value={s.totalRevenue} prefix="₹" trend={s.revenueTrend} color="#10B981" delay={0} />
-        <StatCard icon={<ShoppingCart size={20} />} label="Total Orders" value={s.totalOrders} trend={s.ordersTrend} color="#3B82F6" delay={0.05} />
-        <StatCard icon={<Users size={20} />} label="Total Customers" value={s.totalCustomers} trend={s.customersTrend} color="#8B5CF6" delay={0.1} />
-        <StatCard icon={<Percent size={20} />} label="Conversion Rate" value={s.conversionRate} suffix="%" trend={s.conversionTrend} color="#E91E8C" delay={0.15} />
-        <StatCard icon={<TrendingUp size={20} />} label="Avg Order Value" value={s.avgOrderValue} prefix="₹" trend={s.aovTrend} color="#F59E0B" delay={0.2} />
-        <StatCard icon={<Eye size={20} />} label="Repeat Customers" value={s.repeatCustomerRate} suffix="%" color="#06B6D4" delay={0.25} />
+      {/* Stats Grid with Vibrant Colors */}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 mb-7">
+        <StatCard icon={<DollarSign size={20} />} label="Total Revenue" value={s.totalRevenue} prefix="₹" trend={s.revenueTrend} color="#10B981" delay={0} gradient="from-emerald-400 to-green-600" />
+        <StatCard icon={<ShoppingCart size={20} />} label="Total Orders" value={s.totalOrders} trend={s.ordersTrend} color="#3B82F6" delay={0.05} gradient="from-blue-400 to-blue-600" />
+        <StatCard icon={<Users size={20} />} label="Total Customers" value={s.totalCustomers} trend={s.customersTrend} color="#8B5CF6" delay={0.1} gradient="from-purple-400 to-purple-600" />
+        <StatCard icon={<Percent size={20} />} label="Conversion Rate" value={s.conversionRate} suffix="%" trend={s.conversionTrend} color="#E91E8C" delay={0.15} gradient="from-pink-400 to-pink-600" />
+        <StatCard icon={<TrendingUp size={20} />} label="Avg Order Value" value={s.avgOrderValue} prefix="₹" trend={s.aovTrend} color="#F59E0B" delay={0.2} gradient="from-yellow-400 to-orange-600" />
+        <StatCard icon={<Eye size={20} />} label="Repeat Customers" value={s.repeatCustomerRate} suffix="%" color="#06B6D4" delay={0.25} gradient="from-cyan-400 to-cyan-600" />
       </div>
 
       {/* Alert Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginBottom: 28 }}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-7">
         {[
           { icon: <Package size={16} />, label: 'Pending Orders', value: s.pendingOrders, color: '#F59E0B', bg: 'rgba(245,158,11,0.08)' },
           { icon: <AlertTriangle size={16} />, label: 'Low Stock Items', value: s.lowStockItems, color: '#EF4444', bg: 'rgba(239,68,68,0.08)' },
           { icon: <RotateCcw size={16} />, label: 'Refund Requests', value: s.refundRequests, color: '#F97316', bg: 'rgba(249,115,22,0.08)' },
         ].map((alert, i) => (
           <motion.div key={alert.label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.05 }}
-            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', borderRadius: 12, background: alert.bg, border: `1px solid ${alert.color}20`, cursor: 'pointer' }}>
+            className="flex items-center gap-3.5 p-3.5 px-4.5 rounded-xl cursor-pointer border"
+            style={{ background: alert.bg, borderColor: `${alert.color}20` }}>
             <div style={{ color: alert.color }}>{alert.icon}</div>
             <div>
-              <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'Outfit', color: alert.color }}>{alert.value}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{alert.label}</div>
+              <div className="text-xl font-bold font-outfit" style={{ color: alert.color }}>{alert.value}</div>
+              <div className="text-[11px] text-[var(--text-muted)]">{alert.label}</div>
             </div>
           </motion.div>
         ))}
       </div>
 
       {/* Charts Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16, marginBottom: 28 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-7">
         {/* Revenue Chart */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-5">
             <div>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: 16, fontWeight: 600 }}>Revenue Overview</h3>
-              <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Last 30 days</p>
+              <h3 className="font-outfit text-base font-semibold">Revenue Overview</h3>
+              <p className="text-[12px] text-[var(--text-muted)]">Last 30 days</p>
             </div>
-            <div style={{ display: 'flex', gap: 6 }}>
+            <div className="flex gap-1.5">
               {['7D', '30D', '90D'].map(p => (
-                <button key={p} style={{
-                  padding: '5px 12px', borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-                  background: p === '30D' ? 'linear-gradient(135deg, #E91E8C, #7C3AED)' : 'rgba(255,255,255,0.04)',
-                  color: '#fff', border: p === '30D' ? 'none' : '1px solid rgba(255,255,255,0.06)',
-                }}>{p}</button>
+                <button key={p} className={`
+                  p-1 px-3 rounded-lg text-[11px] font-semibold cursor-pointer border
+                  ${p === '30D' ? 'bg-gradient-to-br from-[#E91E8C] to-[#7C3AED] text-white border-none' : 'bg-white/[0.04] text-white border-white/[0.06]'}
+                `}>{p}</button>
               ))}
             </div>
           </div>
@@ -95,9 +95,9 @@ export default function DashboardClient({ stats, recentOrders }: { stats: AdminD
 
         {/* Category Donut */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '24px' }}>
-          <h3 style={{ fontFamily: 'Outfit', fontSize: 16, fontWeight: 600, marginBottom: 4 }}>Sales by Category</h3>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>Revenue distribution</p>
+          className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+          <h3 className="font-outfit text-base font-semibold mb-1">Sales by Category</h3>
+          <p className="text-[12px] text-[var(--text-muted)] mb-4">Revenue distribution</p>
           <ResponsiveContainer width="100%" height={180}>
             <PieChart>
               <Pie data={categorySalesData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={3} dataKey="value">
@@ -106,10 +106,10 @@ export default function DashboardClient({ stats, recentOrders }: { stats: AdminD
               <Tooltip contentStyle={{ background: 'rgba(20,15,30,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }} formatter={(v: any) => [`${v}%`]} />
             </PieChart>
           </ResponsiveContainer>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8 }}>
+          <div className="flex flex-wrap gap-2 mt-2">
             {categorySalesData.map(c => (
-              <div key={c.name} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--text-secondary)' }}>
-                <span style={{ width: 8, height: 8, borderRadius: 2, background: c.color }} />
+              <div key={c.name} className="flex items-center gap-1.5 text-[11px] text-[var(--text-secondary)]">
+                <span className="w-2 h-2 rounded-[2px]" style={{ background: c.color }} />
                 {c.name} ({c.value}%)
               </div>
             ))}
@@ -118,27 +118,27 @@ export default function DashboardClient({ stats, recentOrders }: { stats: AdminD
       </div>
 
       {/* Bottom Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {/* Top Products */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontFamily: 'Outfit', fontSize: 16, fontWeight: 600 }}>Bestselling Products</h3>
-            <Link href="/admin/products" style={{ fontSize: 12, color: '#E91E8C', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>View all <ArrowUpRight size={12} /></Link>
+          className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-outfit text-base font-semibold">Bestselling Products</h3>
+            <Link href="/admin/products" className="text-[12px] text-[#E91E8C] no-underline flex items-center gap-1">View all <ArrowUpRight size={12} /></Link>
           </div>
           {topProducts.map((p, i) => (
-            <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < topProducts.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)', width: 20 }}>#{i + 1}</span>
-              <div style={{ width: 36, height: 36, position: 'relative', borderRadius: 8, overflow: 'hidden' }}>
-                <Image src={p.image} alt="" fill style={{ objectFit: 'cover' }} />
+            <div key={p.id} className="flex items-center gap-3 py-2.5 border-b border-white/[0.04] last:border-none">
+              <span className="text-[12px] text-[var(--text-muted)] w-5">#{i + 1}</span>
+              <div className="w-9 h-9 relative rounded-lg overflow-hidden">
+                <Image src={p.image} alt="" fill className="object-cover" />
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{p.unitsSold.toLocaleString()} sold</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] font-medium overflow-hidden text-ellipsis whitespace-nowrap">{p.name}</div>
+                <div className="text-[11px] text-[var(--text-muted)]">{p.unitsSold.toLocaleString()} sold</div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 13, fontWeight: 600 }}>₹{(p.revenue / 1000).toFixed(0)}k</div>
-                <div style={{ fontSize: 11, color: p.trend > 0 ? '#10B981' : '#EF4444' }}>
+              <div className="text-right">
+                <div className="text-[13px] font-semibold">₹{(p.revenue / 1000).toFixed(0)}k</div>
+                <div className="text-[11px]" style={{ color: p.trend > 0 ? '#10B981' : '#EF4444' }}>
                   {p.trend > 0 ? '+' : ''}{p.trend}%
                 </div>
               </div>
@@ -148,19 +148,19 @@ export default function DashboardClient({ stats, recentOrders }: { stats: AdminD
 
         {/* Recent Orders */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontFamily: 'Outfit', fontSize: 16, fontWeight: 600 }}>Recent Orders</h3>
-            <Link href="/admin/orders" style={{ fontSize: 12, color: '#E91E8C', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}>View all <ArrowUpRight size={12} /></Link>
+          className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="font-outfit text-base font-semibold">Recent Orders</h3>
+            <Link href="/admin/orders" className="text-[12px] text-[#E91E8C] no-underline flex items-center gap-1">View all <ArrowUpRight size={12} /></Link>
           </div>
           {recentOrders.map((o, i) => (
-            <div key={o.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < recentOrders.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: 500 }}>{o.orderNumber || o.id}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{o.customerName || o.user_id}</div>
+            <div key={o.id} className="flex items-center gap-3 py-2.5 border-b border-white/[0.04] last:border-none">
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] font-medium">{o.orderNumber || o.id}</div>
+                <div className="text-[11px] text-[var(--text-muted)]">{o.customerName || o.user_id}</div>
               </div>
-              <div style={{ textAlign: 'right', marginRight: 12 }}>
-                <div style={{ fontSize: 13, fontWeight: 600 }}>₹{(o.total || 0).toLocaleString('en-IN')}</div>
+              <div className="text-right mr-3">
+                <div className="text-[13px] font-semibold">₹{(o.total || 0).toLocaleString('en-IN')}</div>
               </div>
               <StatusBadge status={o.status} />
             </div>

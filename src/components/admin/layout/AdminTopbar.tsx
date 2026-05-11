@@ -18,8 +18,8 @@ export function AdminTopbar({ onMenuToggle }: Props) {
   return (
     <header style={{
       height: 64, padding: '0 24px', display: 'flex', alignItems: 'center', gap: 16,
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      background: 'rgba(10,10,15,0.8)', backdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255,255,255,0.14)',
+      background: 'linear-gradient(90deg, rgba(48,18,74,0.88), rgba(102,18,90,0.82), rgba(150,76,10,0.72))', backdropFilter: 'blur(20px)',
       position: 'sticky', top: 0, zIndex: 40,
     }}>
       <button aria-label="Toggle menu" onClick={onMenuToggle} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'none' }} className="admin-menu-btn">
@@ -29,7 +29,7 @@ export function AdminTopbar({ onMenuToggle }: Props) {
       {/* Search */}
       <div style={{
         flex: 1, maxWidth: 480, position: 'relative',
-        background: searchFocused ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+        background: searchFocused ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.12)',
         borderRadius: 12, border: `1px solid ${searchFocused ? 'rgba(233,30,140,0.3)' : 'rgba(255,255,255,0.06)'}`,
         transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', padding: '0 14px',
       }}>
@@ -73,8 +73,8 @@ export function AdminTopbar({ onMenuToggle }: Props) {
       {/* Theme Toggle */}
       <button aria-label="Toggle theme" onClick={toggleTheme} style={{
         width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer',
-        color: 'var(--text-secondary)', transition: 'all 0.2s',
+        background: 'rgba(255,255,255,0.16)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer',
+        color: '#fff', transition: 'all 0.2s',
       }}>
         {dark ? <Sun size={16} /> : <Moon size={16} />}
       </button>
@@ -82,19 +82,19 @@ export function AdminTopbar({ onMenuToggle }: Props) {
       {/* Notifications */}
       <button aria-label="View notifications" style={{
         width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer',
-        color: 'var(--text-secondary)', position: 'relative',
+        background: 'rgba(255,255,255,0.16)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer',
+        color: '#fff', position: 'relative',
       }}>
         <Bell size={16} />
         <span style={{ position: 'absolute', top: 6, right: 6, width: 8, height: 8, borderRadius: '50%', background: '#E91E8C', border: '2px solid var(--bg-primary)' }} />
       </button>
 
       {/* Admin Avatar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 10px', borderRadius: 10, cursor: 'pointer', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 10px', borderRadius: 10, cursor: 'pointer', background: 'rgba(255,255,255,0.16)', border: '1px solid rgba(255,255,255,0.2)' }}>
         <div style={{ width: 30, height: 30, borderRadius: 8, background: 'linear-gradient(135deg, #E91E8C, #7C3AED)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#fff' }}>S</div>
         <div style={{ lineHeight: 1.2 }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>Sayanita</div>
-          <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Super Admin</div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>Sayanita</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.82)' }}>Super Admin</div>
         </div>
       </div>
 

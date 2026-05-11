@@ -29,8 +29,8 @@ export default function ProfilePage() {
       router.push('/login');
     }
     
-    if (isAuthenticated) {
-      getUserOrders().then(o => {
+    if (isAuthenticated && user) {
+      getUserOrders(user.id).then(o => {
         setOrders(o as Order[]);
         setIsLoadingOrders(false);
       });
@@ -47,120 +47,112 @@ export default function ProfilePage() {
   if (!isAuthenticated) return null;
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px', maxWidth: '900px' }}>
+    <div className="container-main animate-fade-in p-6 px-4 max-w-[900px]">
       {/* Profile card */}
-      <div className="glass-card" style={{ padding: '24px', marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{
-          width: '80px', height: '80px', borderRadius: '50%',
-          background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '28px', fontWeight: 700, color: 'white', fontFamily: 'Outfit',
-          position: 'relative', flexShrink: 0,
-          overflow: 'hidden'
-        }}>
+      <div className="glass-card p-6 mb-5 flex gap-5 items-center flex-wrap">
+        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center text-[28px] font-bold text-white font-outfit relative shrink-0 overflow-hidden">
           {user?.avatarUrl ? (
             <Image 
               src={user.avatarUrl} 
               alt={user.name || 'User Avatar'} 
               width={80}
               height={80}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              className="w-full h-full object-cover" 
             />
           ) : (
             user?.name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'
           )}
-          <div style={{
-            position: 'absolute', bottom: 0, right: 0, width: '24px', height: '24px', borderRadius: '50%',
-            background: 'var(--bg-surface)', border: '2px solid var(--primary)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-          }}><Camera size={10} style={{ color: 'var(--primary)' }} /></div>
+          <div className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-[var(--bg-surface)] border-2 border-[var(--primary)] flex items-center justify-center cursor-pointer">
+            <Camera size={10} className="text-[var(--primary)]" />
+          </div>
         </div>
-        <div style={{ flex: 1, minWidth: '200px' }}>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>{user?.name || 'Beauty Lover'}</h1>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '8px' }}>{user?.email}</p>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="flex-1 min-w-[200px]">
+          <h1 className="font-outfit text-2xl font-bold mb-1">{user?.name || 'Beauty Lover'}</h1>
+          <p className="text-sm text-[var(--text-muted)] mb-2">{user?.email}</p>
+          <div className="flex gap-2 flex-wrap">
             {user?.skinType && <span className="badge badge-primary">{user.skinType} Skin</span>}
             <span className="badge badge-gold"><Gift size={12} /> {user?.loyaltyPoints?.toLocaleString() || 0} Points</span>
           </div>
-        </div>
-        <Link href="/skin-analyzer" className="btn-outline" style={{ textDecoration: 'none', padding: '10px 20px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          </div>
+        <Link href="/skin-analyzer" className="btn-outline no-underline p-2.5 px-5 text-[13px] flex items-center gap-1.5">
           <Sparkles size={16} /> Analyze Skin
         </Link>
       </div>
 
+
       {/* Quick stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '24px' }}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3 mb-6">
         {[
           { icon: ShoppingBag, label: 'Orders', value: orders.length, href: '#orders' },
           { icon: Heart, label: 'Wishlist', value: wishlistCount, href: '/wishlist' },
           { icon: Star, label: 'Reviews', value: 0, href: '#' },
           { icon: Gift, label: 'Rewards', value: `${user?.loyaltyPoints || 0}`, href: '#' },
         ].map(({ icon: Icon, label, value, href }) => (
-          <Link key={label} href={href} className="glass-card" style={{ padding: '16px', textAlign: 'center', textDecoration: 'none', color: 'var(--text-primary)' }}>
-            <Icon size={22} style={{ color: 'var(--primary)', marginBottom: '8px' }} />
-            <div style={{ fontFamily: 'Outfit', fontSize: '22px', fontWeight: 700 }}>{value}</div>
-            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{label}</div>
+          <Link key={label} href={href} className="glass-card p-4 text-center no-underline text-[var(--text-primary)]">
+            <Icon size={22} className="text-[var(--primary)] mb-2" />
+            <div className="font-outfit text-xl font-bold">{value}</div>
+            <div className="text-[12px] text-[var(--text-muted)]">{label}</div>
           </Link>
         ))}
       </div>
 
       {/* Recent orders */}
       <div id="orders">
-        <h2 style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 700, marginBottom: '16px' }}>Recent Orders</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+        <h2 className="font-outfit text-xl font-bold mb-4">Recent Orders</h2>
+        <div className="flex flex-col gap-2.5 mb-6">
           {isLoadingOrders ? (
             Array.from({ length: 2 }).map((_, i) => (
-              <div key={i} className="glass-card animate-pulse" style={{ padding: '16px', height: '64px' }}></div>
+              <div key={i} className="glass-card animate-pulse p-4 h-16"></div>
             ))
           ) : orders.length > 0 ? (
             orders.map(order => (
-              <div key={order.id} className="glass-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}>
+              <Link
+                key={order.id}
+                href={`/orders/${order.id}`}
+                className="glass-card p-4 flex justify-between items-center no-underline text-[var(--text-primary)] rounded-xl transition-colors duration-200 hover:bg-[var(--bg-surface)]/80"
+                onMouseEnter={() => router.prefetch(`/orders/${order.id}`)}
+              >
                 <div>
-                  <div style={{ fontSize: '14px', fontWeight: 600 }}>#{order.id}</div>
-                  <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{order.date} • {order.items} items</div>
+                  <div className="text-sm font-semibold">#{order.id}</div>
+                  <div className="text-[12px] text-[var(--text-muted)]">{order.date} • {order.items} items</div>
                 </div>
-                <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="text-right flex items-center gap-3">
                   <div>
-                    <div style={{ fontFamily: 'Outfit', fontSize: '15px', fontWeight: 600 }}>₹{order.total.toLocaleString()}</div>
-                    <span className="badge" style={{ background: `${statusColor[order.status] || 'var(--primary)'}20`, color: statusColor[order.status] || 'var(--primary)', fontSize: '11px' }}>{order.status}</span>
+                    <div className="font-outfit text-[15px] font-semibold">₹{order.total.toLocaleString()}</div>
+                    <span className="badge text-[11px]" style={{ background: `${statusColor[order.status] || 'var(--primary)'}20`, color: statusColor[order.status] || 'var(--primary)' }}>{order.status}</span>
                   </div>
-                  <ChevronRight size={18} style={{ color: 'var(--text-muted)' }} />
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
-            <div className="glass-card" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <ShoppingBag size={32} style={{ margin: '0 auto 12px', opacity: 0.5 }} />
-              <p style={{ fontSize: '14px' }}>No orders yet. Start your beauty journey today!</p>
-              <Link href="/products" style={{ color: 'var(--primary)', fontSize: '13px', fontWeight: 600, textDecoration: 'none', display: 'block', marginTop: '8px' }}>Shop Products</Link>
+            <div className="glass-card p-8 text-center text-[var(--text-muted)]">
+              <ShoppingBag size={32} className="mx-auto mb-3 opacity-50" />
+              <p className="text-sm">No orders yet. Start your beauty journey today!</p>
+              <Link href="/products" className="text-[var(--primary)] text-[13px] font-semibold no-underline block mt-2">Shop Products</Link>
             </div>
           )}
         </div>
       </div>
 
       {/* Menu */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <Link href="#" className="glass-card" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-primary)', borderRadius: '12px' }}>
+      <div className="flex flex-col gap-1">
+        <Link href="#" className="glass-card p-3.5 px-4 flex items-center gap-3 no-underline text-[var(--text-primary)] rounded-xl">
           <Settings size={18} />
-          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Account Settings</span>
-          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+          <span className="flex-1 text-sm font-medium">Account Settings</span>
+          <ChevronRight size={16} className="text-[var(--text-muted)]" />
         </Link>
-        <Link href="#" className="glass-card" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-primary)', borderRadius: '12px' }}>
+        <Link href="#" className="glass-card p-3.5 px-4 flex items-center gap-3 no-underline text-[var(--text-primary)] rounded-xl">
           <Gift size={18} />
-          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Rewards & Offers</span>
-          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+          <span className="flex-1 text-sm font-medium">Rewards & Offers</span>
+          <ChevronRight size={16} className="text-[var(--text-muted)]" />
         </Link>
         <button 
           onClick={logout}
-          className="glass-card" 
-          style={{ 
-            width: '100%', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', 
-            textDecoration: 'none', color: 'var(--error)', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left'
-          }}
+          className="glass-card w-full p-3.5 px-4 flex items-center gap-3 no-underline text-[var(--error)] rounded-xl bg-none border-none cursor-pointer text-left" 
         >
           <LogOut size={18} />
-          <span style={{ flex: 1, fontSize: '14px', fontWeight: 500 }}>Logout</span>
-          <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+          <span className="flex-1 text-sm font-medium">Logout</span>
+          <ChevronRight size={16} className="text-[var(--text-muted)]" />
         </button>
       </div>
     </div>

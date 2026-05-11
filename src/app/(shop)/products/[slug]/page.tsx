@@ -1,29 +1,101 @@
 'use client';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Star, Heart, ShoppingBag, Truck, Shield, RotateCcw, ChevronRight, Minus, Plus, Check } from 'lucide-react';
+import {
+  Star,
+  Heart,
+  ShoppingBag,
+  Truck,
+  Shield,
+  RotateCcw,
+  ChevronRight,
+  Minus,
+  Plus,
+  Check,
+} from 'lucide-react';
+
 import { products } from '@/data/products';
-import { reviews } from '@/data/reviews';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
+import { useAuthStore } from '@/features/auth/authStore';
+import ReviewForm from '@/components/product/ReviewForm';
 import ProductCard from '@/components/product/ProductCard';
+
+type Review = {
+  id: string;
+  userName: string;
+  rating: number;
+  title: string;
+  body: string;
+  isVerified?: boolean;
+  skinType?: string;
+};
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const product = products.find(p => p.slug === params.slug);
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+  const product = products.find((item) => item.slug === slug);
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'ingredients' | 'reviews'>('description');
-  const addItem = useCartStore(s => s.addItem);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+
+  const addItem = useCartStore((state) => state.addItem);
   const { isInWishlist, toggleItem } = useWishlistStore();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const loadReviews = async () => {
+      try {
+        setLoadingReviews(true);
+        const response = await fetch(`/api/products/${slug}/reviews`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch reviews');
+        }
+
+        const data = await response.json();
+        setReviews(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+        setReviews([]);
+      } finally {
+        setLoadingReviews(false);
+      }
+    };
+
+    loadReviews();
+  }, [slug]);
+
+  const refetchReviews = async () => {
+    if (!slug) return;
+
+    try {
+      const response = await fetch(`/api/products/${slug}/reviews`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+      }
+
+      const data = await response.json();
+      setReviews(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error refetching reviews:', error);
+    }
+  };
 
   if (!product) {
     return (
-      <div className="container-main" style={{ textAlign: 'center', padding: '100px 20px' }}>
-        <p style={{ fontSize: '48px' }}>🔍</p>
-        <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', margin: '16px 0' }}>Product not found</h2>
-        <Link href="/products" className="btn-gradient" style={{ textDecoration: 'none', padding: '12px 24px' }}>
+      <div className="container-main text-center py-[100px] px-5">
+        <p className="text-[48px]">🔍</p>
+        <h2 className="font-outfit text-2xl my-4">Product not found</h2>
+        <Link href="/products" className="btn-gradient no-underline p-3 px-6">
           <span>Browse Products</span>
         </Link>
       </div>
@@ -32,196 +104,238 @@ export default function ProductDetailPage() {
 
   const wishlisted = isInWishlist(product.id);
   const discount = product.salePrice ? Math.round(((product.price - product.salePrice) / product.price) * 100) : 0;
-  const productReviews = reviews.filter(r => r.productId === product.id);
-  const related = products.filter(p => p.categoryId === product.categoryId && p.id !== product.id).slice(0, 4);
+  const related = products.filter((item) => item.categoryId === product.categoryId && item.id !== product.id).slice(0, 4);
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
-      {/* Breadcrumb */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', fontSize: '13px', color: 'var(--text-muted)' }}>
-        <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Home</Link>
+    <div className="container-main animate-fade-in py-6 px-4 pb-12">
+      <div className="mb-6 flex items-center gap-2 text-[13px] text-[var(--text-muted)] overflow-x-auto hide-scrollbar">
+        <Link href="/" className="text-[var(--text-muted)] no-underline whitespace-nowrap">Home</Link>
         <ChevronRight size={14} />
-        <Link href="/products" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Products</Link>
+        <Link href="/products" className="text-[var(--text-muted)] no-underline whitespace-nowrap">Products</Link>
         <ChevronRight size={14} />
-        <span style={{ color: 'var(--text-secondary)' }}>{product.name}</span>
+        <span className="text-[var(--text-secondary)] whitespace-nowrap">{product.name}</span>
       </div>
 
-      {/* Main content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px' }} className="product-detail-grid">
-        {/* Images */}
-        <div>
-          <div style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '12px', aspectRatio: '1', background: 'var(--bg-surface)' }}>
-            <img src={product.images[selectedImage]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
-          {product.images.length > 1 && (
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {product.images.map((img, i) => (
-                <button key={i} aria-label={`Select image ${i + 1}`} onClick={() => setSelectedImage(i)} style={{
-                  width: '64px', height: '64px', borderRadius: '10px', overflow: 'hidden', cursor: 'pointer',
-                  border: `2px solid ${i === selectedImage ? 'var(--primary)' : 'var(--border-glass)'}`,
-                  opacity: i === selectedImage ? 1 : 0.6, transition: 'all 0.2s',
-                }}>
-                  <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </button>
-              ))}
+      <section className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="space-y-4">
+          <div className="glass-card overflow-hidden rounded-[28px] border border-[var(--border-glass-strong)] bg-[var(--bg-surface)]">
+            <div className="relative aspect-square overflow-hidden">
+              <Image src={product.images[selectedImage]} alt={product.name} fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" priority />
+              <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+                {product.isNew && <span className="badge badge-new">NEW</span>}
+                {product.isBestseller && <span className="badge badge-gold">⭐ BESTSELLER</span>}
+                {discount > 0 && <span className="badge badge-primary">{discount}% OFF</span>}
+              </div>
             </div>
-          )}
-        </div>
 
-        {/* Info */}
-        <div>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-            {product.isNew && <span className="badge badge-new">NEW</span>}
-            {product.isBestseller && <span className="badge badge-gold">⭐ BESTSELLER</span>}
-          </div>
-          <Link href={`/products?brand=${product.brandName}`} style={{ fontSize: '13px', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            {product.brandName}
-          </Link>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, margin: '8px 0 12px', lineHeight: 1.3 }}>{product.name}</h1>
-          <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '16px' }}>{product.shortDesc}</p>
-
-          {/* Rating */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-            <div style={{ display: 'flex', gap: '2px' }}>
-              {[1,2,3,4,5].map(n => <Star key={n} size={16} fill={n <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'none'} color={n <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'var(--text-muted)'} />)}
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: 600 }}>{product.ratingAvg}</span>
-            <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>({product.ratingCount.toLocaleString()} reviews)</span>
-          </div>
-
-          {/* Price */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '24px' }}>
-            <span style={{ fontFamily: 'Outfit', fontSize: '32px', fontWeight: 700 }}>₹{(product.salePrice || product.price).toLocaleString()}</span>
-            {product.salePrice && (
-              <>
-                <span style={{ fontSize: '18px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>₹{product.price.toLocaleString()}</span>
-                <span className="badge badge-primary">{discount}% OFF</span>
-              </>
+            {product.images.length > 1 && (
+              <div className="flex gap-2 p-4 overflow-x-auto hide-scrollbar">
+                {product.images.map((image, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    aria-label={`Select image ${index + 1}`}
+                    onClick={() => setSelectedImage(index)}
+                    className={`h-18 w-18 shrink-0 overflow-hidden rounded-[14px] border-2 transition-all duration-200 ${index === selectedImage ? 'border-[var(--primary)] opacity-100' : 'border-[var(--border-glass)] opacity-60'}`}
+                  >
+                      <Image src={image} alt="" width={72} height={72} className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
-          {/* Skin types */}
-          {product.skinTypes.length > 0 && (
-            <div style={{ marginBottom: '16px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginRight: '8px' }}>SUITABLE FOR:</span>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
-                {product.skinTypes.map(st => <span key={st} className="badge" style={{ background: 'var(--bg-glass)', color: 'var(--text-secondary)', border: '1px solid var(--border-glass)' }}>{st}</span>)}
-              </div>
-            </div>
-          )}
-          {product.concerns.length > 0 && (
-            <div style={{ marginBottom: '24px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginRight: '8px' }}>ADDRESSES:</span>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
-                {product.concerns.map(c => <span key={c} className="badge badge-primary">{c}</span>)}
-              </div>
-            </div>
-          )}
-
-          {/* Quantity + Actions */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0', border: '1px solid var(--border-glass)', borderRadius: '12px', overflow: 'hidden' }}>
-              <button aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Minus size={16} /></button>
-              <span style={{ padding: '12px 18px', fontWeight: 600, minWidth: '40px', textAlign: 'center' }}>{quantity}</span>
-              <button aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Plus size={16} /></button>
-            </div>
-            <button onClick={() => addItem(product, quantity)} className="btn-gradient" style={{ flex: 1, padding: '14px', fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShoppingBag size={18} /> Add to Cart</span>
-            </button>
-            <button aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"} onClick={() => toggleItem(product)} style={{
-              padding: '14px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s',
-              background: wishlisted ? 'rgba(233,30,140,0.15)' : 'var(--bg-glass)',
-              border: `1px solid ${wishlisted ? 'var(--primary)' : 'var(--border-glass)'}`,
-              color: wishlisted ? 'var(--primary)' : 'var(--text-muted)',
-            }}>
-              <Heart size={20} fill={wishlisted ? 'var(--primary)' : 'none'} />
-            </button>
-          </div>
-
-          {/* Perks */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px' }}>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {[
-              { icon: Truck, text: 'Free Delivery above ₹499' },
-              { icon: Shield, text: '100% Authentic Products' },
-              { icon: RotateCcw, text: 'Easy 15-Day Returns' },
-            ].map(({ icon: Icon, text }) => (
-              <div key={text} className="glass-card" style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                <Icon size={18} style={{ color: 'var(--success)' }} />
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', lineHeight: 1.3 }}>{text}</span>
+              { icon: Truck, title: 'Free Delivery', text: 'Above ₹499 across serviceable pin codes' },
+              { icon: Shield, title: 'Authentic Stock', text: 'Genuine products and secure checkout' },
+              { icon: RotateCcw, title: 'Easy Returns', text: '15-day return window for eligible items' },
+            ].map(({ icon: Icon, title, text }) => (
+              <div key={title} className="glass-card rounded-2xl p-4">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[rgba(16,185,129,0.1)] text-[var(--success)]">
+                  <Icon size={18} />
+                </div>
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">{title}</h3>
+                <p className="mt-1 text-[12px] leading-6 text-[var(--text-secondary)]">{text}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Tabs */}
-      <div style={{ marginTop: '48px' }}>
-        <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid var(--border-glass)', marginBottom: '24px' }}>
-          {(['description', 'ingredients', 'reviews'] as const).map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} style={{
-              padding: '12px 24px', background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '14px', fontWeight: 600, textTransform: 'capitalize',
-              color: activeTab === tab ? 'var(--primary)' : 'var(--text-muted)',
-              borderBottom: `2px solid ${activeTab === tab ? 'var(--primary)' : 'transparent'}`,
-              transition: 'all 0.2s',
-            }}>{tab}{tab === 'reviews' ? ` (${productReviews.length})` : ''}</button>
+        <div className="space-y-5 lg:sticky lg:top-[96px] self-start">
+          <div className="glass-card rounded-[28px] p-6 sm:p-7">
+            <div className="flex flex-wrap gap-2 mb-3">
+              {product.isNew && <span className="badge badge-new">NEW</span>}
+              {product.isBestseller && <span className="badge badge-gold">⭐ BESTSELLER</span>}
+            </div>
+
+            <Link href={`/products?brand=${product.brandName}`} className="text-[13px] font-semibold text-[var(--primary)] no-underline uppercase tracking-wider">
+              {product.brandName}
+            </Link>
+            <h1 className="font-outfit text-[clamp(2rem,4vw,3rem)] font-black leading-[1.05] mt-2">{product.name}</h1>
+            <p className="mt-3 text-[15px] leading-7 text-[var(--text-secondary)]">{product.shortDesc}</p>
+
+            <div className="mt-5 flex items-center gap-2 flex-wrap">
+              <div className="flex gap-[2px]">
+                {[1, 2, 3, 4, 5].map((rating) => (
+                  <Star
+                    key={rating}
+                    size={16}
+                    fill={rating <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'none'}
+                    color={rating <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'var(--text-muted)'}
+                  />
+                ))}
+              </div>
+              <span className="text-sm font-semibold">{product.ratingAvg}</span>
+              <span className="text-[13px] text-[var(--text-muted)]">({product.ratingCount.toLocaleString()} reviews)</span>
+            </div>
+
+            <div className="mt-5 flex items-baseline gap-3 flex-wrap">
+              <span className="font-outfit text-[34px] font-black">₹{(product.salePrice || product.price).toLocaleString()}</span>
+              {product.salePrice && <span className="text-lg text-[var(--text-muted)] line-through">₹{product.price.toLocaleString()}</span>}
+            </div>
+
+            {product.skinTypes.length > 0 && (
+              <div className="mt-5">
+                <div className="mb-2 text-[12px] font-semibold text-[var(--text-muted)]">SUITABLE FOR</div>
+                <div className="flex flex-wrap gap-2">
+                  {product.skinTypes.map((skinType) => (
+                    <span key={skinType} className="badge bg-[var(--bg-glass)] text-[var(--text-secondary)] border border-[var(--border-glass)]">
+                      {skinType}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {product.concerns.length > 0 && (
+              <div className="mt-5">
+                <div className="mb-2 text-[12px] font-semibold text-[var(--text-muted)]">ADDRESSES</div>
+                <div className="flex flex-wrap gap-2">
+                  {product.concerns.map((concern) => (
+                    <span key={concern} className="badge badge-primary">{concern}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <div className="flex items-center overflow-hidden rounded-xl border border-[var(--border-glass)]">
+                <button type="button" aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="border-none bg-[var(--bg-glass)] p-3 px-3.5 text-[var(--text-primary)] cursor-pointer hover:bg-white/[0.05]">
+                  <Minus size={16} />
+                </button>
+                <span className="min-w-[40px] p-3 px-4 text-center font-semibold">{quantity}</span>
+                <button type="button" aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)} className="border-none bg-[var(--bg-glass)] p-3 px-3.5 text-[var(--text-primary)] cursor-pointer hover:bg-white/[0.05]">
+                  <Plus size={16} />
+                </button>
+              </div>
+              <button onClick={() => addItem(product, quantity)} className="btn-gradient flex-1 p-3.5 text-[15px] flex items-center justify-center gap-2">
+                <span className="flex items-center gap-2"><ShoppingBag size={18} /> Add to Cart</span>
+              </button>
+              <button
+                type="button"
+                aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                onClick={() => toggleItem(product)}
+                className={`rounded-xl border p-3.5 cursor-pointer transition-all duration-200 ${wishlisted ? 'bg-[rgba(233,30,140,0.15)] border-[var(--primary)] text-[var(--primary)]' : 'bg-[var(--bg-glass)] border-[var(--border-glass)] text-[var(--text-muted)]'}`}
+              >
+                <Heart size={20} fill={wishlisted ? 'var(--primary)' : 'none'} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-12">
+        <div className="flex gap-0 overflow-x-auto hide-scrollbar border-b border-[var(--border-glass)] mb-6">
+          {(['description', 'ingredients', 'reviews'] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(tab)}
+              className={`border-b-2 p-3 px-6 text-sm font-semibold capitalize transition-all duration-200 ${activeTab === tab ? 'border-[var(--primary)] text-[var(--primary)]' : 'border-transparent text-[var(--text-muted)]'}`}
+            >
+              {tab}{tab === 'reviews' ? ` (${reviews.length})` : ''}
+            </button>
           ))}
         </div>
+
         {activeTab === 'description' && (
-          <div style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '700px' }}>
+          <div className="max-w-[700px] text-[15px] leading-[1.8] text-[var(--text-secondary)]">
             <p>{product.description}</p>
             {product.howToUse && (
               <>
-                <h4 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '20px 0 8px' }}>How to Use</h4>
+                <h4 className="mt-5 mb-2 font-outfit text-base font-semibold text-[var(--text-primary)]">How to Use</h4>
                 <p>{product.howToUse}</p>
               </>
             )}
           </div>
         )}
+
         {activeTab === 'ingredients' && (
-          <div style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '700px' }}>
+          <div className="max-w-[700px] text-[15px] leading-[1.8] text-[var(--text-secondary)]">
             <p>{product.ingredients || 'Ingredient list coming soon.'}</p>
           </div>
         )}
+
         {activeTab === 'reviews' && (
-          <div style={{ maxWidth: '700px' }}>
-            {productReviews.length > 0 ? productReviews.map(r => (
-              <div key={r.id} className="glass-card" style={{ padding: '20px', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontWeight: 600 }}>{r.userName}</span>
-                    {r.isVerified && <span style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: 'var(--success)' }}><Check size={12} /> Verified</span>}
-                  </div>
-                  <div style={{ display: 'flex', gap: '2px' }}>
-                    {[1,2,3,4,5].map(n => <Star key={n} size={12} fill={n <= r.rating ? 'var(--accent-gold)' : 'none'} color={n <= r.rating ? 'var(--accent-gold)' : 'var(--text-muted)'} />)}
-                  </div>
-                </div>
-                <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>{r.title}</h4>
-                <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{r.body}</p>
-                {r.skinType && <span className="badge" style={{ marginTop: '8px', background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'var(--text-muted)', fontSize: '11px' }}>Skin: {r.skinType}</span>}
+          <div className="max-w-[700px]">
+            {isAuthenticated ? (
+              <ReviewForm productId={product.id.toString()} slug={product.slug} onReviewSubmitted={refetchReviews} />
+            ) : (
+              <div className="glass-card mb-6 p-6 text-center">
+                <p className="text-[var(--text-secondary)]">
+                  Please <Link href="/login" className="font-medium text-[var(--primary)] no-underline hover:underline">log in</Link> to write a review.
+                </p>
               </div>
-            )) : (
-              <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '40px' }}>No reviews yet. Be the first! ✨</p>
+            )}
+
+            {loadingReviews ? (
+              <p className="py-8 text-center text-[var(--text-muted)]">Loading reviews...</p>
+            ) : reviews.length > 0 ? (
+              reviews.map((review) => (
+                <div key={review.id} className="glass-card mb-3 p-5">
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold">{review.userName}</span>
+                      {review.isVerified && (
+                        <span className="flex items-center gap-0.5 text-[11px] text-[var(--success)]"><Check size={12} /> Verified</span>
+                      )}
+                    </div>
+                    <div className="flex gap-[2px]">
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <Star
+                          key={rating}
+                          size={12}
+                          fill={rating <= review.rating ? 'var(--accent-gold)' : 'none'}
+                          color={rating <= review.rating ? 'var(--accent-gold)' : 'var(--text-muted)'}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <h4 className="mb-1 text-sm font-semibold">{review.title}</h4>
+                  <p className="text-sm leading-[1.6] text-[var(--text-secondary)]">{review.body}</p>
+                  {review.skinType && (
+                    <span className="badge mt-2 border border-[var(--border-glass)] bg-[var(--bg-glass)] text-[11px] text-[var(--text-muted)]">
+                      Skin: {review.skinType}
+                    </span>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="p-10 text-center text-[var(--text-muted)]">No reviews yet. Be the first! ✨</p>
             )}
           </div>
         )}
-      </div>
 
-      {/* Related */}
-      {related.length > 0 && (
-        <div style={{ marginTop: '48px' }}>
-          <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700, marginBottom: '20px' }}>You May Also Like</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {related.map(p => <ProductCard key={p.id} product={p} />)}
+        {related.length > 0 && (
+          <div className="mt-12">
+            <h2 className="mb-5 font-outfit text-2xl font-bold">You May Also Like</h2>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+              {related.map((item) => <ProductCard key={item.id} product={item} />)}
+            </div>
           </div>
-        </div>
-      )}
-
-      <style jsx global>{`
-        @media (min-width: 768px) {
-          .product-detail-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-      `}</style>
+        )}
+      </section>
     </div>
   );
 }

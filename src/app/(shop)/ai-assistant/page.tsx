@@ -95,16 +95,16 @@ export default function AIAssistantPage() {
 
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '24px 16px', maxWidth: '800px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <div style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '28px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center', marginBottom: '8px' }}>
+      <div className="container-main p-6 px-4 max-w-[800px]">
+        <div className="text-center mb-6">
+          <div className="font-outfit font-black text-3xl tracking-tight flex items-center gap-1 justify-center mb-2">
             <span className="gradient-text">GLOW</span>
-            <span style={{ color: 'var(--text-primary)' }}>ADDICT</span>
+            <span className="text-[var(--text-primary)]">ADDICT</span>
           </div>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>
+          <h1 className="font-outfit text-3xl font-bold mb-1">
             AI Beauty Assistant
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <p className="text-[var(--text-muted)] text-sm flex items-center justify-center gap-1.5">
             <Sparkles size={14} /> Powered by NVIDIA AI
           </p>
         </div>
@@ -112,16 +112,7 @@ export default function AIAssistantPage() {
         {/* Chat */}
         <div
           ref={chatRef}
-          className="glass-card"
-          style={{
-            height: '500px',
-            overflowY: 'auto',
-            padding: '20px',
-            marginBottom: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}
+          className="glass-card h-[500px] overflow-y-auto p-5 mb-4 flex flex-col gap-4"
         >
           <AnimatePresence initial={false}>
             {messages.map((msg) => (
@@ -130,39 +121,24 @@ export default function AIAssistantPage() {
                 initial={{ opacity: 0, y: 10, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                style={{ display: 'flex', gap: '10px', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}
+                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
               >
                 <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    flexShrink: 0,
-                    background:
-                      msg.role === 'assistant'
-                        ? 'linear-gradient(135deg, var(--primary), var(--secondary))'
-                        : 'var(--bg-glass)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: msg.role === 'user' ? '1px solid var(--border-glass)' : 'none',
-                  }}
+                  className={`w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center ${
+                    msg.role === 'assistant'
+                      ? 'bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]'
+                      : 'bg-[var(--bg-glass)] border border-[var(--border-glass)]'
+                  }`}
                 >
-                  {msg.role === 'assistant' ? <Bot size={16} color="white" /> : <User size={16} />}
+                  {msg.role === 'assistant' ? <Bot size={16} className="text-white" /> : <User size={16} />}
                 </div>
-                <div style={{ maxWidth: '80%' }}>
+                <div className={`max-w-[80%] ${msg.role === 'user' ? 'flex flex-col items-end' : ''}`}>
                   <div
-                    style={{
-                      background: msg.role === 'user' ? 'rgba(233,30,140,0.12)' : 'var(--bg-glass)',
-                      border: '1px solid',
-                      borderColor: msg.role === 'user' ? 'rgba(233,30,140,0.2)' : 'var(--border-glass)',
-                      borderRadius: '14px',
-                      padding: '12px 16px',
-                      fontSize: '14px',
-                      lineHeight: 1.7,
-                      color: 'var(--text-primary)',
-                      whiteSpace: 'pre-line',
-                    }}
+                    className={`rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-line border ${
+                      msg.role === 'user'
+                        ? 'bg-[rgba(233,30,140,0.12)] border-[rgba(233,30,140,0.2)]'
+                        : 'bg-[var(--bg-glass)] border-[var(--border-glass)]'
+                    } text-[var(--text-primary)]`}
                   >
                     {msg.content.split('**').map((part, i) =>
                       i % 2 === 1 ? (
@@ -178,75 +154,39 @@ export default function AIAssistantPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 0.4 }}
-                      style={{
-                        display: 'flex',
-                        gap: '10px',
-                        marginTop: '10px',
-                        overflowX: 'auto',
-                        paddingBottom: '4px',
-                      }}
-                      className="hide-scrollbar"
+                      className="flex gap-2.5 mt-2.5 overflow-x-auto pb-1 hide-scrollbar"
                     >
                       {msg.products.map((p) => (
                         <motion.div
                           key={p.id}
                           whileTap={{ scale: 0.95 }}
-                          style={{
-                            minWidth: '180px',
-                            background: 'var(--bg-glass)',
-                            border: '1px solid var(--border-glass)',
-                            borderRadius: '12px',
-                            overflow: 'hidden',
-                          }}
+                          className="min-w-[180px] bg-[var(--bg-glass)] border border-[var(--border-glass)] rounded-xl overflow-hidden"
                         >
                           <Link href={`/products/${p.slug}`}>
-                            <div style={{ position: 'relative', height: '120px', width: '100%' }}>
+                            <div className="relative h-[120px] w-full">
                               <Image
                                 src={p.images[0]}
                                 alt={p.name}
                                 fill
-                                style={{ objectFit: 'cover' }}
+                                className="object-cover"
                               />
                             </div>
                           </Link>
-                          <div style={{ padding: '10px' }}>
-                            <div
-                              style={{
-                                fontSize: '10px',
-                                color: 'var(--primary)',
-                                fontWeight: 600,
-                                textTransform: 'uppercase',
-                              }}
-                            >
+                          <div className="p-2.5">
+                            <div className="text-[10px] text-[var(--primary)] font-semibold uppercase">
                               {p.brandName}
                             </div>
-                            <div
-                              style={{
-                                fontSize: '12px',
-                                fontWeight: 500,
-                                marginBottom: '6px',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                              }}
-                            >
+                            <div className="text-[12px] font-medium mb-1.5 overflow-hidden text-ellipsis whitespace-nowrap">
                               {p.name}
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <span style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 700 }}>
+                            <div className="flex justify-between items-center">
+                              <span className="font-outfit text-sm font-bold">
                                 ₹{p.salePrice || p.price}
                               </span>
                               <motion.button
                                 whileTap={{ scale: 0.85 }}
                                 onClick={() => handleAddToCart(p)}
-                                style={{
-                                  background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                                  border: 'none',
-                                  borderRadius: '6px',
-                                  padding: '4px 8px',
-                                  cursor: 'pointer',
-                                  color: 'white',
-                                }}
+                                className="bg-linear-to-br from-[var(--primary)] to-[var(--secondary)] border-none rounded-md p-1 px-2 cursor-pointer text-white"
                               >
                                 <ShoppingBag size={12} />
                               </motion.button>
@@ -269,42 +209,18 @@ export default function AIAssistantPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: 'spring', damping: 20 }}
-                style={{ display: 'flex', gap: '10px' }}
+                className="flex gap-2.5"
               >
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '10px',
-                    background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
+                <div className="w-8 h-8 rounded-lg bg-linear-to-br from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center">
                   <Bot size={16} color="white" />
                 </div>
-                <div
-                  style={{
-                    background: 'var(--bg-glass)',
-                    border: '1px solid var(--border-glass)',
-                    borderRadius: '14px',
-                    padding: '12px 16px',
-                    display: 'flex',
-                    gap: '4px',
-                  }}
-                >
+                <div className="bg-[var(--bg-glass)] border border-[var(--border-glass)] rounded-2xl p-3 px-4 flex gap-1">
                   {[0, 1, 2].map((i) => (
                     <motion.div
                       key={i}
                       animate={{ scale: [0.6, 1, 0.6], opacity: [0.4, 1, 0.4] }}
                       transition={{ duration: 1.4, delay: i * 0.2, repeat: Infinity }}
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: 'var(--text-muted)',
-                      }}
+                      className="w-2 h-2 rounded-full bg-[var(--text-muted)]"
                     />
                   ))}
                 </div>
@@ -314,30 +230,13 @@ export default function AIAssistantPage() {
         </div>
 
         {/* Suggestions */}
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+        <div className="flex gap-2 flex-wrap mb-3">
           {suggestions.map((s) => (
             <motion.button
               key={s}
               whileTap={{ scale: 0.95 }}
               onClick={() => send(s)}
-              style={{
-                background: 'var(--bg-glass)',
-                border: '1px solid var(--border-glass)',
-                borderRadius: '20px',
-                padding: '6px 14px',
-                fontSize: '12px',
-                color: 'var(--text-secondary)',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--primary)';
-                e.currentTarget.style.color = 'var(--primary)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-glass)';
-                e.currentTarget.style.color = 'var(--text-secondary)';
-              }}
+              className="bg-[var(--bg-glass)] border border-[var(--border-glass)] rounded-full px-3.5 py-1.5 text-[12px] text-[var(--text-secondary)] cursor-pointer transition-all duration-200 hover:border-[var(--primary)] hover:text-[var(--primary)]"
             >
               {s}
             </motion.button>
@@ -345,22 +244,20 @@ export default function AIAssistantPage() {
         </div>
 
         {/* Input */}
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div className="flex gap-2">
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && send()}
             placeholder="Ask me anything about beauty..."
-            className="input-glass"
-            style={{ flex: 1, fontSize: '15px' }}
+            className="input-glass flex-1 text-[15px]"
             disabled={isTyping}
           />
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => send()}
-            className="btn-gradient"
-            style={{ padding: '12px 20px', flexShrink: 0 }}
+            className="btn-gradient p-3 px-5 flex-shrink-0"
             disabled={isTyping}
           >
             <span>

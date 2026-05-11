@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Upload, Camera, Sparkles, Check, Shield, X, Sun, Droplets, Moon } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -96,14 +97,17 @@ export default function SkinAnalyzerPage() {
 
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '24px 16px', maxWidth: '800px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <img
-            src="/images/logo.png" alt="Glow Addict"
-            style={{ height: '64px', width: 'auto', objectFit: 'contain', margin: '0 auto 12px', display: 'block' }}
+      <div className="container-main p-6 px-4 max-w-[800px]">
+        <div className="text-center mb-8">
+          <Image
+            src="/images/logo.png"
+            alt="Glow Addict"
+            width={160}
+            height={64}
+            className="h-16 w-auto object-contain mx-auto mb-3 block"
           />
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>AI Skin Analyzer</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <h1 className="font-outfit text-[28px] font-bold mb-1">AI Skin Analyzer</h1>
+          <p className="text-[var(--text-muted)] text-sm flex items-center justify-center gap-1.5">
             <Sparkles size={14} /> Powered by NVIDIA Vision AI
           </p>
         </div>
@@ -119,84 +123,74 @@ export default function SkinAnalyzerPage() {
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={() => setDragOver(false)}
                 onDrop={onDrop}
-                className="glass-card"
-                style={{
-                  padding: preview ? '20px' : '60px 24px',
-                  textAlign: 'center',
-                  cursor: preview ? 'default' : 'pointer',
-                  border: `2px dashed ${dragOver ? 'var(--primary)' : 'var(--border-glass-strong)'}`,
-                  background: dragOver ? 'rgba(233,30,140,0.08)' : analyzing ? 'rgba(233,30,140,0.05)' : 'var(--bg-glass)',
-                  transition: 'all 0.3s',
-                }}
+                className={`
+                  glass-card p-5 text-center transition-all duration-300 border-2 border-dashed
+                  ${preview ? 'cursor-default' : 'cursor-pointer'}
+                  ${dragOver ? 'border-[var(--primary)] bg-[rgba(233,30,140,0.08)]' : 'border-[var(--border-glass-strong)] bg-[var(--bg-glass)]'}
+                  ${analyzing ? 'bg-[rgba(233,30,140,0.05)]' : ''}
+                  ${!preview ? 'py-[60px] px-6' : ''}
+                `}
               >
                 {analyzing ? (
                   <div>
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      style={{
-                        width: '64px', height: '64px', borderRadius: '50%', margin: '0 auto 16px',
-                        border: '3px solid var(--border-glass)', borderTopColor: 'var(--primary)',
-                      }}
+                      className="w-16 h-16 rounded-full mx-auto mb-4 border-3 border-[var(--border-glass)] border-t-[var(--primary)]"
                     />
-                    <h3 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '8px' }}>
+                    <h3 className="font-outfit text-lg font-semibold mb-2">
                       Analyzing your skin...
                     </h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
+                    <p className="text-[var(--text-muted)] text-sm">
                       Our AI is examining texture, tone, hydration & more
                     </p>
                   </div>
                 ) : preview ? (
                   <div>
-                    <div style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
-                      <img src={preview} alt="Preview" style={{ width: '200px', height: '200px', objectFit: 'cover', borderRadius: '16px', border: '2px solid var(--border-glass-strong)' }} />
+                    <div className="relative inline-block mb-4 h-[200px] w-[200px] overflow-hidden rounded-2xl border-2 border-[var(--border-glass-strong)]">
+                      <Image src={preview} alt="Preview" fill className="object-cover" sizes="200px" />
                       <motion.button
                         whileTap={{ scale: 0.85 }}
                         onClick={(e) => { e.stopPropagation(); setPreview(null); }}
-                        style={{
-                          position: 'absolute', top: '-8px', right: '-8px',
-                          background: 'var(--error)', border: 'none', borderRadius: '50%',
-                          width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          cursor: 'pointer', color: 'white',
-                        }}
+                        className="absolute -top-2 -right-2 bg-[var(--error)] border-none rounded-full w-7 h-7 flex items-center justify-center cursor-pointer text-white"
                       >
                         <X size={14} />
                       </motion.button>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-                      <motion.button whileTap={{ scale: 0.95 }} onClick={analyze} className="btn-gradient" style={{ padding: '12px 32px' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Sparkles size={18} /> Analyze My Skin</span>
+                    <div className="flex gap-3 justify-center">
+                      <motion.button whileTap={{ scale: 0.95 }} onClick={analyze} className="btn-gradient p-3 px-8">
+                        <span className="flex items-center gap-2"><Sparkles size={18} /> Analyze My Skin</span>
                       </motion.button>
-                      <motion.button whileTap={{ scale: 0.95 }} onClick={() => fileRef.current?.click()} className="btn-outline" style={{ padding: '12px 20px' }}>
+                      <motion.button whileTap={{ scale: 0.95 }} onClick={() => fileRef.current?.click()} className="btn-outline p-3 px-5">
                         Change Photo
                       </motion.button>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <Upload size={48} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
-                    <h3 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '8px' }}>Upload a Clear Selfie</h3>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '16px' }}>Take a photo in natural lighting, no makeup, facing forward</p>
-                    <motion.button whileTap={{ scale: 0.95 }} className="btn-gradient" style={{ padding: '12px 24px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Camera size={18} /> Choose Photo</span>
+                    <Upload size={48} className="text-[var(--primary)] mb-4" />
+                    <h3 className="font-outfit text-lg font-semibold mb-2">Upload a Clear Selfie</h3>
+                    <p className="text-[var(--text-muted)] text-sm mb-4">Take a photo in natural lighting, no makeup, facing forward</p>
+                    <motion.button whileTap={{ scale: 0.95 }} className="btn-gradient p-3 px-6">
+                      <span className="flex items-center gap-2"><Camera size={18} /> Choose Photo</span>
                     </motion.button>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '12px' }}>or drag & drop an image here</p>
+                    <p className="text-[var(--text-muted)] text-[12px] mt-3">or drag & drop an image here</p>
                   </div>
                 )}
               </div>
 
               {/* How it works */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginTop: '24px' }}>
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mt-6">
                 {[
                   { icon: Camera, title: 'Upload Selfie', desc: 'Clear photo in natural light' },
                   { icon: Sparkles, title: 'AI Analysis', desc: 'Skin type, concerns & score' },
                   { icon: Shield, title: 'Get Routine', desc: 'Personalized recommendations' },
                 ].map(({ icon: Icon, title, desc }, i) => (
                   <AnimatedCard key={title} index={i}>
-                    <div className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
-                      <Icon size={24} style={{ color: 'var(--primary)', marginBottom: '8px' }} />
-                      <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>{title}</h4>
-                      <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{desc}</p>
+                    <div className="glass-card p-5 text-center">
+                      <Icon size={24} className="text-[var(--primary)] mb-2" />
+                      <h4 className="text-sm font-semibold mb-1">{title}</h4>
+                      <p className="text-[12px] text-[var(--text-muted)]">{desc}</p>
                     </div>
                   </AnimatedCard>
                 ))}
@@ -206,63 +200,57 @@ export default function SkinAnalyzerPage() {
             <motion.div key="results" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}>
               {/* Results */}
               <AnimatedCard index={0}>
-                <div className="glass-card" style={{ padding: '24px', marginBottom: '20px' }}>
-                  <h3 style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 600, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Check size={22} style={{ color: 'var(--success)' }} /> Analysis Complete
+                <div className="glass-card p-6 mb-5">
+                  <h3 className="font-outfit text-xl font-semibold mb-5 flex items-center gap-2">
+                    <Check size={22} className="text-[var(--success)]" /> Analysis Complete
                   </h3>
 
                   {/* Score + Summary */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                  <div className="flex items-center gap-5 mb-6 flex-wrap">
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.2 }}
-                      style={{
-                        width: '100px', height: '100px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        background: `conic-gradient(var(--success) ${result.score}%, var(--bg-glass) 0%)`, position: 'relative',
-                      }}
+                      className="w-[100px] h-[100px] rounded-full flex items-center justify-center relative"
+                      style={{ background: `conic-gradient(var(--success) ${result.score}%, var(--bg-glass) 0%)` }}
                     >
-                      <div style={{
-                        width: '80px', height: '80px', borderRadius: '50%', background: 'var(--bg-surface)',
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                      }}>
+                      <div className="w-20 h-20 rounded-full bg-[var(--bg-surface)] flex flex-col items-center justify-center">
                         <motion.span
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.6 }}
-                          style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700 }}
+                          className="font-outfit text-[28px] font-bold"
                         >
                           {result.score}
                         </motion.span>
-                        <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>SCORE</span>
+                        <span className="text-[10px] text-[var(--text-muted)]">SCORE</span>
                       </div>
                     </motion.div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Skin Type</div>
-                      <div style={{ fontFamily: 'Outfit', fontSize: '22px', fontWeight: 700 }} className="gradient-text">{result.skinType}</div>
+                    <div className="flex-1">
+                      <div className="text-sm text-[var(--text-muted)] mb-1">Skin Type</div>
+                      <div className="font-outfit text-[22px] font-bold gradient-text">{result.skinType}</div>
                       {result.hydrationLevel && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                          <Droplets size={14} style={{ color: 'var(--secondary)' }} /> Hydration: {result.hydrationLevel}
+                        <div className="flex items-center gap-1.5 mt-2 text-[13px] text-[var(--text-secondary)]">
+                          <Droplets size={14} className="text-[var(--secondary)]" /> Hydration: {result.hydrationLevel}
                         </div>
                       )}
                       {result.summary && (
-                        <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '8px', lineHeight: 1.5 }}>{result.summary}</p>
+                        <p className="text-[13px] text-[var(--text-secondary)] mt-2 leading-[1.5]">{result.summary}</p>
                       )}
                     </div>
                   </div>
 
                   {/* Concerns */}
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>Detected Concerns</h4>
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <div className="mb-5">
+                    <h4 className="text-sm font-semibold mb-2">Detected Concerns</h4>
+                    <div className="flex gap-2 flex-wrap">
                       {result.concerns.map((c, i) => (
                         <motion.span
                           key={c}
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.3 + i * 0.1 }}
-                          className="badge badge-primary"
-                          style={{ fontSize: '13px', padding: '6px 14px' }}
+                          className="badge badge-primary text-[13px] p-1.5 px-3.5"
                         >
                           {c}
                         </motion.span>
@@ -271,18 +259,18 @@ export default function SkinAnalyzerPage() {
                   </div>
 
                   {/* Tips */}
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>AI Recommendations</h4>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div className="mb-5">
+                    <h4 className="text-sm font-semibold mb-2">AI Recommendations</h4>
+                    <div className="flex flex-col gap-2">
                       {result.tips.map((tip, i) => (
                         <motion.div
                           key={i}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.5 + i * 0.1 }}
-                          style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '14px', color: 'var(--text-secondary)' }}
+                          className="flex gap-2 items-start text-sm text-[var(--text-secondary)]"
                         >
-                          <Check size={16} style={{ color: 'var(--success)', flexShrink: 0, marginTop: '2px' }} />
+                          <Check size={16} className="text-[var(--success)] shrink-0 mt-0.5" />
                           <span>{tip}</span>
                         </motion.div>
                       ))}
@@ -292,25 +280,25 @@ export default function SkinAnalyzerPage() {
                   {/* Routine */}
                   {result.routine && (
                     <div>
-                      <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '12px' }}>Your Personalized Routine</h4>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                        <div className="glass-card" style={{ padding: '16px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px', fontWeight: 600, fontSize: '13px' }}>
-                            <Sun size={16} style={{ color: 'var(--accent-gold)' }} /> Morning
+                      <h4 className="text-sm font-semibold mb-3">Your Personalized Routine</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="glass-card p-4">
+                          <div className="flex items-center gap-1.5 mb-2.5 font-semibold text-[13px]">
+                            <Sun size={16} className="text-[var(--accent-gold)]" /> Morning
                           </div>
                           {result.routine.morning.map((step, i) => (
-                            <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', padding: '4px 0', display: 'flex', gap: '6px' }}>
-                              <span style={{ color: 'var(--primary)', fontWeight: 600 }}>{i + 1}.</span> {step}
+                            <div key={i} className="text-[12px] text-[var(--text-secondary)] py-1 flex gap-1.5">
+                              <span className="text-[var(--primary)] font-semibold">{i + 1}.</span> {step}
                             </div>
                           ))}
                         </div>
-                        <div className="glass-card" style={{ padding: '16px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px', fontWeight: 600, fontSize: '13px' }}>
-                            <Moon size={16} style={{ color: 'var(--secondary)' }} /> Evening
+                        <div className="glass-card p-4">
+                          <div className="flex items-center gap-1.5 mb-2.5 font-semibold text-[13px]">
+                            <Moon size={16} className="text-[var(--secondary)]" /> Evening
                           </div>
                           {result.routine.evening.map((step, i) => (
-                            <div key={i} style={{ fontSize: '12px', color: 'var(--text-secondary)', padding: '4px 0', display: 'flex', gap: '6px' }}>
-                              <span style={{ color: 'var(--secondary)', fontWeight: 600 }}>{i + 1}.</span> {step}
+                            <div key={i} className="text-[12px] text-[var(--text-secondary)] py-1 flex gap-1.5">
+                              <span className="text-[var(--secondary)] font-semibold">{i + 1}.</span> {step}
                             </div>
                           ))}
                         </div>
@@ -323,8 +311,8 @@ export default function SkinAnalyzerPage() {
               {/* Recommended products from AI */}
               {result.products && result.products.length > 0 && (
                 <AnimatedCard index={1}>
-                  <h3 style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 700, marginBottom: '16px' }}>Recommended for You</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px', marginBottom: '24px' }}>
+                  <h3 className="font-outfit text-xl font-bold mb-4">Recommended for You</h3>
+                  <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 mb-6">
                     {result.products.map((p, i) => (
                       <motion.div
                         key={p.id}
@@ -332,13 +320,15 @@ export default function SkinAnalyzerPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 + i * 0.1 }}
                       >
-                        <Link href={`/products/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          <div className="glass-card" style={{ overflow: 'hidden' }}>
-                            <img src={p.image} alt={p.name} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
-                            <div style={{ padding: '12px' }}>
-                              <div style={{ fontSize: '10px', color: 'var(--primary)', fontWeight: 600, textTransform: 'uppercase' }}>{p.brandName}</div>
-                              <div style={{ fontSize: '13px', fontWeight: 500, marginBottom: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
-                              <div style={{ fontFamily: 'Outfit', fontSize: '14px', fontWeight: 700 }}>₹{p.salePrice || p.price}</div>
+                        <Link href={`/products/${p.slug}`} className="no-underline color-inherit">
+                          <div className="glass-card overflow-hidden">
+                            <div className="relative h-[140px] w-full overflow-hidden">
+                              <Image src={p.image} alt={p.name} fill className="object-cover" sizes="(min-width: 1024px) 25vw, 50vw" />
+                            </div>
+                            <div className="p-3">
+                              <div className="text-[10px] text-[var(--primary)] font-semibold uppercase">{p.brandName}</div>
+                              <div className="text-[13px] font-medium mb-1 overflow-hidden overflow-ellipsis whitespace-nowrap">{p.name}</div>
+                              <div className="font-outfit text-sm font-bold">₹{p.salePrice || p.price}</div>
                             </div>
                           </div>
                         </Link>
@@ -351,8 +341,7 @@ export default function SkinAnalyzerPage() {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={() => { setResult(null); setPreview(null); }}
-                className="btn-outline"
-                style={{ padding: '12px 24px' }}
+                className="btn-outline p-3 px-6"
               >
                 Analyze Again
               </motion.button>

@@ -5,17 +5,19 @@ import { ReactNode } from 'react';
 interface Props {
   children: ReactNode;
   className?: string;
+  delay?: number;
 }
 
 /** Wraps page content with a smooth fade+slide entrance animation */
-export default function PageTransition({ children, className }: Props) {
+export default function PageTransition({ children, className, delay = 0 }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20, scale: 0.99 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94], // iOS spring-like curve
+        duration: 0.55,
+        delay,
+        ease: [0.2, 0.8, 0.2, 1],
       }}
       className={className}
     >

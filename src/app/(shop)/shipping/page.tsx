@@ -12,27 +12,27 @@ const policies = [
 export default function ShippingPage() {
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '40px 16px', maxWidth: '800px' }}>
-        <h1 style={{ fontFamily: 'Outfit', fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Shipping Policy</h1>
-        <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '32px' }}>Everything you need to know about delivery</p>
+      <div className="container-main p-10 px-4 max-w-[800px]">
+        <h1 className="font-outfit text-3xl font-bold mb-2">Shipping Policy</h1>
+        <p className="text-[var(--text-muted)] text-[15px] mb-8">Everything you need to know about delivery</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 mb-8">
           {policies.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="glass-card" style={{ padding: '24px' }}>
-              <Icon size={24} style={{ color: 'var(--primary)', marginBottom: '12px' }} />
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600, marginBottom: '8px' }}>{title}</h3>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{desc}</p>
+            <div key={title} className="glass-card p-6">
+              <Icon size={24} className="text-[var(--primary)] mb-3" />
+              <h3 className="font-outfit text-base font-semibold mb-2">{title}</h3>
+              <p className="text-[13px] text-[var(--text-secondary)] leading-[1.6]">{desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="glass-card" style={{ padding: '24px' }}>
-          <h2 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>Shipping Details</h2>
-          <div style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-            <p style={{ marginBottom: '12px' }}>• We ship to all serviceable pin codes across India via trusted courier partners.</p>
-            <p style={{ marginBottom: '12px' }}>• Tracking information will be sent to your registered email and phone number once your order is dispatched.</p>
-            <p style={{ marginBottom: '12px' }}>• Orders placed before 2 PM IST on business days are dispatched the same day.</p>
-            <p style={{ marginBottom: '12px' }}>• For remote areas, delivery may take up to 10 business days.</p>
+        <div className="glass-card p-6">
+          <h2 className="font-outfit text-lg font-semibold mb-4">Shipping Details</h2>
+          <div className="text-sm text-[var(--text-secondary)] leading-[1.8]">
+            <p className="mb-3">• We ship to all serviceable pin codes across India via trusted courier partners.</p>
+            <p className="mb-3">• Tracking information will be sent to your registered email and phone number once your order is dispatched.</p>
+            <p className="mb-3">• Orders placed before 2 PM IST on business days are dispatched the same day.</p>
+            <p className="mb-3">• For remote areas, delivery may take up to 10 business days.</p>
             <p>• International shipping is not available at this time.</p>
           </div>
         </div>

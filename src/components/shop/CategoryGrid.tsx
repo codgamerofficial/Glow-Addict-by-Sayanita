@@ -14,15 +14,15 @@ export function CategoryGrid({ collections }: { collections: AdminCollection[] }
 
   return (
     <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
+      <section className="py-12">
         <div className="container-main">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }}>{collections.length > 0 ? 'Featured Collections' : 'Shop by Category'}</h2>
-            <Link href="/products" style={{ color: 'var(--primary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="font-outfit text-2xl font-bold">{collections.length > 0 ? 'Featured Collections' : 'Shop by Category'}</h2>
+            <Link href="/products" className="text-[var(--primary)] no-underline text-sm font-medium flex items-center gap-1">
               View All <ArrowRight size={16} />
             </Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '12px' }}>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3">
             {displayItems.map((cat, i) => (
               <motion.div
                 key={cat.id}
@@ -31,11 +31,11 @@ export function CategoryGrid({ collections }: { collections: AdminCollection[] }
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05, duration: 0.4 }}
               >
-                <Link href={`/products?category=${cat.slug}`} style={{ textDecoration: 'none' }}>
-                  <motion.div whileTap={{ scale: 0.95 }} whileHover={{ y: -4 }} className="glass-card" style={{ textAlign: 'center', padding: '20px 12px', cursor: 'pointer' }}>
-                    <div style={{ fontSize: '32px', marginBottom: '8px' }}>{'icon' in cat ? cat.icon : '✨'}</div>
-                    <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>{cat.name}</div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{('productCount' in cat ? cat.productCount : cat.count)} Products</div>
+                <Link href={`/products?category=${cat.slug}`} className="no-underline">
+                  <motion.div whileTap={{ scale: 0.95 }} whileHover={{ y: -4 }} className="glass-card text-center p-5 px-3 cursor-pointer">
+                    <div className="text-[32px] mb-2">{'icon' in cat ? cat.icon : '✨'}</div>
+                    <div className="text-sm font-semibold text-[var(--text-primary)] mb-1">{cat.name}</div>
+                    <div className="text-[12px] text-[var(--text-muted)]">{('productCount' in cat ? cat.productCount : cat.count)} Products</div>
                   </motion.div>
                 </Link>
               </motion.div>

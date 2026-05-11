@@ -1,13 +1,6 @@
 import { getAdminBanners, getAdminCollections } from '@/actions/admin';
-import { HeroBanner } from '@/components/shop/HeroBanner';
-import { CategoryGrid } from '@/components/shop/CategoryGrid';
-import { 
-  TrendingSection, 
-  FlashDeal, 
-  AIRecommendations, 
-  NewArrivals, 
-  LoyaltyBanner 
-} from '@/components/shop/HomeSections';
+export const dynamic = 'force-dynamic';
+import { StorefrontLaunch } from '@/components/shop/StorefrontLaunch';
 
 export default async function HomePage() {
   const [liveBanners, liveCollections] = await Promise.all([
@@ -16,14 +9,6 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div>
-      <HeroBanner banners={liveBanners} />
-      <CategoryGrid collections={liveCollections} />
-      <TrendingSection />
-      <FlashDeal />
-      <AIRecommendations />
-      <NewArrivals />
-      <LoyaltyBanner />
-    </div>
+    <StorefrontLaunch banners={liveBanners} collections={liveCollections} />
   );
 }

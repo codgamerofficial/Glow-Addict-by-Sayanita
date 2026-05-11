@@ -2,6 +2,7 @@
 import React, { useState, createContext, useContext } from 'react';
 import { AdminSidebar } from '@/components/admin/layout/AdminSidebar';
 import { AdminTopbar } from '@/components/admin/layout/AdminTopbar';
+import { AdminRouteProtection } from '@/components/admin/AdminRouteProtection';
 
 interface AdminCtx { sidebarOpen: boolean; toggleSidebar: () => void; }
 const AdminContext = createContext<AdminCtx>({ sidebarOpen: true, toggleSidebar: () => {} });
@@ -12,11 +13,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <AdminContext.Provider value={{ sidebarOpen, toggleSidebar: () => setSidebarOpen(p => !p) }}>
       <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
+        <div className="ambient-mesh" aria-hidden />
+        <div className="ambient-grain" aria-hidden />
         <AdminSidebar open={sidebarOpen} onToggle={() => setSidebarOpen(p => !p)} />
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, transition: 'margin-left 0.3s cubic-bezier(0.4,0,0.2,1)', marginLeft: sidebarOpen ? '260px' : '72px' }}>
+        <div data-admin-main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, transition: 'margin-left 0.3s cubic-bezier(0.4,0,0.2,1)', marginLeft: sidebarOpen ? '260px' : '72px', position: 'relative', zIndex: 1 }}>
           <AdminTopbar onMenuToggle={() => setSidebarOpen(p => !p)} />
           <main style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
-            {children}
+            <div style={{ maxWidth: '1500px', margin: '0 auto' }}>
+            <AdminRouteProtection>{children}</AdminRouteProtection>
+            </div>
           </main>
         </div>
       </div>

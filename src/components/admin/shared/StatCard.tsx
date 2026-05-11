@@ -11,20 +11,31 @@ interface Props {
   prefix?: string;
   suffix?: string;
   color?: string;
+  gradient?: string;
   delay?: number;
 }
 
-export function StatCard({ icon, label, value, trend, prefix = '', suffix = '', color = '#E91E8C', delay = 0 }: Props) {
+export function StatCard({ icon, label, value, trend, prefix = '', suffix = '', color = '#E91E8C', gradient, delay = 0 }: Props) {
   const isPositive = (trend ?? 0) >= 0;
+  
+  const gradientMap: { [key: string]: string } = {
+    'from-emerald-400 to-green-600': 'linear-gradient(135deg, rgba(52,211,153,0.4) 0%, rgba(34,197,94,0.4) 100%)',
+    'from-blue-400 to-blue-600': 'linear-gradient(135deg, rgba(96,165,250,0.4) 0%, rgba(37,99,235,0.4) 100%)',
+    'from-purple-400 to-purple-600': 'linear-gradient(135deg, rgba(192,132,250,0.4) 0%, rgba(147,51,234,0.4) 100%)',
+    'from-pink-400 to-pink-600': 'linear-gradient(135deg, rgba(244,114,182,0.4) 0%, rgba(236,72,153,0.4) 100%)',
+    'from-yellow-400 to-orange-600': 'linear-gradient(135deg, rgba(250,204,21,0.4) 0%, rgba(217,119,6,0.4) 100%)',
+    'from-cyan-400 to-cyan-600': 'linear-gradient(135deg, rgba(34,211,238,0.4) 0%, rgba(14,165,233,0.4) 100%)',
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
-        background: 'rgba(255,255,255,0.03)',
+        background: gradient ? gradientMap[gradient] : 'rgba(255,255,255,0.03)',
         backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        border: `2px solid ${color}40`,
         borderRadius: 16,
         padding: '22px 24px',
         position: 'relative',
@@ -32,7 +43,7 @@ export function StatCard({ icon, label, value, trend, prefix = '', suffix = '', 
         cursor: 'pointer',
         transition: 'all 0.3s ease',
       }}
-      whileHover={{ y: -3, boxShadow: `0 12px 40px ${color}20` }}
+      whileHover={{ y: -3, boxShadow: `0 12px 40px ${color}30` }}
     >
       {/* Glow dot */}
       <div style={{

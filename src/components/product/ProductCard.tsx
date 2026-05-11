@@ -35,19 +35,19 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <div className="glass-card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div className="glass-card overflow-hidden flex flex-col">
       {/* Image */}
-      <Link href={`/products/${product.slug}`} style={{ textDecoration: 'none' }}>
-        <div style={{ position: 'relative', paddingTop: '110%', overflow: 'hidden' }} className="product-image-wrap">
+      <Link href={`/products/${product.slug}`} className="no-underline">
+        <div className="relative pt-[110%] overflow-hidden product-image-wrap">
           <Image 
             src={product.images[0]} 
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            style={{ objectFit: 'cover' }}
+            className="object-cover"
           />
           {/* Badges */}
-          <div style={{ position: 'absolute', top: '8px', left: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div className="absolute top-2 left-2 flex flex-col gap-1">
             {product.isNew && <span className="badge badge-new">NEW</span>}
             {product.isBestseller && <span className="badge badge-gold">⭐ BESTSELLER</span>}
             {discount > 0 && <span className="badge badge-primary">{discount}% OFF</span>}
@@ -56,50 +56,45 @@ export default function ProductCard({ product }: { product: Product }) {
       </Link>
 
       {/* Info */}
-      <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', flex: 1, gap: '6px' }}>
-        <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <div className="p-3.5 flex flex-col flex-1 gap-1.5">
+        <div className="text-[11px] font-semibold text-[var(--primary)] uppercase tracking-wider">
           {product.brandName}
         </div>
-        <Link href={`/products/${product.slug}`} style={{ textDecoration: 'none', color: 'var(--text-primary)' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: 500, lineHeight: 1.4, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        <Link href={`/products/${product.slug}`} className="no-underline text-[var(--text-primary)]">
+          <h3 className="text-sm font-medium leading-[1.4] line-clamp-2 overflow-hidden">
             {product.name}
           </h3>
         </Link>
 
         {/* Rating */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2px', background: 'rgba(16,185,129,0.15)', padding: '2px 8px', borderRadius: '4px' }}>
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 bg-[rgba(16,185,129,0.15)] p-0.5 px-2 rounded">
             <Star size={11} fill="var(--success)" color="var(--success)" />
-            <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--success)' }}>{product.ratingAvg}</span>
+            <span className="text-[12px] font-semibold text-[var(--success)]">{product.ratingAvg}</span>
           </div>
-          <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>({product.ratingCount.toLocaleString()})</span>
+          <span className="text-[11px] text-[var(--text-muted)]">({product.ratingCount.toLocaleString()})</span>
         </div>
 
         {/* Price */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: 'auto', paddingTop: '4px' }}>
-          <span style={{ fontSize: '16px', fontWeight: 700, fontFamily: 'Outfit' }}>
+        <div className="flex items-center gap-2 mt-auto pt-1">
+          <span className="text-base font-bold font-outfit">
             ₹{(product.salePrice || product.price).toLocaleString()}
           </span>
           {product.salePrice && (
-            <span style={{ fontSize: '13px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>
+            <span className="text-[13px] text-[var(--text-muted)] line-through">
               ₹{product.price.toLocaleString()}
             </span>
           )}
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+        <div className="flex gap-2 mt-2">
           <motion.button
             onClick={handleAddToCart}
             whileTap={{ scale: 0.93 }}
-            className="btn-gradient"
-            style={{
-              flex: 1, padding: '10px 12px', fontSize: '13px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-              background: justAdded ? 'var(--success)' : undefined,
-            }}
+            className={`btn-gradient flex-1 p-2.5 px-3 text-[13px] flex items-center justify-center gap-1.5 ${justAdded ? 'bg-[var(--success)]' : ''}`}
           >
-            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="flex items-center gap-1.5">
               {justAdded ? <><Check size={14} /> Added!</> : <><ShoppingBag size={14} /> Add</>}
             </span>
           </motion.button>
@@ -108,12 +103,10 @@ export default function ProductCard({ product }: { product: Product }) {
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
             whileTap={{ scale: 0.85 }}
             transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-            style={{
-              background: wishlisted ? 'rgba(233,30,140,0.15)' : 'var(--bg-glass)',
-              border: '1px solid', borderColor: wishlisted ? 'var(--primary)' : 'var(--border-glass)',
-              borderRadius: '12px', padding: '10px', cursor: 'pointer', transition: 'all 0.2s',
-              color: wishlisted ? 'var(--primary)' : 'var(--text-muted)',
-            }}
+            className={`
+              rounded-xl p-2.5 cursor-pointer transition-all duration-200 border
+              ${wishlisted ? 'bg-[rgba(233,30,140,0.15)] border-[var(--primary)] text-[var(--primary)]' : 'bg-[var(--bg-glass)] border-[var(--border-glass)] text-[var(--text-muted)]'}
+            `}
           >
             <motion.div
               animate={wishlisted ? { scale: [1, 1.3, 1] } : { scale: 1 }}

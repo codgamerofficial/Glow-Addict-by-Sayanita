@@ -1,20 +1,28 @@
-import { createClient } from '@/utils/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
   const code = searchParams.get('code');
-  // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? '/';
+  const next = searchParams.get('next') || '/';
 
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
-    }
+  if (!code) {
+    return NextResponse.redirect(new URL('/login?error=missing_code', request.url));
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=Could not authenticate user`);
+  try {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (error) {
+      console.error('Auth callback error:', error);
+      const errorMessage = encodeURIComponent(error.message);
+      return NextResponse.redirect(new URL(`/login?error=${errorMessage}`, request.url));
+    }
+
+    return NextResponse.redirect(new URL(next, request.url));
+  } catch (error) {
+    console.error('Unexpected error in auth callback:', error);
+    const errorMessage = encodeURIComponent('An unexpected error occurred');
+    return NextResponse.redirect(new URL(`/login?error=${errorMessage}`, request.url));
+  }
 }

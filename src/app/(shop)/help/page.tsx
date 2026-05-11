@@ -13,24 +13,24 @@ const topics = [
 export default function HelpPage() {
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '40px 16px', maxWidth: '800px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '32px', fontWeight: 700, marginBottom: '8px' }}>Help Center</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '24px' }}>How can we help you today?</p>
-          <div style={{ position: 'relative', maxWidth: '500px', margin: '0 auto' }}>
-            <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-            <input placeholder="Search help articles..." className="input-glass" style={{ paddingLeft: '40px', fontSize: '15px' }} />
+      <div className="container-main p-10 px-4 max-w-[800px]">
+        <div className="text-center mb-10">
+          <h1 className="font-outfit text-3xl font-bold mb-2">Help Center</h1>
+          <p className="text-[var(--text-muted)] text-[15px] mb-6">How can we help you today?</p>
+          <div className="relative max-w-[500px] mx-auto">
+            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
+            <input placeholder="Search help articles..." className="input-glass pl-10 text-[15px]" />
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4">
           {topics.map(({ icon: Icon, title, desc, links }) => (
-            <div key={title} className="glass-card" style={{ padding: '24px' }}>
-              <Icon size={24} style={{ color: 'var(--primary)', marginBottom: '12px' }} />
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600, marginBottom: '6px' }}>{title}</h3>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>{desc}</p>
+            <div key={title} className="glass-card p-6">
+              <Icon size={24} className="text-[var(--primary)] mb-3" />
+              <h3 className="font-outfit text-base font-semibold mb-1.5">{title}</h3>
+              <p className="text-[13px] text-[var(--text-muted)] mb-3">{desc}</p>
               {links.map((l) => (
-                <Link key={l.label} href={l.href} style={{ display: 'block', color: 'var(--primary)', fontSize: '13px', fontWeight: 500, textDecoration: 'none', padding: '3px 0' }}>
+                <Link key={l.label} href={l.href} className="block text-[var(--primary)] text-[13px] font-medium no-underline py-0.5">
                   → {l.label}
                 </Link>
               ))}

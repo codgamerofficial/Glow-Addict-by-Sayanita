@@ -1,12 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, User, ArrowRight, Sparkles, Quote, Send } from 'lucide-react';
-import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
+import { Mail, User, ArrowRight, Sparkles, Quote, Send } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 export function AuthForm() {
-  const supabase = createClient();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,14 +31,14 @@ export function AuthForm() {
       const { error } = await supabase.auth.signInWithOtp({
         email: formData.email,
         options: {
-          data: !isLogin ? { full_name: formData.name } : {},
-          emailRedirectTo: `${window.location.origin}/api/auth/callback`,
-        }
+          emailRedirectTo: `${window.location.origin}/login`,
+          data: !isLogin ? { name: formData.name } : {},
+        },
       });
 
       if (error) throw error;
       
-      setMessage('A magic link has been sent to your email. Please check your inbox (and spam folder) to sign in!');
+      setMessage('A magic link has been sent to your email. Click it to sign in!');
     } catch (err: any) {
       setError(err.message || 'An error occurred during authentication');
     } finally {
@@ -54,8 +53,8 @@ export function AuthForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/api/auth/callback`,
-        }
+          redirectTo: `${window.location.origin}/`,
+        },
       });
       if (error) throw error;
     } catch (err: any) {

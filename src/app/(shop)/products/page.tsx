@@ -16,18 +16,16 @@ const sortOptions = [
 ];
 
 const FilterSection = ({ title, items, selected, onToggle }: { title: string; items: string[]; selected: string[]; onToggle: (v: string) => void }) => (
-  <div style={{ marginBottom: '20px' }}>
-    <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</h4>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+  <div className="mb-5">
+    <h4 className="text-[13px] font-semibold text-[var(--text-primary)] mb-2.5 uppercase tracking-wider">{title}</h4>
+    <div className="flex flex-wrap gap-1.5">
       {items.map(item => {
         const active = selected.includes(item);
         return (
-          <button key={item} onClick={() => onToggle(item)} style={{
-            padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', border: '1px solid',
-            background: active ? 'rgba(233,30,140,0.15)' : 'transparent',
-            borderColor: active ? 'var(--primary)' : 'var(--border-glass)',
-            color: active ? 'var(--primary)' : 'var(--text-secondary)',
-          }}>{item}</button>
+          <button key={item} onClick={() => onToggle(item)} className={`
+            p-1.5 px-3 rounded-full text-[12px] font-medium cursor-pointer transition-all duration-200 border
+            ${active ? 'bg-[rgba(233,30,140,0.15)] border-[var(--primary)] text-[var(--primary)]' : 'bg-transparent border-[var(--border-glass)] text-[var(--text-secondary)]'}
+          `}>{item}</button>
         );
       })}
     </div>
@@ -35,7 +33,7 @@ const FilterSection = ({ title, items, selected, onToggle }: { title: string; it
 );
 
 export default function ProductsPageWrapper() {
-  return <Suspense fallback={<div className="container-main" style={{ padding: '40px', textAlign: 'center' }}><div className="skeleton" style={{ width: '100%', height: '400px' }} /></div>}><ProductsPage /></Suspense>;
+  return <Suspense fallback={<div className="container-main p-10 text-center"><div className="skeleton w-full h-[400px]" /></div>}><ProductsPage /></Suspense>;
 }
 
 function ProductsPage() {
@@ -77,37 +75,37 @@ function ProductsPage() {
 
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
+    <div className="container-main animate-fade-in py-6 px-4">
       {/* Top bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
         <div>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>
+          <h1 className="font-outfit text-[28px] font-bold mb-1">
             {categoryParam ? categories.find(c => c.slug === categoryParam)?.name || 'Products' : 'All Products'}
           </h1>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>{filtered.length} products found</p>
+          <p className="text-sm text-[var(--text-muted)]">{filtered.length} products found</p>
         </div>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <button onClick={() => setFiltersOpen(!filtersOpen)} className="btn-outline" style={{ padding: '8px 16px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <div className="flex gap-2 items-center">
+          <button onClick={() => setFiltersOpen(!filtersOpen)} className="btn-outline p-2 px-4 text-[13px] flex items-center gap-1.5">
             <SlidersHorizontal size={16} /> Filters
-            {activeFilterCount > 0 && <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{activeFilterCount}</span>}
+            {activeFilterCount > 0 && <span className="bg-[var(--primary)] text-white rounded-full w-[18px] h-[18px] text-[10px] flex items-center justify-center">{activeFilterCount}</span>}
           </button>
-          <div style={{ position: 'relative' }}>
-            <select aria-label="Sort products" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-glass" style={{ paddingRight: '32px', fontSize: '13px', cursor: 'pointer', appearance: 'none', minWidth: '160px' }}>
-              {sortOptions.map(o => <option key={o.value} value={o.value} style={{ background: 'var(--bg-surface)' }}>{o.label}</option>)}
+          <div className="relative">
+            <select aria-label="Sort products" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-glass pr-8 text-[13px] cursor-pointer appearance-none min-w-[160px]">
+              {sortOptions.map(o => <option key={o.value} value={o.value} className="bg-[var(--bg-surface)]">{o.label}</option>)}
             </select>
-            <ChevronDown size={16} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }} />
+            <ChevronDown size={16} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] pointer-events-none" />
           </div>
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '24px' }}>
+      <div className="flex gap-6">
         {/* Filter sidebar */}
         {filtersOpen && (
-          <div className="glass-card" style={{ width: '260px', padding: '20px', flexShrink: 0, alignSelf: 'flex-start', position: 'sticky', top: '110px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600 }}>Filters</h3>
+          <div className="glass-card w-[260px] p-5 shrink-0 self-start sticky top-[110px]">
+            <div className="flex justify-between items-center mb-5">
+              <h3 className="font-outfit text-base font-semibold">Filters</h3>
               <button onClick={() => { setSelectedCategories([]); setSelectedBrands([]); setSelectedSkinTypes([]); setSelectedConcerns([]); }}
-                style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: '12px', cursor: 'pointer', fontWeight: 500 }}>Clear All</button>
+                className="bg-none border-none text-[var(--primary)] text-[12px] cursor-pointer font-medium">Clear All</button>
             </div>
             <FilterSection title="Category" items={categories.map(c => c.slug)} selected={selectedCategories} onToggle={(v) => toggleFilter(selectedCategories, v, setSelectedCategories)} />
             <FilterSection title="Brand" items={brands.map(b => b.name)} selected={selectedBrands} onToggle={(v) => toggleFilter(selectedBrands, v, setSelectedBrands)} />
@@ -117,17 +115,17 @@ function ProductsPage() {
         )}
 
         {/* Product grid */}
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
+        <div className="flex-1">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
             {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
           {filtered.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-              <p style={{ fontSize: '48px', marginBottom: '16px' }}>😢</p>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '20px', marginBottom: '8px' }}>No products found</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Try adjusting your filters</p>
+            <div className="text-center py-[60px] px-5">
+              <p className="text-[48px] mb-4">😢</p>
+              <h3 className="font-outfit text-xl mb-2">No products found</h3>
+              <p className="text-[var(--text-muted)] mb-5">Try adjusting your filters</p>
               <button onClick={() => { setSelectedCategories([]); setSelectedBrands([]); setSelectedSkinTypes([]); setSelectedConcerns([]); }}
-                className="btn-outline" style={{ padding: '10px 24px' }}>Clear Filters</button>
+                className="btn-outline p-2.5 px-6">Clear Filters</button>
             </div>
           )}
         </div>

@@ -7,39 +7,12 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      padding: '20px',
-      background: '#050505',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
+    <div className="min-h-screen flex items-center justify-center p-5 bg-[#050505] relative overflow-hidden">
       {/* Abstract background elements */}
-      <div style={{
-        position: 'absolute',
-        top: '10%',
-        left: '5%',
-        width: '40vw',
-        height: '40vw',
-        background: 'radial-gradient(circle, rgba(233, 30, 140, 0.15) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        zIndex: 0
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        right: '5%',
-        width: '30vw',
-        height: '30vw',
-        background: 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        zIndex: 0
-      }} />
+      <div className="absolute top-[10%] left-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,_rgba(233,30,140,0.15)_0%,_transparent_70%)] blur-[80px] z-0" />
+      <div className="absolute bottom-[10%] right-[5%] w-[30vw] h-[30vw] bg-[radial-gradient(circle,_rgba(124,58,237,0.1)_0%,_transparent_70%)] blur-[80px] z-0" />
 
-      <div style={{ position: 'relative', zIndex: 1, width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <div className="relative z-10 w-full flex justify-center">
         <AuthForm />
       </div>
     </div>

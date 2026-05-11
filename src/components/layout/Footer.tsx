@@ -24,6 +24,7 @@ const supportLinks = [
   { label: 'Shipping Policy', href: '/shipping' },
   { label: 'Returns & Refunds', href: '/returns' },
   { label: 'Track Order', href: '/track-order' },
+  { label: 'My Orders', href: '/profile#orders' },
   { label: 'Contact Us', href: '/contact' },
 ];
 
@@ -34,8 +35,16 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-glass)', paddingTop: '48px', paddingBottom: '24px' }}>
+    <footer style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-glass)', paddingTop: '48px', paddingBottom: '24px', position: 'relative', overflow: 'hidden' }}>
+      <div className="floating-blob w-40 h-40 -top-16 -left-10 bg-purple-500/30" aria-hidden />
+      <div className="floating-blob w-40 h-40 top-24 -right-8 bg-pink-400/30" style={{ animationDelay: '1s' }} aria-hidden />
       <div className="container-main">
+        <div className="story-section p-5 md:p-7 mb-8">
+          <p className="story-kicker text-sm text-white/85 mb-1">Your Glow Story, Weekly</p>
+          <h3 className="story-title text-2xl md:text-3xl font-black text-white mb-2">Beauty edits, ritual guides, and surprise drops.</h3>
+          <p className="text-sm md:text-[15px] text-white/80 max-w-2xl">Every week, Glow Addict curates one practical routine story so your skin wins without the guesswork.</p>
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px', marginBottom: '40px' }}>
           {/* Brand */}
           <div>

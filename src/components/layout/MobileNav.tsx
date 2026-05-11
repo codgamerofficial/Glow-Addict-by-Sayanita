@@ -23,9 +23,9 @@ export default function MobileNav() {
     <>
       <nav style={{
         position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
-        background: 'var(--bg-glass)', backdropFilter: 'blur(24px)',
+        background: 'linear-gradient(180deg, rgba(18,18,30,0.8), rgba(25,18,40,0.92))', backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        borderTop: '1px solid var(--border-glass)',
+        borderTop: '1px solid rgba(255,255,255,0.16)',
         padding: '4px 0 env(safe-area-inset-bottom, 8px)',
         display: 'flex', justifyContent: 'space-around',
       }} className="mobile-bottom-nav">
@@ -36,13 +36,23 @@ export default function MobileNav() {
             <Link key={tab.href} href={tab.href} style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
               textDecoration: 'none', padding: '6px 12px', position: 'relative',
-              color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+              color: isActive ? '#ffffff' : 'var(--text-muted)',
             }}>
               <motion.div
                 whileTap={{ scale: 0.8 }}
                 animate={{ y: isActive ? -2 : 0 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                style={{ position: 'relative' }}
+                style={{
+                  position: 'relative',
+                  background: isActive ? 'linear-gradient(135deg, rgba(168,85,247,0.95), rgba(236,72,153,0.95))' : 'transparent',
+                  borderRadius: '999px',
+                  width: '34px',
+                  height: '34px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: isActive ? '0 8px 22px rgba(236,72,153,0.4)' : 'none',
+                }}
               >
                 <Icon size={22} />
                 {tab.label === 'Cart' && hydrated && itemCount > 0 && (

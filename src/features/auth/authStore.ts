@@ -1,16 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { User } from '@/types/product';
-import { createClient } from '@/utils/supabase/client';
-
-const supabase = createClient();
+import { supabase } from '@/lib/supabase';
 
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isInitialized: boolean;
   login: (user: User) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => void;
   initialize: () => Promise<void>;
 }
@@ -38,47 +36,40 @@ export const useAuthStore = create<AuthState>()(
         // Get initial session
         const { data: { session } } = await supabase.auth.getSession();
         
-        if (session?.user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-
-          set({ 
-            user: {
-              id: session.user.id,
-              email: session.user.email || '',
-              name: profile?.name || session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-              avatarUrl: profile?.avatar_url || session.user.user_metadata?.avatar_url,
-              loyaltyPoints: profile?.loyalty_points || 0,
-              skinType: profile?.skin_type,
-            }, 
-            isAuthenticated: true 
-          });
-        }
-
-        // Listen for changes
-        supabase.auth.onAuthStateChange(async (event, session) => {
-          if (session?.user) {
+        const handleUser = async (supabaseUser: any) => {
+          if (supabaseUser) {
+            // Get profile from profiles table
             const { data: profile } = await supabase
               .from('profiles')
               .select('*')
-              .eq('id', session.user.id)
+              .eq('id', supabaseUser.id)
               .single();
 
-            set({ 
-              user: {
-                id: session.user.id,
-                email: session.user.email || '',
-                name: profile?.name || session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-                avatarUrl: profile?.avatar_url || session.user.user_metadata?.avatar_url,
-                loyaltyPoints: profile?.loyalty_points || 0,
-                skinType: profile?.skin_type,
-              }, 
-              isAuthenticated: true 
-            });
+            const userData: User = {
+              id: supabaseUser.id,
+              email: supabaseUser.email || '',
+              name: profile?.name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || 'Glow User',
+              avatarUrl: profile?.avatar_url || supabaseUser.user_metadata?.avatar_url,
+              loyaltyPoints: profile?.loyalty_points || 0,
+              skinType: profile?.skin_type,
+            };
+
+            set({ user: userData, isAuthenticated: true });
           } else {
+            set({ user: null, isAuthenticated: false });
+          }
+        };
+
+        // Handle initial session
+        if (session?.user) {
+          await handleUser(session.user);
+        }
+
+        // Listen for Auth changes
+        supabase.auth.onAuthStateChange(async (event, session) => {
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+            await handleUser(session?.user);
+          } else if (event === 'SIGNED_OUT') {
             set({ user: null, isAuthenticated: false });
           }
         });

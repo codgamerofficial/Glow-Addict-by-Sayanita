@@ -23,23 +23,19 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
   const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacidamide', 'Lipstick', 'Retinol'];
 
   return (
-    <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto', padding: '8px 0' }}>
-      <div style={{ position: 'relative' }}>
-        <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+    <div className="relative max-w-[600px] mx-auto py-2">
+      <div className="relative">
+        <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
         <input
           type="text" 
           aria-label="Search products"
           placeholder="Search for products, brands, concerns..."
           value={query} onChange={(e) => setQuery(e.target.value)}
           autoFocus
-          className="input-glass"
-          style={{ paddingLeft: '42px', paddingRight: '40px', fontSize: '15px' }}
+          className="input-glass pl-[42px] pr-10 text-[15px]"
         />
         {onClose && (
-          <button aria-label="Close search" onClick={onClose} style={{
-            position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
-            background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px',
-          }}>
+          <button aria-label="Close search" onClick={onClose} className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-none border-none text-[var(--text-muted)] cursor-pointer p-1">
             <X size={18} />
           </button>
         )}
@@ -47,62 +43,41 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
 
       {/* Results / Trending */}
       {query.trim() && (
-        <div style={{
-          position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
-          background: 'var(--bg-surface)', border: '1px solid var(--border-glass)',
-          borderRadius: '12px', marginTop: '8px', overflow: 'hidden',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-        }}>
+        <div className="absolute top-full left-0 right-0 z-50 bg-[var(--bg-surface)] border border-[var(--border-glass)] rounded-xl mt-2 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
           {results.length > 0 ? (
-            <div style={{ padding: '8px' }}>
+            <div className="p-2">
               {results.map((p) => (
                 <Link key={p.id} href={`/products/${p.slug}`} onClick={onClose}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '12px',
-                    padding: '10px 12px', borderRadius: '8px', textDecoration: 'none',
-                    color: 'var(--text-primary)', transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-glass)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  className="flex items-center gap-3 p-2.5 px-3 rounded-lg no-underline text-[var(--text-primary)] transition-colors duration-200 hover:bg-[var(--bg-glass)]"
                 >
-                  <div style={{
-                    width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden',
-                    background: 'var(--bg-glass)', flexShrink: 0, position: 'relative'
-                  }}>
+                  <div className="w-10 h-10 rounded-lg overflow-hidden bg-[var(--bg-glass)] shrink-0 relative">
                     <Image 
                       src={p.images[0]} 
                       alt={p.name} 
                       fill
-                      style={{ objectFit: 'cover' }} 
+                      className="object-cover"
                     />
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '14px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium overflow-hidden text-ellipsis whitespace-nowrap">
                       {p.name}
                     </div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{p.brandName}</div>
+                    <div className="text-[12px] text-[var(--text-muted)]">{p.brandName}</div>
                   </div>
-                  <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--primary)' }}>
+                  <div className="text-sm font-semibold text-[var(--primary)]">
                     ₹{p.salePrice || p.price}
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            <div style={{ padding: '16px' }}>
-              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div className="p-4">
+              <div className="text-[12px] font-semibold text-[var(--text-muted)] mb-3 flex items-center gap-1.5">
                 <TrendingUp size={14} /> TRENDING SEARCHES
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              <div className="flex flex-wrap gap-2">
                 {trending.map((t) => (
-                  <button key={t} onClick={() => setQuery(t)} style={{
-                    background: 'var(--bg-glass)', border: '1px solid var(--border-glass)',
-                    borderRadius: '20px', padding: '6px 14px', fontSize: '13px',
-                    color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = 'var(--primary)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                  >
+                  <button key={t} onClick={() => setQuery(t)} className="bg-[var(--bg-glass)] border border-[var(--border-glass)] rounded-full p-1.5 px-3.5 text-[13px] text-[var(--text-secondary)] cursor-pointer transition-all duration-200 hover:border-[var(--primary)] hover:text-[var(--primary)]">
                     {t}
                   </button>
                 ))}
