@@ -80,6 +80,7 @@ export interface AdminOrder {
   createdAt: string;
   paymentStatus?: string;
   paymentMethod?: string;
+  codDepositAmount?: number | null;
   items?: OrderItem[];
   shippingAddress?: ShippingAddress;
   trackingNumber?: string;
