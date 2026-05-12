@@ -99,42 +99,7 @@ export interface WishlistItem {
   addedAt: string;
 }
 
-export interface Order {
-  id: string;
-  orderNumber: string;
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
-  items: OrderItem[];
-  subtotal: number;
-  discount: number;
-  shippingFee: number;
-  tax: number;
-  total: number;
-  paymentMethod: string;
-  paymentStatus: string;
-  shippingAddress: Address;
-  createdAt: string;
-}
 
-export interface OrderItem {
-  id: string;
-  productId: string;
-  productName: string;
-  productImage: string;
-  quantity: number;
-  price: number;
-  total: number;
-}
-
-export interface Address {
-  fullName: string;
-  phone: string;
-  line1: string;
-  line2?: string;
-  city: string;
-  state: string;
-  pincode: string;
-  country: string;
-}
 
 export interface User {
   id: string;
@@ -165,5 +130,7 @@ export interface AIMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: string;
-  products?: Product[];
+   products?: Product[];
 }
+
+export { Order, OrderItem, Address } from './order';
