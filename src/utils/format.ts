@@ -4,5 +4,5 @@ export function formatINR(value: number | string | null | undefined) {
     return '₹0';
   }
 
-  return numericValue.toLocaleString('en-IN');
+  return '₹' + numericValue.toLocaleString('en-IN');
 }
