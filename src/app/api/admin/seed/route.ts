@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { products } from '@/data/products';
+import { brands, categories, products } from '@/data/products';
 import { adminOrders, adminInfluencers, adminCoupons, adminNotifications, adminAIRecommendations, adminBanners } from '@/data/admin-seed';
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL, MANUAL_PAYMENT_NOTE, STORE_NAME, UPI_ID, WHATSAPP_NUMBER } from '@/lib/commerce';
 
 export async function POST() {
   try {
@@ -15,7 +16,43 @@ export async function POST() {
     // Initialize a Supabase client with the service role key to bypass RLS for seeding
     const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
 
-    // 1. Seed Products (upsert to avoid duplicates if run multiple times)
+    // 1. Seed Categories
+    const { error: categoryError } = await supabaseAdmin
+      .from('categories')
+      .upsert(
+        categories.map((category) => ({
+          id: category.id,
+          name: category.name,
+          slug: category.slug,
+          description: category.description,
+          image_url: category.imageUrl,
+          icon: category.icon,
+          parent_id: category.parentId,
+          product_count: category.productCount,
+        })),
+        { onConflict: 'id' }
+      );
+
+    if (categoryError) throw new Error(`Category Seeding Failed: ${categoryError.message}`);
+
+    // 2. Seed Brands
+    const { error: brandError } = await supabaseAdmin
+      .from('brands')
+      .upsert(
+        brands.map((brand) => ({
+          id: brand.id,
+          name: brand.name,
+          slug: brand.slug,
+          logo_url: brand.logoUrl || null,
+          description: brand.description,
+          is_premium: brand.isPremium,
+        })),
+        { onConflict: 'id' }
+      );
+
+    if (brandError) throw new Error(`Brand Seeding Failed: ${brandError.message}`);
+
+    // 3. Seed Products (upsert to avoid duplicates if run multiple times)
     const formattedProducts = products.map((p) => ({
       id: p.id,
       name: p.name,
@@ -26,10 +63,19 @@ export async function POST() {
       brand_name: p.brandName,
       category_id: p.categoryId,
       category_name: p.categoryName,
+      subcategory_name: p.subcategoryName,
       price: p.price,
+      mrp: p.mrp ?? p.price,
       sale_price: p.salePrice,
+      discount_percent: p.discountPercent ?? (p.salePrice ? Math.round(((p.price - p.salePrice) / p.price) * 100) : 0),
       currency: p.currency,
       images: p.images,
+      sku: p.sku,
+      seo_title: p.seoTitle,
+      seo_description: p.seoDescription,
+      badges: p.badges || [],
+      gender: p.gender,
+      benefits: p.benefits || [],
       ingredients: p.ingredients,
       how_to_use: p.howToUse,
       skin_types: p.skinTypes,
@@ -38,8 +84,12 @@ export async function POST() {
       rating_count: p.ratingCount,
       is_bestseller: p.isBestseller,
       is_new: p.isNew,
+      is_trending: p.isTrending || false,
+      is_recommended: p.isRecommended || false,
       tags: p.tags,
       stock_quantity: p.stockQuantity || Math.floor(Math.random() * 100),
+      inventory_count: p.inventoryCount ?? p.stockQuantity,
+      gst_percent: p.gstPercent ?? 18,
     }));
 
     const { error: prodError } = await supabaseAdmin
@@ -48,7 +98,7 @@ export async function POST() {
 
     if (prodError) throw new Error(`Product Seeding Failed: ${prodError.message}`);
 
-    // 2. Seed Orders
+    // 4. Seed Orders
     const formattedOrders = adminOrders.map((o) => ({
       id: o.id,
       order_number: o.orderNumber,
@@ -58,6 +108,13 @@ export async function POST() {
       total: o.total,
       payment_method: o.paymentMethod,
       payment_status: o.paymentStatus,
+      cod_deposit_amount: o.codDepositAmount || null,
+      transaction_id: o.transactionId || null,
+      screenshot_url: o.screenshotUrl || null,
+      customer_name: o.customerName || null,
+      customer_email: o.customerEmail || null,
+      customer_phone: o.customerPhone || null,
+      shipping_address: o.shippingAddress || null,
       created_at: o.createdAt,
     }));
 
@@ -67,7 +124,7 @@ export async function POST() {
 
     if (orderError) throw new Error(`Order Seeding Failed: ${orderError.message}`);
 
-    // 3. Seed Influencers
+    // 5. Seed Influencers
     const { error: infError } = await supabaseAdmin.from('influencers').upsert(
       adminInfluencers.map(i => ({
         id: i.id,
@@ -85,7 +142,7 @@ export async function POST() {
     );
     if (infError) throw new Error(`Influencer Seeding Failed: ${infError.message}`);
 
-    // 4. Seed Coupons
+    // 6. Seed Coupons
     const { error: coupError } = await supabaseAdmin.from('coupons').upsert(
       adminCoupons.map(c => ({
         id: c.id,
@@ -104,7 +161,7 @@ export async function POST() {
     );
     if (coupError) throw new Error(`Coupon Seeding Failed: ${coupError.message}`);
 
-    // 5. Seed Notifications
+    // 7. Seed Notifications
     const { error: notifError } = await supabaseAdmin.from('notifications').upsert(
       adminNotifications.map(n => ({
         id: n.id,
@@ -121,7 +178,7 @@ export async function POST() {
     );
     if (notifError) throw new Error(`Notification Seeding Failed: ${notifError.message}`);
 
-    // 6. Seed AI Recommendations
+    // 8. Seed AI Recommendations
     const { error: aiError } = await supabaseAdmin.from('ai_recommendations').upsert(
       adminAIRecommendations.map(r => ({
         id: r.id,
@@ -135,7 +192,7 @@ export async function POST() {
     );
     if (aiError) throw new Error(`AI Recommendation Seeding Failed: ${aiError.message}`);
 
-    // 7. Seed Banners
+    // 9. Seed Banners
     const banners = adminBanners.map(b => ({
       id: b.id,
       title: b.title,
@@ -147,15 +204,26 @@ export async function POST() {
     }));
     await supabaseAdmin.from('cms_banners').upsert(banners, { onConflict: 'id' });
 
-    // 8. Seed Collections
+    // 10. Seed Collections
     const collections = [
       { name: 'Summer Essentials', slug: 'summer-essentials', description: 'Lightweight hydrators.', display_order: 1 },
       { name: 'K-Beauty Picks', slug: 'k-beauty-picks', description: 'Curated secrets.', display_order: 2 },
     ];
     await supabaseAdmin.from('cms_collections').upsert(collections, { onConflict: 'slug' });
 
-    // 9. Seed Settings
-    await supabaseAdmin.from('settings').upsert({ id: 'global', store_name: 'Glow Addict', contact_email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@glowaddict.com' });
+    // 11. Seed Settings
+    await supabaseAdmin.from('settings').upsert({
+      id: 'global',
+      store_name: STORE_NAME,
+      store_description: MANUAL_PAYMENT_NOTE,
+      contact_email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'sayanitapayra@gmail.com',
+      contact_phone: WHATSAPP_NUMBER,
+      social_links: {
+        instagram: INSTAGRAM_URL,
+        whatsapp: `https://wa.me/${WHATSAPP_NUMBER}`,
+        instagramHandle: INSTAGRAM_HANDLE,
+      },
+    });
 
     return NextResponse.json({ success: true, message: 'Database successfully seeded with the full Glow Addict ecosystem!' });
   } catch (error: unknown) {

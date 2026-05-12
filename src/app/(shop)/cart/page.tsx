@@ -2,12 +2,15 @@
 import Link from 'next/link';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Truck, Tag } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
+import { useAuthStore } from '@/features/auth/authStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/components/shared/Toast';
 import PageTransition from '@/components/shared/PageTransition';
+import CartWhatsAppShare from '@/components/cart/CartWhatsAppShare';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getSubtotal, getTotal, getItemCount } = useCartStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
   const subtotal = getSubtotal();
   const total = getTotal();
   const shipping = subtotal > 499 ? 0 : 49;
@@ -180,14 +183,23 @@ export default function CartPage() {
                 <Tag size={14} /> Apply
               </motion.button>
             </div>
-            <Link href="/checkout" className="btn-gradient" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '14px', fontSize: '15px', textDecoration: 'none' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Proceed to Checkout <ArrowRight size={18} /></span>
-            </Link>
+            {isInitialized && isAuthenticated ? (
+              <Link href="/checkout" className="btn-gradient" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '14px', fontSize: '15px', textDecoration: 'none' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Proceed to Checkout <ArrowRight size={18} /></span>
+              </Link>
+            ) : (
+              <Link href="/login?redirect=/checkout" className="btn-gradient" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '14px', fontSize: '15px', textDecoration: 'none' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Sign in to Checkout <ArrowRight size={18} /></span>
+              </Link>
+            )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '12px', justifyContent: 'center' }}>
               <Truck size={14} style={{ color: 'var(--success)' }} />
               <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Estimated delivery: 3-5 business days</span>
             </div>
           </motion.div>
+
+          {/* WhatsApp Order Button */}
+          <CartWhatsAppShare />
         </div>
 
         <style jsx global>{`

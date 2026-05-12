@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 interface StatusBadgeProps {
   status: string;
   size?: 'sm' | 'md';
+  variant?: 'default' | 'payment';
 }
 
 const statusStyles: Record<string, { bg: string; color: string; dot: string }> = {
@@ -26,7 +27,7 @@ const statusStyles: Record<string, { bg: string; color: string; dot: string }> =
   resolved: { bg: 'rgba(16,185,129,0.1)', color: '#10B981', dot: '#10B981' },
 };
 
-export function StatusBadge({ status, size = 'sm' }: StatusBadgeProps) {
+export function StatusBadge({ status, size = 'sm', variant = 'default' }: StatusBadgeProps) {
   const style = statusStyles[status] || statusStyles.pending;
   const px = size === 'sm' ? '8px 12px' : '6px 14px';
   const fs = size === 'sm' ? 11 : 12;
@@ -40,6 +41,7 @@ export function StatusBadge({ status, size = 'sm' }: StatusBadgeProps) {
         padding: px, borderRadius: 20, fontSize: fs, fontWeight: 600,
         background: style.bg, color: style.color,
         textTransform: 'capitalize', letterSpacing: '0.02em',
+        opacity: variant === 'payment' && status === 'verified' ? 1 : 1,
       }}
     >
       <span style={{ width: 6, height: 6, borderRadius: '50%', background: style.dot }} />

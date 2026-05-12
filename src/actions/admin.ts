@@ -1,6 +1,6 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
+import { createClient, isSupabaseConfigured } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import type { AdminRole, AdminUserWithRole } from '@/types/admin';
 
@@ -99,6 +99,31 @@ export async function deleteProduct(id: string) {
 }
 
 // -- Orders --
+function normalizeOrderRecord(order: Record<string, any>) {
+  return {
+    ...order,
+    id: order.id,
+    orderNumber: order.order_number,
+    status: order.status,
+    userId: order.user_id,
+    paymentMethod: order.payment_method,
+    paymentStatus: order.payment_status,
+    codDepositAmount: order.cod_deposit_amount,
+    transactionId: order.transaction_id,
+    screenshotUrl: order.screenshot_url,
+    subtotal: order.subtotal,
+    shippingFee: order.shipping_fee,
+    tax: order.tax,
+    total: order.total,
+    shippingAddress: order.shipping_address,
+    customerName: order.customer_name,
+    customerEmail: order.customer_email,
+    customerPhone: order.customer_phone,
+    trackingNumber: order.tracking_number,
+    createdAt: order.created_at,
+  };
+}
+
 export async function getAdminOrders() {
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -110,7 +135,47 @@ export async function getAdminOrders() {
     console.error('Failed to fetch admin orders:', error);
     return [];
   }
-  return data;
+  return (data || []).map(normalizeOrderRecord);
+}
+
+export async function getOrderById(id: string) {
+  const supabase = await createClient();
+  const { data: order, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Failed to fetch order by ID:', error);
+    return null;
+  }
+
+  const { data: orderItems, error: itemsError } = await supabase
+    .from('order_items')
+    .select('*')
+    .eq('order_id', id)
+    .order('created_at', { ascending: false });
+
+  if (itemsError) {
+    console.error('Failed to fetch order items:', itemsError);
+  }
+
+  return {
+    ...normalizeOrderRecord(order),
+    items: (orderItems || []).map((item) => ({
+      id: item.id,
+      product: {
+        id: item.product_id,
+        name: item.product_name,
+        images: item.product_image ? [item.product_image] : [],
+        price: Number(item.price || 0),
+      },
+      quantity: item.quantity,
+      price: Number(item.price || 0),
+      total: Number(item.total || 0),
+    })),
+  };
 }
 
 export async function updateOrderStatus(id: string, status: string) {
@@ -120,6 +185,36 @@ export async function updateOrderStatus(id: string, status: string) {
   
   await createAuditLog('update_status', 'order', id, { status });
   revalidatePath(`/admin/orders/${id}`);
+  revalidatePath('/admin/orders');
+  return { success: true };
+}
+
+export async function verifyPayment(orderId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('orders')
+    .update({ payment_status: 'verified', status: 'confirmed' })
+    .eq('id', orderId);
+
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('verify_payment', 'order', orderId);
+  revalidatePath(`/admin/orders/${orderId}`);
+  revalidatePath('/admin/orders');
+  return { success: true };
+}
+
+export async function saveTrackingNumber(orderId: string, trackingNumber: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('orders')
+    .update({ status: 'shipped', tracking_number: trackingNumber })
+    .eq('id', orderId);
+
+  if (error) throw new Error(error.message);
+  
+  await createAuditLog('save_tracking', 'order', orderId, { trackingNumber });
+  revalidatePath(`/admin/orders/${orderId}`);
   revalidatePath('/admin/orders');
   return { success: true };
 }
@@ -233,6 +328,7 @@ export async function getAdminAIRecommendations() {
 
 // -- CMS Banners --
 export async function getAdminBanners() {
+  if (!isSupabaseConfigured) return [];
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.from('cms_banners').select('*').order('display_order', { ascending: true });
@@ -279,6 +375,7 @@ export async function deleteBanner(id: string) {
 
 // -- CMS Collections --
 export async function getAdminCollections() {
+  if (!isSupabaseConfigured) return [];
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.from('cms_collections').select('*').order('display_order', { ascending: true });

@@ -4,12 +4,14 @@ import { cookies } from "next/headers";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+
 export const createClient = async () => {
   const cookieStore = await cookies();
 
   return createServerClient(
-    supabaseUrl!,
-    supabaseKey!,
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseKey || 'placeholder-key',
     {
       cookies: {
         getAll() {

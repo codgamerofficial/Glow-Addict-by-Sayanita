@@ -8,10 +8,19 @@ export interface Product {
   brandName: string;
   categoryId: string;
   categoryName: string;
+  subcategoryName?: string;
   price: number;
   salePrice?: number;
+  mrp?: number;
+  discountPercent?: number;
   currency: string;
   images: string[];
+  sku?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  badges?: string[];
+  gender?: string;
+  benefits?: string[];
   ingredients?: string;
   howToUse?: string;
   skinTypes: string[];
@@ -20,10 +29,14 @@ export interface Product {
   ratingCount: number;
   isBestseller: boolean;
   isNew: boolean;
+  isTrending?: boolean;
+  isRecommended?: boolean;
   tags: string[];
   weightGrams?: number;
   variants?: ProductVariant[];
   stockQuantity: number;
+  inventoryCount?: number;
+  gstPercent?: number;
 }
 
 export interface ProductVariant {

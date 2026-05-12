@@ -1,13 +1,14 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Heart, ShoppingBag, Star, Gift, Settings, LogOut, ChevronRight, Sparkles, Camera } from 'lucide-react';
+import { Heart, ShoppingBag, Star, Gift, Settings, LogOut, ChevronRight, Sparkles, Camera, Mail, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useAuthStore } from '@/features/auth/authStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import { getUserOrders } from '@/actions/shop';
 import { useState } from 'react';
 import Image from 'next/image';
+import { createClient } from '@/utils/supabase/client';
 
 interface Order {
   id: string;
@@ -19,23 +20,46 @@ interface Order {
 
 export default function ProfilePage() {
   const router = useRouter();
+  const supabase = createClient();
   const { user, isAuthenticated, logout, isInitialized } = useAuthStore();
   const wishlistCount = useWishlistStore(s => s.items.length);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
+  const [emailVerified, setEmailVerified] = useState(true);
+  const [isResendingEmail, setIsResendingEmail] = useState(false);
 
   useEffect(() => {
-    if (isInitialized && !isAuthenticated) {
-      router.push('/login');
-    }
-    
     if (isAuthenticated) {
       getUserOrders().then(o => {
         setOrders(o as Order[]);
         setIsLoadingOrders(false);
       });
+
+      // Check email verification status
+      const checkEmailVerification = async () => {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        setEmailVerified(!!authUser?.email_confirmed_at);
+      };
+      checkEmailVerification();
     }
-  }, [isInitialized, isAuthenticated, router]);
+  }, [isAuthenticated, supabase]);
+
+  const handleResendVerificationEmail = async () => {
+    if (!user?.email) return;
+    setIsResendingEmail(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: user.email
+      });
+      if (error) throw error;
+      alert('Verification email sent! Please check your inbox.');
+    } catch (err: any) {
+      alert('Failed to resend verification email: ' + err.message);
+    } finally {
+      setIsResendingEmail(false);
+    }
+  };
 
   const statusColor: Record<string, string> = { 
     Delivered: 'var(--success)', 
@@ -44,10 +68,71 @@ export default function ProfilePage() {
     Cancelled: 'var(--error)' 
   };
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated) {
+    return (
+      <div className="container-main animate-fade-in" style={{ padding: '24px 16px', maxWidth: '900px', textAlign: 'center' }}>
+        <div style={{
+          padding: '48px 32px',
+          borderRadius: '24px',
+          background: 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          color: 'white',
+          maxWidth: '400px',
+          margin: '0 auto'
+        }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '12px' }}>Profile Access</h1>
+          <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '24px' }}>
+            Please sign in to access your profile and personalized features.
+          </p>
+          <a href="/login" style={{
+            display: 'inline-block',
+            padding: '12px 24px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #7c2cff 0%, #9d5cff 100%)',
+            color: 'white',
+            fontWeight: 700,
+            fontSize: '14px',
+            textDecoration: 'none'
+          }}>
+            Sign In
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-main animate-fade-in" style={{ padding: '24px 16px', maxWidth: '900px' }}>
+      {/* Email Verification Banner */}
+      {!emailVerified && (
+        <div style={{ marginBottom: '20px', padding: '14px 16px', borderRadius: '12px', background: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.2)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <AlertCircle size={20} style={{ color: 'rgb(251, 191, 36)', flexShrink: 0 }} />
+          <div style={{ flex: 1 }}>
+            <p style={{ fontSize: '14px', fontWeight: 600, marginBottom: '4px', color: 'rgb(251, 191, 36)' }}>Email not verified</p>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Click the verification link in your email or resend it below</p>
+          </div>
+          <button
+            onClick={handleResendVerificationEmail}
+            disabled={isResendingEmail}
+            style={{
+              padding: '8px 14px',
+              borderRadius: '8px',
+              border: 'none',
+              background: 'rgba(251, 191, 36, 0.2)',
+              color: 'rgb(251, 191, 36)',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: isResendingEmail ? 'not-allowed' : 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              opacity: isResendingEmail ? 0.6 : 1
+            }}
+          >
+            {isResendingEmail ? 'Sending...' : 'Resend'}
+          </button>
+        </div>
+      )}
       {/* Profile card */}
       <div className="glass-card" style={{ padding: '24px', marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
         <div style={{
@@ -77,7 +162,18 @@ export default function ProfilePage() {
         </div>
         <div style={{ flex: 1, minWidth: '200px' }}>
           <h1 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>{user?.name || 'Beauty Lover'}</h1>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '8px' }}>{user?.email}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>{user?.email}</p>
+            {emailVerified ? (
+              <span style={{ fontSize: '11px', fontWeight: 600, background: 'rgba(16,185,129,0.15)', color: 'var(--success)', padding: '2px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                ✓ Verified
+              </span>
+            ) : (
+              <span style={{ fontSize: '11px', fontWeight: 600, background: 'rgba(251,191,36,0.15)', color: 'rgb(251, 191, 36)', padding: '2px 8px', borderRadius: '6px' }}>
+                ⚠ Pending
+              </span>
+            )}
+          </div>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {user?.skinType && <span className="badge badge-primary">{user.skinType} Skin</span>}
             <span className="badge badge-gold"><Gift size={12} /> {user?.loyaltyPoints?.toLocaleString() || 0} Points</span>

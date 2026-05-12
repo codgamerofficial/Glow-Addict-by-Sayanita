@@ -1,48 +1,39 @@
-import { AuthForm } from '@/components/auth/AuthForm';
-
-export const metadata = {
-  title: 'Your Journey | Glow Addict',
-  description: 'Step into a world of personalized beauty. Sign in or join our movement for a radiant future.',
-};
-
 export default function LoginPage() {
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px',
-      background: '#050505',
-      position: 'relative',
-      overflow: 'hidden'
+      background: 'linear-gradient(180deg, rgba(124, 44, 255, 0.1) 0%, rgba(255, 235, 247, 0.05) 100%)'
     }}>
-      {/* Abstract background elements */}
       <div style={{
-        position: 'absolute',
-        top: '10%',
-        left: '5%',
-        width: '40vw',
-        height: '40vw',
-        background: 'radial-gradient(circle, rgba(233, 30, 140, 0.15) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        zIndex: 0
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        right: '5%',
-        width: '30vw',
-        height: '30vw',
-        background: 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        zIndex: 0
-      }} />
-
-      <div style={{ position: 'relative', zIndex: 1, width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <AuthForm />
+        padding: '48px 32px',
+        borderRadius: '24px',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        textAlign: 'center',
+        color: 'white',
+        maxWidth: '400px'
+      }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '12px' }}>Sign In Unavailable</h1>
+        <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '24px' }}>
+          Authentication is currently disabled. Please check back later.
+        </p>
+        <a href="/" style={{
+          display: 'inline-block',
+          padding: '12px 24px',
+          borderRadius: '12px',
+          background: 'linear-gradient(135deg, #7c2cff 0%, #9d5cff 100%)',
+          color: 'white',
+          fontWeight: 700,
+          fontSize: '14px',
+          textDecoration: 'none'
+        }}>
+          Return to Home
+        </a>
       </div>
     </div>
   );
 }
-

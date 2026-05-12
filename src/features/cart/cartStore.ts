@@ -10,6 +10,7 @@ interface CartState {
   clearCart: () => void;
   getTotal: () => number;
   getSubtotal: () => number;
+  getShipping: () => number;
   getItemCount: () => number;
 }
 
@@ -55,11 +56,15 @@ export const useCartStore = create<CartState>()(
           return sum + price * item.quantity;
         }, 0);
       },
-      getTotal: () => {
-        const subtotal = get().getSubtotal();
-        const shipping = subtotal > 499 ? 0 : 49;
-        return subtotal + shipping;
-      },
+       getTotal: () => {
+         const subtotal = get().getSubtotal();
+         const shipping = get().getShipping();
+         return subtotal + shipping;
+       },
+       getShipping: () => {
+         const subtotal = get().getSubtotal();
+         return subtotal > 499 ? 0 : 49;
+       },
       getItemCount: () => {
         return get().items.reduce((sum, item) => sum + item.quantity, 0);
       },

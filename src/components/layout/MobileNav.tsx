@@ -1,17 +1,18 @@
 'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Sparkles, ShoppingBag, User } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Home, Search, ShoppingBag, Sparkles, User } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useHydrated } from '@/hooks/useHydrated';
-import { motion } from 'framer-motion';
 
 const tabs = [
   { href: '/', icon: Home, label: 'Home' },
   { href: '/products', icon: Search, label: 'Shop' },
-  { href: '/ai-assistant', icon: Sparkles, label: 'AI Beauty' },
-  { href: '/cart', icon: ShoppingBag, label: 'Cart' },
-  { href: '/profile', icon: User, label: 'Profile' },
+  { href: '/ai-assistant', icon: Sparkles, label: 'AI' },
+  { href: '/cart', icon: ShoppingBag, label: 'Bag' },
+  { href: '/profile', icon: User, label: 'You' },
 ];
 
 export default function MobileNav() {
@@ -21,68 +22,118 @@ export default function MobileNav() {
 
   return (
     <>
-      <nav style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
-        background: 'var(--bg-glass)', backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
-        borderTop: '1px solid var(--border-glass)',
-        padding: '4px 0 env(safe-area-inset-bottom, 8px)',
-        display: 'flex', justifyContent: 'space-around',
-      }} className="mobile-bottom-nav">
+      <nav className="mobile-bottom-nav" aria-label="Mobile quick navigation">
         {tabs.map((tab) => {
-          const isActive = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
+          const active = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
           const Icon = tab.icon;
           return (
-            <Link key={tab.href} href={tab.href} style={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
-              textDecoration: 'none', padding: '6px 12px', position: 'relative',
-              color: isActive ? 'var(--primary)' : 'var(--text-muted)',
-            }}>
-              <motion.div
-                whileTap={{ scale: 0.8 }}
-                animate={{ y: isActive ? -2 : 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                style={{ position: 'relative' }}
+            <Link key={tab.href} href={tab.href} className={`mobile-tab ${active ? 'mobile-tab-active' : ''}`}>
+              <motion.span
+                whileTap={{ scale: 0.85 }}
+                animate={{ y: active ? -3 : 0 }}
+                transition={{ type: 'spring', stiffness: 430, damping: 24 }}
+                className="mobile-tab-icon"
               >
                 <Icon size={22} />
-                {tab.label === 'Cart' && hydrated && itemCount > 0 && (
-                  <motion.span
-                    key={itemCount}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 12 }}
-                    style={{
-                      position: 'absolute', top: '-4px', right: '-8px',
-                      background: 'var(--primary)', color: 'white', borderRadius: '50%',
-                      width: '16px', height: '16px', fontSize: '9px', fontWeight: 700,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}
-                  >
-                    {itemCount}
-                  </motion.span>
+                {tab.href === '/cart' && hydrated && itemCount > 0 && (
+                  <span className="mobile-tab-count">{itemCount > 9 ? '9+' : itemCount}</span>
                 )}
-              </motion.div>
-              <span style={{ fontSize: '10px', fontWeight: isActive ? 600 : 400, transition: 'all 0.2s' }}>{tab.label}</span>
-              {isActive && (
-                <motion.div
-                  layoutId="mobile-tab-indicator"
-                  style={{
-                    position: 'absolute', top: '-1px', left: '50%', transform: 'translateX(-50%)',
-                    width: '20px', height: '3px', borderRadius: '2px',
-                    background: 'linear-gradient(90deg, var(--primary), var(--secondary))',
-                  }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                />
-              )}
+              </motion.span>
+              <span>{tab.label}</span>
+              {active && <motion.i layoutId="mobile-nav-pill" transition={{ type: 'spring', stiffness: 430, damping: 28 }} />}
             </Link>
           );
         })}
       </nav>
-      <div style={{ height: '70px' }} className="mobile-nav-spacer" />
+      <div className="mobile-nav-spacer" />
+
       <style jsx global>{`
-        @media (min-width: 768px) {
-          .mobile-bottom-nav { display: none !important; }
-          .mobile-nav-spacer { display: none !important; }
+        .mobile-bottom-nav {
+          position: fixed;
+          right: 12px;
+          bottom: 12px;
+          left: 12px;
+          z-index: 100;
+          display: none;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px;
+          padding-bottom: calc(8px + env(safe-area-inset-bottom));
+          border: 1px solid var(--line);
+          border-radius: 28px;
+          background: var(--bg-glass);
+          box-shadow: 0 20px 60px rgba(55, 21, 43, 0.18);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+        }
+
+        .mobile-tab {
+          position: relative;
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          gap: 3px;
+          min-height: 54px;
+          color: var(--text-muted);
+          text-decoration: none;
+          isolation: isolate;
+        }
+
+        .mobile-tab > span:last-child {
+          font-size: 10px;
+          font-weight: 900;
+          line-height: 1;
+        }
+
+        .mobile-tab-icon {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mobile-tab-active {
+          color: #fff;
+        }
+
+        .mobile-tab i {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          border-radius: 20px;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          box-shadow: 0 12px 28px rgba(245, 31, 123, 0.26);
+        }
+
+        .mobile-tab-count {
+          position: absolute;
+          top: -9px;
+          right: -11px;
+          display: grid;
+          place-items: center;
+          min-width: 17px;
+          height: 17px;
+          padding: 0 4px;
+          border: 2px solid var(--bg-surface);
+          border-radius: 999px;
+          color: #fff;
+          background: var(--primary);
+          font-size: 9px;
+          font-weight: 900;
+        }
+
+        .mobile-nav-spacer {
+          display: none;
+          height: 86px;
+        }
+
+        @media (max-width: 767px) {
+          .mobile-bottom-nav,
+          .mobile-nav-spacer {
+            display: flex;
+          }
         }
       `}</style>
     </>

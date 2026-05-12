@@ -1,10 +1,12 @@
 'use client';
-import { useState, useMemo, Suspense } from 'react';
+
+import { Suspense, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { SlidersHorizontal, X, ChevronDown } from 'lucide-react';
+import { ChevronDown, SlidersHorizontal, Sparkles, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { products } from '@/data/products';
-import { categories, skinTypes, skinConcerns } from '@/data/categories';
 import { brands } from '@/data/brands';
+import { categories, skinConcerns, skinTypes } from '@/data/categories';
 import ProductCard from '@/components/product/ProductCard';
 
 const sortOptions = [
@@ -15,123 +17,466 @@ const sortOptions = [
   { value: 'newest', label: 'Newest First' },
 ];
 
-const FilterSection = ({ title, items, selected, onToggle }: { title: string; items: string[]; selected: string[]; onToggle: (v: string) => void }) => (
-  <div style={{ marginBottom: '20px' }}>
-    <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{title}</h4>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-      {items.map(item => {
-        const active = selected.includes(item);
-        return (
-          <button key={item} onClick={() => onToggle(item)} style={{
-            padding: '6px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', transition: 'all 0.2s', border: '1px solid',
-            background: active ? 'rgba(233,30,140,0.15)' : 'transparent',
-            borderColor: active ? 'var(--primary)' : 'var(--border-glass)',
-            color: active ? 'var(--primary)' : 'var(--text-secondary)',
-          }}>{item}</button>
-        );
-      })}
+function FilterSection({
+  title,
+  items,
+  selected,
+  onToggle,
+}: {
+  title: string;
+  items: string[];
+  selected: string[];
+  onToggle: (value: string) => void;
+}) {
+  return (
+    <div className="filter-section">
+      <h4>{title}</h4>
+      <div>
+        {items.map((item) => {
+          const active = selected.includes(item);
+          return (
+            <button key={item} type="button" onClick={() => onToggle(item)} className={active ? 'filter-chip active' : 'filter-chip'}>
+              {item}
+            </button>
+          );
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
 export default function ProductsPageWrapper() {
-  return <Suspense fallback={<div className="container-main" style={{ padding: '40px', textAlign: 'center' }}><div className="skeleton" style={{ width: '100%', height: '400px' }} /></div>}><ProductsPage /></Suspense>;
+  return (
+    <Suspense
+      fallback={
+        <div className="container-main" style={{ padding: '40px 18px' }}>
+          <div className="skeleton" style={{ width: '100%', height: 420 }} />
+        </div>
+      }
+    >
+      <ProductsPage />
+    </Suspense>
+  );
 }
 
 function ProductsPage() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const initialCategory = categoryParam ? [categoryParam] : [];
 
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(categoryParam ? [categoryParam] : []);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedSkinTypes, setSelectedSkinTypes] = useState<string[]>([]);
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('relevance');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
 
-  const toggleFilter = (arr: string[], val: string, setter: (v: string[]) => void) => {
-    setter(arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]);
+  const toggleFilter = (arr: string[], value: string, setter: (next: string[]) => void) => {
+    setter(arr.includes(value) ? arr.filter((item) => item !== value) : [...arr, value]);
   };
 
   const filtered = useMemo(() => {
     let result = [...products];
-    if (selectedCategories.length) result = result.filter(p => selectedCategories.includes(p.categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')));
-    if (selectedBrands.length) result = result.filter(p => selectedBrands.includes(p.brandName));
-    if (selectedSkinTypes.length) result = result.filter(p => p.skinTypes.some(st => selectedSkinTypes.includes(st)));
-    if (selectedConcerns.length) result = result.filter(p => p.concerns.some(c => selectedConcerns.includes(c)));
-    result = result.filter(p => {
-      const price = p.salePrice || p.price;
+    if (selectedCategories.length) {
+      result = result.filter((product) =>
+        selectedCategories.includes(product.categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')),
+      );
+    }
+    if (selectedBrands.length) result = result.filter((product) => selectedBrands.includes(product.brandName));
+    if (selectedSkinTypes.length) result = result.filter((product) => product.skinTypes.some((type) => selectedSkinTypes.includes(type)));
+    if (selectedConcerns.length) result = result.filter((product) => product.concerns.some((concern) => selectedConcerns.includes(concern)));
+    result = result.filter((product) => {
+      const price = product.salePrice || product.price;
       return price >= priceRange[0] && price <= priceRange[1];
     });
+
     switch (sortBy) {
-      case 'price-asc': result.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price)); break;
-      case 'price-desc': result.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price)); break;
-      case 'rating': result.sort((a, b) => b.ratingAvg - a.ratingAvg); break;
-      case 'newest': result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
+      case 'price-asc':
+        result.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
+        break;
+      case 'price-desc':
+        result.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+        break;
+      case 'rating':
+        result.sort((a, b) => b.ratingAvg - a.ratingAvg);
+        break;
+      case 'newest':
+        result.sort((a, b) => Number(b.isNew) - Number(a.isNew));
+        break;
     }
+
     return result;
   }, [selectedCategories, selectedBrands, selectedSkinTypes, selectedConcerns, sortBy, priceRange]);
 
   const activeFilterCount = selectedCategories.length + selectedBrands.length + selectedSkinTypes.length + selectedConcerns.length;
-
+  const clearFilters = () => {
+    setSelectedCategories([]);
+    setSelectedBrands([]);
+    setSelectedSkinTypes([]);
+    setSelectedConcerns([]);
+    setPriceRange([0, 3000]);
+  };
+  const title = categoryParam ? categories.find((c) => c.slug === categoryParam)?.name || 'Products' : 'All Beauty';
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
-      {/* Top bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
-        <div>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '4px' }}>
-            {categoryParam ? categories.find(c => c.slug === categoryParam)?.name || 'Products' : 'All Products'}
-          </h1>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>{filtered.length} products found</p>
-        </div>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <button onClick={() => setFiltersOpen(!filtersOpen)} className="btn-outline" style={{ padding: '8px 16px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <SlidersHorizontal size={16} /> Filters
-            {activeFilterCount > 0 && <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{activeFilterCount}</span>}
-          </button>
-          <div style={{ position: 'relative' }}>
-            <select aria-label="Sort products" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-glass" style={{ paddingRight: '32px', fontSize: '13px', cursor: 'pointer', appearance: 'none', minWidth: '160px' }}>
-              {sortOptions.map(o => <option key={o.value} value={o.value} style={{ background: 'var(--bg-surface)' }}>{o.label}</option>)}
-            </select>
-            <ChevronDown size={16} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }} />
+    <div className="products-page animate-fade-in">
+      <section className="products-hero">
+        <div className="container-main products-hero-inner">
+          <div>
+            <p><Sparkles size={17} /> Glow Addict catalog</p>
+            <h1>{title}</h1>
+            <span>{filtered.length} premium products found</span>
+          </div>
+          <div className="products-hero-offer">
+            <strong>EXTRA20</strong>
+            <span>First order code</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ display: 'flex', gap: '24px' }}>
-        {/* Filter sidebar */}
-        {filtersOpen && (
-          <div className="glass-card" style={{ width: '260px', padding: '20px', flexShrink: 0, alignSelf: 'flex-start', position: 'sticky', top: '110px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600 }}>Filters</h3>
-              <button onClick={() => { setSelectedCategories([]); setSelectedBrands([]); setSelectedSkinTypes([]); setSelectedConcerns([]); }}
-                style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: '12px', cursor: 'pointer', fontWeight: 500 }}>Clear All</button>
+      <section className="container-main products-toolbar">
+        <button type="button" onClick={() => setFiltersOpen((open) => !open)} className="btn-outline filter-toggle">
+          {filtersOpen ? <X size={17} /> : <SlidersHorizontal size={17} />} Filters
+          {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
+        </button>
+
+        <div className="sort-wrap">
+          <select aria-label="Sort products" value={sortBy} onChange={(event) => setSortBy(event.target.value)} className="input-glass">
+            {sortOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown size={17} />
+        </div>
+      </section>
+
+      <section className={`container-main products-layout ${filtersOpen ? 'products-layout-with-filters' : ''}`}>
+        <motion.aside
+          className={`filter-sidebar ${filtersOpen ? 'filter-sidebar-open' : ''}`}
+          initial={false}
+          animate={{ opacity: filtersOpen ? 1 : 0.98 }}
+        >
+          <div className="filter-header">
+            <h3>Refine shelf</h3>
+            <button type="button" onClick={clearFilters}>
+              Clear all
+            </button>
+          </div>
+          <FilterSection title="Category" items={categories.map((c) => c.slug)} selected={selectedCategories} onToggle={(v) => toggleFilter(selectedCategories, v, setSelectedCategories)} />
+          <FilterSection title="Brand" items={brands.map((b) => b.name)} selected={selectedBrands} onToggle={(v) => toggleFilter(selectedBrands, v, setSelectedBrands)} />
+          <FilterSection title="Skin Type" items={skinTypes} selected={selectedSkinTypes} onToggle={(v) => toggleFilter(selectedSkinTypes, v, setSelectedSkinTypes)} />
+          <FilterSection title="Concern" items={skinConcerns.slice(0, 8)} selected={selectedConcerns} onToggle={(v) => toggleFilter(selectedConcerns, v, setSelectedConcerns)} />
+          <div className="filter-section">
+            <h4>Max price</h4>
+            <input
+              type="range"
+              min="300"
+              max="3000"
+              step="100"
+              value={priceRange[1]}
+              onChange={(event) => setPriceRange([0, Number(event.target.value)])}
+            />
+            <p>Under &#8377;{priceRange[1].toLocaleString()}</p>
+          </div>
+        </motion.aside>
+
+        <div className="products-results">
+          {filtered.length > 0 ? (
+            <div className="product-grid">
+              {filtered.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
             </div>
-            <FilterSection title="Category" items={categories.map(c => c.slug)} selected={selectedCategories} onToggle={(v) => toggleFilter(selectedCategories, v, setSelectedCategories)} />
-            <FilterSection title="Brand" items={brands.map(b => b.name)} selected={selectedBrands} onToggle={(v) => toggleFilter(selectedBrands, v, setSelectedBrands)} />
-            <FilterSection title="Skin Type" items={skinTypes} selected={selectedSkinTypes} onToggle={(v) => toggleFilter(selectedSkinTypes, v, setSelectedSkinTypes)} />
-            <FilterSection title="Concern" items={skinConcerns.slice(0, 8)} selected={selectedConcerns} onToggle={(v) => toggleFilter(selectedConcerns, v, setSelectedConcerns)} />
-          </div>
-        )}
-
-        {/* Product grid */}
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
-          {filtered.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-              <p style={{ fontSize: '48px', marginBottom: '16px' }}>😢</p>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: '20px', marginBottom: '8px' }}>No products found</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Try adjusting your filters</p>
-              <button onClick={() => { setSelectedCategories([]); setSelectedBrands([]); setSelectedSkinTypes([]); setSelectedConcerns([]); }}
-                className="btn-outline" style={{ padding: '10px 24px' }}>Clear Filters</button>
+          ) : (
+            <div className="empty-state">
+              <h3>No matches yet</h3>
+              <p>Try removing a filter or widening your budget range.</p>
+              <button type="button" onClick={clearFilters} className="btn-gradient">
+                <span>Reset filters</span>
+              </button>
             </div>
           )}
         </div>
-      </div>
+      </section>
+
+      <style jsx global>{`
+        .products-page {
+          padding-bottom: 70px;
+        }
+
+        .products-hero {
+          padding: 44px 0 36px;
+          background:
+            radial-gradient(circle at 88% 12%, rgba(255, 212, 71, 0.48), transparent 25%),
+            linear-gradient(135deg, #fff8fd, #ffe1f0 54%, #eaffd6);
+        }
+
+        [data-theme="dark"] .products-hero {
+          background:
+            radial-gradient(circle at 88% 12%, rgba(255, 212, 71, 0.2), transparent 25%),
+            linear-gradient(135deg, #140816, #28102c 58%, #132014);
+        }
+
+        .products-hero-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+        }
+
+        .products-hero p {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          margin-bottom: 12px;
+          color: var(--primary);
+          font-family: var(--font-display);
+          font-size: 14px;
+          font-weight: 900;
+        }
+
+        .products-hero h1 {
+          color: var(--text-primary);
+          font-size: clamp(44px, 8vw, 86px);
+          font-weight: 900;
+          line-height: 0.9;
+        }
+
+        .products-hero div > span {
+          display: block;
+          margin-top: 14px;
+          color: var(--text-secondary);
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .products-hero-offer {
+          min-width: 184px;
+          padding: 22px;
+          border-radius: 26px;
+          color: #fff;
+          text-align: center;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          box-shadow: var(--shadow-glow);
+          transform: rotate(3deg);
+        }
+
+        .products-hero-offer strong {
+          display: block;
+          font-family: var(--font-display);
+          font-size: 32px;
+          font-weight: 900;
+        }
+
+        .products-hero-offer span {
+          color: rgba(255, 255, 255, 0.82);
+          font-size: 13px;
+          font-weight: 800;
+        }
+
+        .products-toolbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 14px;
+          padding-top: 24px;
+          padding-bottom: 20px;
+        }
+
+        .filter-toggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 18px;
+        }
+
+        .filter-toggle span {
+          display: grid;
+          place-items: center;
+          width: 20px;
+          height: 20px;
+          border-radius: 999px;
+          color: #fff;
+          background: var(--primary);
+          font-size: 11px;
+        }
+
+        .sort-wrap {
+          position: relative;
+          min-width: 220px;
+        }
+
+        .sort-wrap select {
+          padding-right: 42px;
+          cursor: pointer;
+          appearance: none;
+        }
+
+        .sort-wrap svg {
+          position: absolute;
+          top: 50%;
+          right: 16px;
+          color: var(--text-muted);
+          pointer-events: none;
+          transform: translateY(-50%);
+        }
+
+        .products-layout {
+          display: grid;
+          grid-template-columns: 290px minmax(0, 1fr);
+          gap: 24px;
+          align-items: start;
+        }
+
+        .filter-sidebar {
+          position: sticky;
+          top: 126px;
+          display: none;
+          padding: 20px;
+          border: 1px solid var(--line);
+          border-radius: 26px;
+          background: var(--bg-surface);
+          box-shadow: var(--shadow-card);
+        }
+
+        .filter-sidebar-open {
+          display: block;
+        }
+
+        .filter-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
+
+        .filter-header h3 {
+          font-size: 19px;
+          font-weight: 900;
+        }
+
+        .filter-header button {
+          border: 0;
+          color: var(--primary);
+          background: transparent;
+          font-size: 12px;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .filter-section {
+          margin-bottom: 22px;
+        }
+
+        .filter-section h4 {
+          margin-bottom: 10px;
+          color: var(--text-primary);
+          font-family: var(--font-display);
+          font-size: 12px;
+          font-weight: 900;
+          text-transform: uppercase;
+        }
+
+        .filter-section > div {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 7px;
+        }
+
+        .filter-chip {
+          min-height: 34px;
+          padding: 8px 11px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--text-secondary);
+          background: transparent;
+          font-size: 12px;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.2s var(--spring);
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+          color: #fff;
+          border-color: transparent;
+          background: var(--primary);
+        }
+
+        .filter-section input[type="range"] {
+          width: 100%;
+          accent-color: var(--primary);
+        }
+
+        .filter-section p {
+          margin-top: 8px;
+          color: var(--text-muted);
+          font-size: 13px;
+          font-weight: 800;
+        }
+
+        .products-results {
+          min-width: 0;
+        }
+
+        .empty-state {
+          display: grid;
+          place-items: center;
+          min-height: 340px;
+          padding: 34px;
+          border: 1px solid var(--line);
+          border-radius: 28px;
+          text-align: center;
+          background: var(--bg-surface);
+          box-shadow: var(--shadow-card);
+        }
+
+        .empty-state h3 {
+          font-size: 28px;
+          font-weight: 900;
+        }
+
+        .empty-state p {
+          margin: 10px 0 18px;
+          color: var(--text-muted);
+        }
+
+        .empty-state button {
+          padding: 0 22px;
+        }
+
+        @media (max-width: 980px) {
+          .products-layout {
+            grid-template-columns: 1fr;
+          }
+
+          .filter-sidebar {
+            position: relative;
+            top: auto;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .products-hero-inner,
+          .products-toolbar {
+            align-items: stretch;
+            flex-direction: column;
+          }
+
+          .products-hero-offer {
+            width: 100%;
+            transform: none;
+          }
+
+          .sort-wrap {
+            min-width: 0;
+          }
+        }
+      `}</style>
     </div>
   );
 }

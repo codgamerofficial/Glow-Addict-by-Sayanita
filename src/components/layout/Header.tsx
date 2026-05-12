@@ -1,13 +1,62 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Search, ShoppingBag, Heart, User, Sun, Moon, Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Heart, Menu, Moon, Search, ShoppingBag, Sparkles, Sun, User, X } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import { useThemeStore } from '@/features/theme/themeStore';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { useHydrated } from '@/hooks/useHydrated';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useAuthStore } from '@/features/auth/authStore';
+
+const navLinks = [
+  { href: '/products?category=skincare', label: 'Skincare' },
+  { href: '/products?category=makeup', label: 'Makeup' },
+  { href: '/products?category=bodycare', label: 'Body' },
+  { href: '/products?category=haircare', label: 'Hair' },
+  { href: '/products?category=tools', label: 'Tools' },
+  { href: '/products', label: 'Sale' },
+  { href: '/ai-assistant', label: 'Glow AI' },
+];
+
+function IconButton({
+  children,
+  label,
+  onClick,
+}: {
+  children: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+}) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.9 }}
+      aria-label={label}
+      onClick={onClick}
+      className="header-icon-button"
+      type="button"
+    >
+      {children}
+    </motion.button>
+  );
+}
+
+function CountBadge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <motion.span
+      key={count}
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 16 }}
+      className="header-count"
+    >
+      {count > 9 ? '9+' : count}
+    </motion.span>
+  );
+}
 
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -17,244 +66,453 @@ export default function Header() {
   const itemCount = useCartStore((s) => s.getItemCount());
   const wishlistCount = useWishlistStore((s) => s.items.length);
   const { theme, toggleTheme } = useThemeStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
 
-  // Track scroll for enhanced blur/shadow
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 16);
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: '/products?category=skincare', label: 'Skincare' },
-    { href: '/products?category=makeup', label: 'Makeup' },
-    { href: '/products?category=hair-care', label: 'Hair' },
-    { href: '/products?category=fragrances', label: 'Fragrances' },
-    { href: '/products', label: 'All Products' },
-    { href: '/ai-assistant', label: '✨ AI Beauty' },
-  ];
-
   return (
     <>
-      <header style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        background: scrolled ? 'var(--bg-glass)' : 'rgba(0,0,0,0.01)',
-        backdropFilter: `blur(${scrolled ? 24 : 12}px)`,
-        WebkitBackdropFilter: `blur(${scrolled ? 24 : 12}px)`,
-        borderBottom: `1px solid ${scrolled ? 'var(--border-glass-strong)' : 'var(--border-glass)'}`,
-        boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
-        transition: 'all 0.4s cubic-bezier(0.28, 0.11, 0.32, 1)',
-      }}>
+      <div className="top-ribbon">
+        <div className="top-ribbon-track">
+          {[...Array(2)].map((_, group) => (
+            <div key={group} className="top-ribbon-group">
+              <span>Pink Summer Sale live</span>
+              <span>Extra 20% off first order</span>
+              <span>Free gift above &#8377;749</span>
+              <span>15-day easy returns</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-        {/* Main nav */}
-        <div className="container-main" style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          height: '64px', gap: '16px',
-        }}>
-          {/* Mobile menu btn */}
+      <header className={`site-header ${scrolled ? 'site-header-scrolled' : ''}`}>
+        <div className="container-main header-inner">
           <motion.button
-            whileTap={{ scale: 0.85 }}
-            onClick={() => setMenuOpen(!menuOpen)}
-            style={{
-              background: 'none', border: 'none', color: 'var(--text-primary)',
-              cursor: 'pointer', display: 'none', padding: '4px',
-            }}
-            className="mobile-menu-btn"
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="Open menu"
+            type="button"
+            className="mobile-menu-btn header-icon-button"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </motion.button>
 
-          {/* Logo */}
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0', flexShrink: 0 }}>
-            <motion.div
-              style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '22px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '4px' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="gradient-text">GLOW</span>
-              <span style={{ color: 'var(--text-primary)' }}>ADDICT</span>
-            </motion.div>
+          <Link href="/" className="header-logo" aria-label="Glow Addict home">
+            <span className="brand-wordmark">
+              <span>GLOW</span>
+              <span>ADDICT</span>
+            </span>
+            <span className="header-logo-dot" />
           </Link>
 
-          {/* Desktop nav links */}
-          <nav style={{ display: 'flex', gap: '24px', alignItems: 'center' }} className="desktop-nav">
+          <nav className="desktop-nav" aria-label="Primary navigation">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} style={{
-                textDecoration: 'none', color: 'var(--text-secondary)',
-                fontSize: '14px', fontWeight: 500, transition: 'color 0.2s',
-                whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--primary)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
-              >
+              <Link key={link.href} href={link.href}>
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <motion.button 
-              whileTap={{ scale: 0.85 }} 
-              onClick={() => setSearchOpen(!searchOpen)} 
-              aria-label="Search"
-              style={{
-                background: 'none', border: 'none', color: 'var(--text-secondary)',
-                cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--primary)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            >
+          <div className="header-actions">
+            <IconButton label="Search" onClick={() => setSearchOpen((open) => !open)}>
               <Search size={20} />
-            </motion.button>
+            </IconButton>
 
-            <motion.button 
-              whileTap={{ scale: 0.85 }} 
-              onClick={toggleTheme} 
-              aria-label="Toggle theme"
-              style={{
-                background: 'none', border: 'none', color: 'var(--text-secondary)',
-                cursor: 'pointer', padding: '8px', borderRadius: '10px', transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-glass)'; e.currentTarget.style.color = 'var(--accent-gold)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            >
-              <motion.div
-                key={hydrated ? theme : 'default'}
-                initial={{ rotate: -30, opacity: 0, scale: 0.5 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                transition={{ type: 'spring', damping: 12 }}
+            <IconButton label="Toggle color theme" onClick={toggleTheme}>
+              <motion.span
+                key={hydrated ? theme : 'light'}
+                initial={{ rotate: -30, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                transition={{ type: 'spring', damping: 13 }}
+                style={{ display: 'inline-flex' }}
               >
-                {(!hydrated || theme === 'dark') ? <Sun size={20} /> : <Moon size={20} />}
-              </motion.div>
-            </motion.button>
+                {hydrated && theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              </motion.span>
+            </IconButton>
 
-            <Link href="/wishlist" aria-label={`Wishlist (${wishlistCount})`} style={{
-              position: 'relative', color: 'var(--text-secondary)', padding: '8px',
-              borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            >
+            <Link href="/wishlist" aria-label={hydrated ? `Wishlist (${wishlistCount})` : 'Wishlist'} className="header-icon-link">
               <Heart size={20} />
-              {hydrated && wishlistCount > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                  style={{
-                    position: 'absolute', top: '2px', right: '2px',
-                    background: 'var(--primary)', color: 'white', borderRadius: '50%',
-                    width: '16px', height: '16px', fontSize: '10px', fontWeight: 700,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}
-                >
-                  {wishlistCount}
-                </motion.span>
-              )}
+              {hydrated && <CountBadge count={wishlistCount} />}
             </Link>
 
-            <Link href="/cart" aria-label={`Cart (${itemCount})`} style={{
-              position: 'relative', color: 'var(--text-secondary)', padding: '8px',
-              borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            >
+            <Link href="/cart" aria-label={hydrated ? `Cart (${itemCount})` : 'Cart'} className="header-icon-link header-cart-link">
               <ShoppingBag size={20} />
-              {hydrated && itemCount > 0 && (
-                <motion.span
-                  key={itemCount}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                  style={{
-                    position: 'absolute', top: '2px', right: '2px',
-                    background: 'var(--primary)', color: 'white', borderRadius: '50%',
-                    width: '16px', height: '16px', fontSize: '10px', fontWeight: 700,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}
-                >
-                  {itemCount}
-                </motion.span>
-              )}
+              {hydrated && <CountBadge count={itemCount} />}
             </Link>
 
-            <Link href="/profile" aria-label="Profile" style={{
-              color: 'var(--text-secondary)', padding: '8px',
-              borderRadius: '10px', transition: 'all 0.2s', display: 'flex',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            >
-              <User size={20} />
-            </Link>
+            {hydrated && isInitialized && (
+              isAuthenticated ? (
+                <Link href="/profile" aria-label="Profile" className="header-icon-link profile-link">
+                  <User size={20} />
+                </Link>
+              ) : (
+                <Link href="/login" className="header-auth-link sign-up">Sign In</Link>
+              )
+            )}
           </div>
         </div>
 
-        {/* Search dropdown */}
         <AnimatePresence>
           {searchOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{ overflow: 'hidden', borderTop: '1px solid var(--border-glass)' }}
+              transition={{ duration: 0.28, ease: [0.28, 0.11, 0.32, 1] }}
+              className="header-search-panel"
             >
-              <div style={{ padding: '0 16px 16px' }}>
-                <div className="container-main">
-                  <SearchBar onClose={() => setSearchOpen(false)} />
-                </div>
+              <div className="container-main">
+                <SearchBar onClose={() => setSearchOpen(false)} />
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {menuOpen && (
-            <motion.div
+            <motion.nav
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              style={{
-                overflow: 'hidden',
-                borderTop: '1px solid var(--border-glass)',
-              }}
+              transition={{ duration: 0.28, ease: [0.28, 0.11, 0.32, 1] }}
+              className="mobile-menu-panel"
+              aria-label="Mobile navigation"
             >
-              <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                {navLinks.map((link, i) => (
+              <div className="container-main mobile-menu-grid">
+                {navLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.3 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.035 }}
                   >
-                    <Link href={link.href} onClick={() => setMenuOpen(false)} style={{
-                      textDecoration: 'none', color: 'var(--text-secondary)',
-                      fontSize: '16px', fontWeight: 500, padding: '10px 0', display: 'block',
-                    }}>
+                    <Link href={link.href} onClick={() => setMenuOpen(false)}>
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
+                <Link href="/ai-assistant" onClick={() => setMenuOpen(false)} className="mobile-ai-link">
+                  <Sparkles size={18} /> Personalize my routine
+                </Link>
               </div>
-            </motion.div>
+            </motion.nav>
           )}
         </AnimatePresence>
       </header>
 
-      {/* Spacer */}
-      <div style={{ height: '68px' }} />
+      <div className="header-spacer" />
 
       <style jsx global>{`
-        @media (min-width: 768px) {
-          .mobile-menu-btn { display: none !important; }
+        .top-ribbon {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 110;
+          height: 34px;
+          overflow: hidden;
+          color: #fff;
+          background: linear-gradient(90deg, #fe347f, #ff743b, #7a2cff);
+          box-shadow: 0 6px 24px rgba(245, 31, 123, 0.22);
         }
+
+        .top-ribbon-track {
+          display: flex;
+          width: max-content;
+          animation: marquee 26s linear infinite;
+        }
+
+        .top-ribbon-group {
+          display: flex;
+          align-items: center;
+          height: 34px;
+          gap: 38px;
+          padding-right: 38px;
+          white-space: nowrap;
+          font-family: var(--font-display);
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .top-ribbon-group span::before {
+          content: "";
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          margin-right: 10px;
+          border-radius: 999px;
+          background: #fff;
+          vertical-align: middle;
+        }
+
+        .site-header {
+          position: fixed;
+          top: 34px;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          background: rgba(255, 255, 255, 0.68);
+          border-bottom: 1px solid transparent;
+          backdrop-filter: blur(22px);
+          -webkit-backdrop-filter: blur(22px);
+          transition: all 0.35s var(--spring);
+        }
+
+        [data-theme="dark"] .site-header {
+          background: rgba(16, 8, 18, 0.72);
+        }
+
+        .site-header-scrolled {
+          background: var(--bg-glass);
+          border-bottom-color: var(--border-glass);
+          box-shadow: 0 12px 40px rgba(70, 24, 48, 0.1);
+        }
+
+        .header-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 72px;
+          gap: 18px;
+        }
+
+        .header-logo {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          text-decoration: none;
+          flex-shrink: 0;
+        }
+
+        .header-logo-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 999px;
+          background: var(--citrus);
+          box-shadow: 0 0 0 5px rgba(255, 212, 71, 0.22);
+        }
+
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          padding: 6px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.58);
+        }
+
+        [data-theme="dark"] .desktop-nav {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .desktop-nav a {
+          padding: 10px 14px;
+          border-radius: 999px;
+          color: var(--text-secondary);
+          font-family: var(--font-display);
+          font-size: 13px;
+          font-weight: 800;
+          text-decoration: none;
+          white-space: nowrap;
+          transition: all 0.2s var(--spring);
+        }
+
+        .desktop-nav a:hover {
+          color: var(--primary);
+          background: var(--bg-surface-hover);
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .header-icon-button,
+        .header-icon-link {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          color: var(--text-secondary);
+          background: rgba(255, 255, 255, 0.56);
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.22s var(--spring);
+        }
+
+        [data-theme="dark"] .header-icon-button,
+        [data-theme="dark"] .header-icon-link {
+          background: rgba(255, 255, 255, 0.06);
+        }
+
+        .header-icon-button:hover,
+        .header-icon-link:hover {
+          color: var(--primary);
+          transform: translateY(-1px);
+          border-color: rgba(245, 31, 123, 0.28);
+          box-shadow: 0 10px 28px rgba(245, 31, 123, 0.12);
+        }
+
+        .header-cart-link {
+          color: #fff;
+          background: var(--text-primary);
+          border-color: var(--text-primary);
+        }
+
+        .header-cart-link:hover {
+          color: #fff;
+          background: var(--primary);
+          border-color: var(--primary);
+        }
+
+        .header-count {
+          position: absolute;
+          top: -5px;
+          right: -4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 18px;
+          height: 18px;
+          padding: 0 5px;
+          border: 2px solid var(--bg-secondary);
+          border-radius: 999px;
+          color: #fff;
+          background: var(--primary);
+          font-size: 10px;
+          font-weight: 900;
+          line-height: 1;
+        }
+
+        .header-search-panel,
+        .mobile-menu-panel {
+          overflow: hidden;
+          border-top: 1px solid var(--line);
+          background: var(--bg-glass);
+        }
+
+        .header-search-panel .container-main {
+          padding-top: 14px;
+          padding-bottom: 18px;
+        }
+
+        .mobile-menu-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+          padding-top: 16px;
+          padding-bottom: 18px;
+        }
+
+        .mobile-menu-grid a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 48px;
+          padding: 12px;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          color: var(--text-primary);
+          background: var(--bg-surface);
+          font-family: var(--font-display);
+          font-size: 14px;
+          font-weight: 800;
+          text-decoration: none;
+        }
+
+        .mobile-menu-grid .mobile-ai-link {
+          grid-column: 1 / -1;
+          gap: 8px;
+          color: #fff;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .header-auth-link {
+          padding: 8px 16px;
+          border-radius: 999px;
+          text-decoration: none;
+          font-family: var(--font-display);
+          font-size: 13px;
+          font-weight: 800;
+          white-space: nowrap;
+          color: #fff;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          transition: all 0.2s var(--spring);
+        }
+
+        .header-auth-link:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 10px 28px rgba(245, 31, 123, 0.22);
+        }
+
+        .header-spacer {
+          height: 106px;
+        }
+
+        .mobile-menu-btn {
+          display: none;
+        }
+
+        @media (max-width: 1180px) {
+          .desktop-nav {
+            display: none;
+          }
+
+          .mobile-menu-btn {
+            display: inline-flex;
+          }
+        }
+
         @media (max-width: 767px) {
-          .mobile-menu-btn { display: flex !important; }
-          .desktop-nav { display: none !important; }
+          .top-ribbon {
+            height: 30px;
+          }
+
+          .top-ribbon-group {
+            height: 30px;
+            gap: 28px;
+            padding-right: 28px;
+            font-size: 11px;
+          }
+
+          .site-header {
+            top: 30px;
+          }
+
+          .header-inner {
+            height: 62px;
+            gap: 10px;
+          }
+
+          .brand-wordmark {
+            font-size: 20px;
+          }
+
+          .header-icon-button,
+          .header-icon-link {
+            width: 38px;
+            height: 38px;
+          }
+
+          .profile-link {
+            display: none;
+          }
+
+          .header-spacer {
+            height: 92px;
+          }
         }
       `}</style>
     </>

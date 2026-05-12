@@ -1,114 +1,303 @@
-'use client';
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Printer, Package, Truck, CheckCircle, XCircle, RotateCcw, FileText } from 'lucide-react';
-import { StatusBadge } from '@/components/admin/shared/StatusBadge';
-import { adminOrders } from '@/data/admin-seed';
+import { getOrderById } from '@/actions/admin';
+import { GlassCard } from '@/components/admin/shared/GlassCard';
+import { Button } from '@/components/admin/shared/Button';
+import { Image } from '@/components/admin/shared/Image';
+import { formatINR } from '@/utils/format';
+import Link from 'next/link';
+import OrderActionsClient from './OrderActionsClient';
 
-const statusFlow = ['pending', 'processing', 'packed', 'shipped', 'delivered'];
+export default async function OrderDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const order = await getOrderById(params.id);
 
-export default function OrderDetailPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const order = adminOrders.find(o => o.id === id);
-  if (!order) return <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>Order not found</div>;
-  const currentIdx = statusFlow.indexOf(order.status);
+  if (!order) {
+    return (
+      <GlassCard>
+        <h2>Order not found</h2>
+        <Link href="/admin/orders">
+          <Button variant="secondary">Back to Orders</Button>
+        </Link>
+      </GlassCard>
+    );
+  }
 
   return (
-    <div>
-      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <button aria-label="Go back" onClick={() => router.back()} style={{ width: 36, height: 36, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ArrowLeft size={16} /></button>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <h1 style={{ fontFamily: 'Outfit', fontSize: 24, fontWeight: 700 }}>{order.orderNumber}</h1>
-              <StatusBadge status={order.status} size="md" />
-            </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>{new Date(order.createdAt).toLocaleString('en-IN')}</p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 12 }}><FileText size={14} /> Invoice</button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 12 }}><Printer size={14} /> Label</button>
-        </div>
-      </motion.div>
+    <>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+        <h1 style={{ fontFamily: 'Outfit', fontSize: 28, fontWeight: 700 }}>
+          Order #{order.orderNumber}
+        </h1>
+        <Link href="/admin/orders">
+          <Button variant="secondary">Back to Orders</Button>
+        </Link>
+      </div>
 
-      {/* Status Timeline */}
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '24px 28px', marginBottom: 20 }}>
-        <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 20 }}>Order Progress</h3>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-          {statusFlow.map((s, i) => (
-            <React.Fragment key={s}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, minWidth: 80 }}>
-                <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: i <= currentIdx ? 'linear-gradient(135deg, #E91E8C, #7C3AED)' : 'rgba(255,255,255,0.06)', transition: 'all 0.3s' }}>
-                  {i <= currentIdx ? <CheckCircle size={16} color="#fff" /> : <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+        {/* Left Column */}
+        <div>
+          <GlassCard>
+            <h2>Order Information</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
+              <div>
+                <h3>Order Status</h3>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontSize: 12,
+                    fontWeight: 500,
+                    textTransform: 'capitalize',
+                    background:
+                      order.status === 'confirmed'
+                        ? 'rgba(16,185,129,0.1)'
+                        : order.status === 'pending_payment'
+                        ? 'rgba(245,158,11,0.1)'
+                        : order.status === 'shipped'
+                        ? 'rgba(59,130,246,0.1)'
+                        : order.status === 'delivered'
+                        ? 'rgba(34,197,94,0.1)'
+                        : order.status === 'cancelled'
+                        ? 'rgba(239,68,68,0.1)'
+                        : 'rgba(107,114,128,0.1)',
+                    color:
+                      order.status === 'confirmed'
+                        ? '#10B981'
+                        : order.status === 'pending_payment'
+                        ? '#F59E0B'
+                        : order.status === 'shipped'
+                        ? '#3B82F6'
+                        : order.status === 'delivered'
+                        ? '#22C55E'
+                        : order.status === 'cancelled'
+                        ? '#EF4444'
+                        : '#6B7280',
+                }}>
+                  {order.status.replace('_', ' ').toUpperCase()}
+                </span>
+              </div>
+              <div>
+                <h3>Payment Status</h3>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontSize: 12,
+                    fontWeight: 500,
+                    textTransform: 'capitalize',
+                    background:
+                      order.paymentStatus === 'verified'
+                        ? 'rgba(34,197,94,0.1)'
+                        : order.paymentStatus === 'pending'
+                        ? 'rgba(245,158,11,0.1)'
+                        : 'rgba(239,68,68,0.1)',
+                    color:
+                      order.paymentStatus === 'verified'
+                        ? '#22C55E'
+                        : order.paymentStatus === 'pending'
+                        ? '#F59E0B'
+                        : '#EF4444',
+                }}>
+                  {order.paymentStatus.toUpperCase()}
+                </span>
+              </div>
+              <div>
+                <h3>Payment Method</h3>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontSize: 12,
+                    fontWeight: 500,
+                    background:
+                      order.paymentMethod === 'cod'
+                        ? 'rgba(245,158,11,0.1)'
+                        : 'rgba(16,185,129,0.1)',
+                    color:
+                      order.paymentMethod === 'cod' ? '#F59E0B' : '#10B981',
+                }}>
+                  {order.paymentMethod === 'cod' ? 'COD' : 'UPI'}
+                </span>
+              </div>
+              {order.codDepositAmount > 0 && (
+                <div>
+                  <h3>COD Deposit</h3>
+                  <p>₹{formatINR(order.codDepositAmount)}</p>
                 </div>
-                <span style={{ fontSize: 11, fontWeight: 500, color: i <= currentIdx ? 'var(--text-primary)' : 'var(--text-muted)', textTransform: 'capitalize' }}>{s}</span>
+              )}
+              <div>
+                <h3>Order Date</h3>
+                <p>{new Date(order.createdAt).toLocaleDateString('en-IN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}</p>
               </div>
-              {i < statusFlow.length - 1 && <div style={{ flex: 1, height: 2, background: i < currentIdx ? 'linear-gradient(90deg, #E91E8C, #7C3AED)' : 'rgba(255,255,255,0.06)', borderRadius: 1 }} />}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+              {order.transactionId && (
+                <div>
+                  <h3>Transaction ID</h3>
+                  <p style={{ wordBreak: 'break-all' }}>{order.transactionId}</p>
+                </div>
+              )}
+              {order.trackingNumber && (
+                <div>
+                  <h3>Tracking Number</h3>
+                  <p style={{ wordBreak: 'break-all' }}>{order.trackingNumber}</p>
+                </div>
+              )}
+            </div>
+          </GlassCard>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
-        {/* Order Items */}
-        <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 24 }}>
-          <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 16 }}>Items ({(order.items || []).length})</h3>
-          {(order.items || []).map(item => (
-            <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              <div style={{ width: 48, height: 48, borderRadius: 10, background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Package size={20} style={{ color: 'var(--text-muted)' }} />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: 500 }}>{item.productName}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Qty: {item.quantity}</div>
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 600 }}>₹{(item.total || 0).toLocaleString('en-IN')}</div>
+          <GlassCard>
+            <h2>Customer Information</h2>
+            <div style={{ marginTop: 16 }}>
+              <p>
+                <strong>Name:</strong> {order.customerName || 'Guest Customer'}
+              </p>
+              {order.customerEmail && (
+                <p>
+                  <strong>Email:</strong> {order.customerEmail}
+                </p>
+              )}
+              {order.customerPhone && (
+                <p>
+                  <strong>Phone:</strong> {order.customerPhone}
+                </p>
+              )}
+              <h3>Shipping Address</h3>
+              <address style={{ marginTop: 8, fontStyle: 'normal' }}>
+                {order.shippingAddress?.fullName}<br />
+                {order.shippingAddress?.line1}<br />
+                {order.shippingAddress?.line2 && (
+                  <>
+                    {order.shippingAddress.line2}<br />
+                  </>
+                )}
+                {order.shippingAddress?.city}, {order.shippingAddress?.state} -
+                {order.shippingAddress?.pincode}<br />
+                {order.shippingAddress?.country}
+              </address>
             </div>
-          ))}
-          <div style={{ marginTop: 16, padding: '12px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-            {[['Subtotal', order.subtotal || 0], ['Discount', -(order.discount || 0)], ['Shipping', order.shippingFee || 0], ['Tax', order.tax || 0]].map(([l, v]) => (
-              <div key={l as string} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                <span>{l}</span><span>₹{(v as number).toLocaleString('en-IN')}</span>
-              </div>
-            ))}
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, fontWeight: 700, fontFamily: 'Outfit', paddingTop: 8, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-              <span>Total</span><span>₹{(order.total || 0).toLocaleString('en-IN')}</span>
-            </div>
-          </div>
+          </GlassCard>
         </div>
 
-        {/* Customer & Shipping */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
-            <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Customer</h3>
-            <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 4 }}>{order.customerName || 'Guest'}</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>{order.customerEmail || '—'}</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{order.shippingAddress?.phone || '—'}</div>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
-            <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Shipping Address</h3>
-            <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-              {order.shippingAddress?.fullName || 'N/A'}<br />
-              {order.shippingAddress?.line1 || ''}<br />
-              {order.shippingAddress?.city || ''}, {order.shippingAddress?.state || ''} {order.shippingAddress?.pincode || ''}
-            </p>
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
-            <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Payment</h3>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 6 }}><span style={{ color: 'var(--text-muted)' }}>Method</span><span style={{ fontWeight: 500 }}>{order.paymentMethod || 'COD'}</span></div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}><span style={{ color: 'var(--text-muted)' }}>Status</span><StatusBadge status={order.paymentStatus || 'pending'} /></div>
-          </div>
-          {order.trackingNumber && (
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
-              <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Tracking</h3>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#E91E8C' }}>{order.trackingNumber}</div>
+        {/* Right Column */}
+        <div>
+          <GlassCard>
+            <h2>Order Items</h2>
+            <div style={{ marginTop: 16 }}>
+              {order.items.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'start',
+                    gap: 12,
+                    marginBottom: 16,
+                    paddingBottom: 16,
+                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                  }}
+                >
+                  <Image
+                    src={item.product.images[0]}
+                    alt={item.product.name}
+                    width={80}
+                    height={80}
+                    style={{ objectFit: 'cover', borderRadius: 8 }}
+                  />
+                  <div style={{ flex: 1 }}>
+                    <h3>{item.product.name}</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
+                      Quantity: {item.quantity}
+                    </p>
+                    <p style={{ fontWeight: 600, marginTop: 4 }}>
+                      ₹{formatINR(item.total)}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+          </GlassCard>
+
+          <GlassCard>
+            <h2>Order Summary</h2>
+            <div style={{ marginTop: 16 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>Subtotal</span>
+                <span>₹{formatINR(order.subtotal)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>Shipping Fee</span>
+                <span>₹{formatINR(order.shippingFee)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                <span>Tax</span>
+                <span>₹{formatINR(order.tax)}</span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: 12,
+                  paddingTop: 12,
+                  borderTop: '1px solid rgba(255,255,255,0.08)',
+                  fontSize: 18,
+                  fontWeight: 700,
+                }}
+              >
+                <span>Total</span>
+                <span>₹{formatINR(order.total)}</span>
+              </div>
+            </div>
+          </GlassCard>
+
+          {order.paymentMethod === 'upi' && order.paymentStatus === 'pending' && (
+            <GlassCard>
+              <h2>Payment Verification</h2>
+              <div style={{ marginTop: 16 }}>
+                <p>
+                  Please verify the UPI payment screenshot below. Once verified, the
+                  order status will be updated to 'Confirmed'.
+                </p>
+                {order.screenshotUrl && (
+                  <div style={{ marginTop: 16, textAlign: 'center' }}>
+                    <Image
+                      src={order.screenshotUrl}
+                      alt="Payment screenshot"
+                      width={200}
+                      height={200}
+                      style={{ borderRadius: 8, cursor: 'pointer' }}
+                      onClick={() => {
+                        // In a real app, you might open a modal or lightbox
+                        window.open(order.screenshotUrl, '_blank');
+                      }}
+                    />
+                    <p style={{ marginTop: 8, fontSize: 12, color: 'var(--text-muted)' }}>
+                      Click to enlarge
+                    </p>
+                  </div>
+                )}
+              </div>
+            </GlassCard>
           )}
+
+          <GlassCard>
+            <h2>Order Actions</h2>
+            <OrderActionsClient
+              orderId={order.id}
+              status={order.status}
+              paymentMethod={order.paymentMethod}
+              paymentStatus={order.paymentStatus}
+            />
+          </GlassCard>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { User } from '@/types/product';
-import { createClient } from '@/utils/supabase/client';
+import { createClient, isSupabaseConfigured } from '@/utils/supabase/client';
 
-const supabase = createClient();
+const supabase = isSupabaseConfigured ? createClient() : null;
 
 interface AuthState {
   user: User | null;
@@ -23,7 +23,7 @@ export const useAuthStore = create<AuthState>()(
       isInitialized: false,
       login: (user) => set({ user, isAuthenticated: true }),
       logout: async () => {
-        await supabase.auth.signOut();
+        await supabase?.auth.signOut();
         set({ user: null, isAuthenticated: false });
       },
       updateProfile: (data) => {
@@ -34,6 +34,10 @@ export const useAuthStore = create<AuthState>()(
       },
       initialize: async () => {
         if (get().isInitialized) return;
+        if (!supabase) {
+          set({ isInitialized: true });
+          return;
+        }
 
         // Get initial session
         const { data: { session } } = await supabase.auth.getSession();

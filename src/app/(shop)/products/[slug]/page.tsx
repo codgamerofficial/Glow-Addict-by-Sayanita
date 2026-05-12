@@ -1,225 +1,678 @@
 'use client';
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Star, Heart, ShoppingBag, Truck, Shield, RotateCcw, ChevronRight, Minus, Plus, Check } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { Check, ChevronRight, Heart, Minus, Plus, RotateCcw, Shield, ShoppingBag, Star, Truck } from 'lucide-react';
 import { products } from '@/data/products';
 import { reviews } from '@/data/reviews';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import ProductCard from '@/components/product/ProductCard';
+import WhatsAppShare from '@/components/product/WhatsAppShare';
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const product = products.find(p => p.slug === params.slug);
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+  const product = products.find((item) => item.slug === slug);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'ingredients' | 'reviews'>('description');
-  const addItem = useCartStore(s => s.addItem);
+  const [productUrl, setProductUrl] = useState('');
+  const addItem = useCartStore((s) => s.addItem);
   const { isInWishlist, toggleItem } = useWishlistStore();
+
+  useEffect(() => {
+    setProductUrl(window.location.origin + '/products/' + slug);
+  }, [slug]);
 
   if (!product) {
     return (
-      <div className="container-main" style={{ textAlign: 'center', padding: '100px 20px' }}>
-        <p style={{ fontSize: '48px' }}>🔍</p>
-        <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', margin: '16px 0' }}>Product not found</h2>
-        <Link href="/products" className="btn-gradient" style={{ textDecoration: 'none', padding: '12px 24px' }}>
-          <span>Browse Products</span>
+      <div className="container-main missing-product">
+        <h2>Product not found</h2>
+        <Link href="/products" className="btn-gradient">
+          <span>Browse products</span>
         </Link>
       </div>
     );
   }
 
   const wishlisted = isInWishlist(product.id);
+  const price = product.salePrice || product.price;
   const discount = product.salePrice ? Math.round(((product.price - product.salePrice) / product.price) * 100) : 0;
-  const productReviews = reviews.filter(r => r.productId === product.id);
-  const related = products.filter(p => p.categoryId === product.categoryId && p.id !== product.id).slice(0, 4);
+  const productReviews = reviews.filter((review) => review.productId === product.id);
+  const related = products.filter((item) => item.categoryId === product.categoryId && item.id !== product.id).slice(0, 4);
 
   return (
-    <div className="container-main animate-fade-in" style={{ padding: '24px 16px' }}>
-      {/* Breadcrumb */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', fontSize: '13px', color: 'var(--text-muted)' }}>
-        <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Home</Link>
-        <ChevronRight size={14} />
-        <Link href="/products" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Products</Link>
-        <ChevronRight size={14} />
-        <span style={{ color: 'var(--text-secondary)' }}>{product.name}</span>
-      </div>
+    <div className="product-detail-page animate-fade-in">
+      <div className="container-main">
+        <nav className="detail-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/">Home</Link>
+          <ChevronRight size={14} />
+          <Link href="/products">Products</Link>
+          <ChevronRight size={14} />
+          <span>{product.name}</span>
+        </nav>
 
-      {/* Main content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px' }} className="product-detail-grid">
-        {/* Images */}
-        <div>
-          <div style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '12px', aspectRatio: '1', background: 'var(--bg-surface)' }}>
-            <img src={product.images[selectedImage]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <section className="detail-grid">
+          <div className="detail-gallery">
+            <div className="detail-main-image">
+              <Image src={product.images[selectedImage]} alt={product.name} fill priority sizes="(max-width: 768px) 100vw, 560px" />
+              {discount > 0 && <span className="detail-discount">{discount}% OFF</span>}
+            </div>
+            {product.images.length > 1 && (
+              <div className="detail-thumbs">
+                {product.images.map((image, index) => (
+                  <button
+                    key={image}
+                    type="button"
+                    aria-label={`Select product image ${index + 1}`}
+                    onClick={() => setSelectedImage(index)}
+                    className={index === selectedImage ? 'active' : ''}
+                  >
+                    <Image src={image} alt="" fill sizes="72px" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-          {product.images.length > 1 && (
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {product.images.map((img, i) => (
-                <button key={i} aria-label={`Select image ${i + 1}`} onClick={() => setSelectedImage(i)} style={{
-                  width: '64px', height: '64px', borderRadius: '10px', overflow: 'hidden', cursor: 'pointer',
-                  border: `2px solid ${i === selectedImage ? 'var(--primary)' : 'var(--border-glass)'}`,
-                  opacity: i === selectedImage ? 1 : 0.6, transition: 'all 0.2s',
-                }}>
-                  <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+
+          <div className="detail-info">
+            <div className="detail-badges">
+              {product.badges?.map((badge) => (
+                <span key={badge} className={badge === 'Bestseller' ? 'badge badge-gold' : badge === 'New Arrival' ? 'badge badge-new' : 'badge badge-primary'}>
+                  {badge.toUpperCase()}
+                </span>
+              ))}
+              {product.isBestseller && <span className="badge badge-gold">BESTSELLER</span>}
+              {product.isNew && <span className="badge badge-new">NEW DROP</span>}
+            </div>
+            <Link href={`/products?brand=${product.brandName}`} className="detail-brand">
+              {product.brandName}
+            </Link>
+            <h1>{product.name}</h1>
+            <p className="detail-short">{product.shortDesc}</p>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px' }}>
+              {product.subcategoryName}{product.sku ? ` • SKU ${product.sku}` : ''}
+            </p>
+
+            <div className="detail-rating">
+              <div>
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <Star
+                    key={value}
+                    size={17}
+                    fill={value <= Math.round(product.ratingAvg) ? 'currentColor' : 'none'}
+                    color="currentColor"
+                  />
+                ))}
+              </div>
+              <strong>{product.ratingAvg}</strong>
+              <span>({product.ratingCount.toLocaleString()} reviews)</span>
+            </div>
+
+            <div className="detail-price">
+              <strong>&#8377;{price.toLocaleString()}</strong>
+              {(product.salePrice || product.mrp) && <span>&#8377;{(product.mrp || product.price).toLocaleString()}</span>}
+              {discount > 0 && <em>You save &#8377;{(product.price - price).toLocaleString()}</em>}
+            </div>
+
+            <div className="detail-tags">
+              {product.skinTypes.slice(0, 5).map((type) => (
+                <span key={type}>{type}</span>
+              ))}
+              {product.concerns.slice(0, 4).map((concern) => (
+                <span key={concern}>{concern}</span>
+              ))}
+              {product.gender && <span>{product.gender}</span>}
+              {product.gstPercent && <span>GST {product.gstPercent}%</span>}
+            </div>
+
+            <div className="detail-actions">
+              <div className="quantity-stepper">
+                <button type="button" aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+                  <Minus size={16} />
                 </button>
+                <span>{quantity}</span>
+                <button type="button" aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)}>
+                  <Plus size={16} />
+                </button>
+              </div>
+              <button type="button" onClick={() => addItem(product, quantity)} className="btn-gradient add-to-bag">
+                <span><ShoppingBag size={18} /> Add to bag</span>
+              </button>
+              <button type="button" onClick={() => toggleItem(product)} className={`detail-heart ${wishlisted ? 'active' : ''}`} aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}>
+                <Heart size={20} fill={wishlisted ? 'currentColor' : 'none'} />
+              </button>
+            </div>
+
+            <div className="detail-perks">
+              {[
+                { icon: Truck, text: 'Free delivery above 499' },
+                { icon: Shield, text: 'Authentic product guarantee' },
+                { icon: RotateCcw, text: 'Easy 15-day returns' },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text}>
+                  <Icon size={19} />
+                  <span>{text}</span>
+                </div>
               ))}
             </div>
-          )}
-        </div>
 
-        {/* Info */}
-        <div>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-            {product.isNew && <span className="badge badge-new">NEW</span>}
-            {product.isBestseller && <span className="badge badge-gold">⭐ BESTSELLER</span>}
-          </div>
-          <Link href={`/products?brand=${product.brandName}`} style={{ fontSize: '13px', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            {product.brandName}
-          </Link>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, margin: '8px 0 12px', lineHeight: 1.3 }}>{product.name}</h1>
-          <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '16px' }}>{product.shortDesc}</p>
-
-          {/* Rating */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-            <div style={{ display: 'flex', gap: '2px' }}>
-              {[1,2,3,4,5].map(n => <Star key={n} size={16} fill={n <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'none'} color={n <= Math.round(product.ratingAvg) ? 'var(--accent-gold)' : 'var(--text-muted)'} />)}
+            {/* WhatsApp Share Section */}
+            <div style={{ marginTop: '18px' }}>
+              {productUrl && (
+                <WhatsAppShare
+                  productName={product.name}
+                  productUrl={productUrl}
+                  price={price}
+                />
+              )}
             </div>
-            <span style={{ fontSize: '14px', fontWeight: 600 }}>{product.ratingAvg}</span>
-            <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>({product.ratingCount.toLocaleString()} reviews)</span>
           </div>
+        </section>
 
-          {/* Price */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '24px' }}>
-            <span style={{ fontFamily: 'Outfit', fontSize: '32px', fontWeight: 700 }}>₹{(product.salePrice || product.price).toLocaleString()}</span>
-            {product.salePrice && (
-              <>
-                <span style={{ fontSize: '18px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>₹{product.price.toLocaleString()}</span>
-                <span className="badge badge-primary">{discount}% OFF</span>
-              </>
-            )}
-          </div>
-
-          {/* Skin types */}
-          {product.skinTypes.length > 0 && (
-            <div style={{ marginBottom: '16px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginRight: '8px' }}>SUITABLE FOR:</span>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
-                {product.skinTypes.map(st => <span key={st} className="badge" style={{ background: 'var(--bg-glass)', color: 'var(--text-secondary)', border: '1px solid var(--border-glass)' }}>{st}</span>)}
-              </div>
-            </div>
-          )}
-          {product.concerns.length > 0 && (
-            <div style={{ marginBottom: '24px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginRight: '8px' }}>ADDRESSES:</span>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
-                {product.concerns.map(c => <span key={c} className="badge badge-primary">{c}</span>)}
-              </div>
-            </div>
-          )}
-
-          {/* Quantity + Actions */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0', border: '1px solid var(--border-glass)', borderRadius: '12px', overflow: 'hidden' }}>
-              <button aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Minus size={16} /></button>
-              <span style={{ padding: '12px 18px', fontWeight: 600, minWidth: '40px', textAlign: 'center' }}>{quantity}</span>
-              <button aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)} style={{ background: 'var(--bg-glass)', border: 'none', padding: '12px 14px', cursor: 'pointer', color: 'var(--text-primary)' }}><Plus size={16} /></button>
-            </div>
-            <button onClick={() => addItem(product, quantity)} className="btn-gradient" style={{ flex: 1, padding: '14px', fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShoppingBag size={18} /> Add to Cart</span>
-            </button>
-            <button aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"} onClick={() => toggleItem(product)} style={{
-              padding: '14px', borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s',
-              background: wishlisted ? 'rgba(233,30,140,0.15)' : 'var(--bg-glass)',
-              border: `1px solid ${wishlisted ? 'var(--primary)' : 'var(--border-glass)'}`,
-              color: wishlisted ? 'var(--primary)' : 'var(--text-muted)',
-            }}>
-              <Heart size={20} fill={wishlisted ? 'var(--primary)' : 'none'} />
-            </button>
-          </div>
-
-          {/* Perks */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px' }}>
-            {[
-              { icon: Truck, text: 'Free Delivery above ₹499' },
-              { icon: Shield, text: '100% Authentic Products' },
-              { icon: RotateCcw, text: 'Easy 15-Day Returns' },
-            ].map(({ icon: Icon, text }) => (
-              <div key={text} className="glass-card" style={{ padding: '12px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                <Icon size={18} style={{ color: 'var(--success)' }} />
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', lineHeight: 1.3 }}>{text}</span>
-              </div>
+        <section className="detail-tabs">
+          <div className="tab-list" role="tablist" aria-label="Product information">
+            {(['description', 'ingredients', 'reviews'] as const).map((tab) => (
+              <button key={tab} type="button" onClick={() => setActiveTab(tab)} className={activeTab === tab ? 'active' : ''}>
+                {tab === 'reviews' ? `Reviews (${productReviews.length})` : tab}
+              </button>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Tabs */}
-      <div style={{ marginTop: '48px' }}>
-        <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid var(--border-glass)', marginBottom: '24px' }}>
-          {(['description', 'ingredients', 'reviews'] as const).map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} style={{
-              padding: '12px 24px', background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '14px', fontWeight: 600, textTransform: 'capitalize',
-              color: activeTab === tab ? 'var(--primary)' : 'var(--text-muted)',
-              borderBottom: `2px solid ${activeTab === tab ? 'var(--primary)' : 'transparent'}`,
-              transition: 'all 0.2s',
-            }}>{tab}{tab === 'reviews' ? ` (${productReviews.length})` : ''}</button>
-          ))}
-        </div>
-        {activeTab === 'description' && (
-          <div style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '700px' }}>
-            <p>{product.description}</p>
-            {product.howToUse && (
+          <div className="tab-panel">
+            {activeTab === 'description' && (
               <>
-                <h4 style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)', margin: '20px 0 8px' }}>How to Use</h4>
-                <p>{product.howToUse}</p>
+                <p>{product.description}</p>
+                {product.howToUse && (
+                  <>
+                    <h3>How to use</h3>
+                    <p>{product.howToUse}</p>
+                  </>
+                )}
               </>
             )}
-          </div>
-        )}
-        {activeTab === 'ingredients' && (
-          <div style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.8, maxWidth: '700px' }}>
-            <p>{product.ingredients || 'Ingredient list coming soon.'}</p>
-          </div>
-        )}
-        {activeTab === 'reviews' && (
-          <div style={{ maxWidth: '700px' }}>
-            {productReviews.length > 0 ? productReviews.map(r => (
-              <div key={r.id} className="glass-card" style={{ padding: '20px', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontWeight: 600 }}>{r.userName}</span>
-                    {r.isVerified && <span style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '11px', color: 'var(--success)' }}><Check size={12} /> Verified</span>}
-                  </div>
-                  <div style={{ display: 'flex', gap: '2px' }}>
-                    {[1,2,3,4,5].map(n => <Star key={n} size={12} fill={n <= r.rating ? 'var(--accent-gold)' : 'none'} color={n <= r.rating ? 'var(--accent-gold)' : 'var(--text-muted)'} />)}
-                  </div>
-                </div>
-                <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '4px' }}>{r.title}</h4>
-                <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{r.body}</p>
-                {r.skinType && <span className="badge" style={{ marginTop: '8px', background: 'var(--bg-glass)', border: '1px solid var(--border-glass)', color: 'var(--text-muted)', fontSize: '11px' }}>Skin: {r.skinType}</span>}
+            {activeTab === 'ingredients' && <p>{product.ingredients || 'Ingredient list coming soon.'}</p>}
+            {activeTab === 'reviews' && (
+              <div className="review-list">
+                {productReviews.length > 0 ? (
+                  productReviews.map((review) => (
+                    <article key={review.id} className="review-card">
+                      <div>
+                        <strong>{review.userName}</strong>
+                        {review.isVerified && <span><Check size={13} /> Verified</span>}
+                      </div>
+                      <h4>{review.title}</h4>
+                      <p>{review.body}</p>
+                    </article>
+                  ))
+                ) : (
+                  <p>No reviews yet. Be the first to share your glow notes.</p>
+                )}
               </div>
-            )) : (
-              <p style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '40px' }}>No reviews yet. Be the first! ✨</p>
             )}
           </div>
+        </section>
+
+        {related.length > 0 && (
+          <section className="section-pad related-section">
+            <div className="section-heading">
+              <div>
+                <h2>You may also like</h2>
+                <p>More formulas from the same beauty family.</p>
+              </div>
+            </div>
+            <div className="product-grid">
+              {related.map((item) => (
+                <ProductCard key={item.id} product={item} />
+              ))}
+            </div>
+          </section>
         )}
       </div>
 
-      {/* Related */}
-      {related.length > 0 && (
-        <div style={{ marginTop: '48px' }}>
-          <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700, marginBottom: '20px' }}>You May Also Like</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {related.map(p => <ProductCard key={p.id} product={p} />)}
-          </div>
-        </div>
-      )}
-
       <style jsx global>{`
-        @media (min-width: 768px) {
-          .product-detail-grid { grid-template-columns: 1fr 1fr !important; }
+        .product-detail-page {
+          padding: 24px 0 80px;
+          background:
+            radial-gradient(circle at 8% 4%, rgba(255, 212, 71, 0.24), transparent 22%),
+            var(--bg-primary);
+        }
+
+        .missing-product {
+          display: grid;
+          place-items: center;
+          gap: 18px;
+          min-height: 50vh;
+          text-align: center;
+        }
+
+        .missing-product h2 {
+          font-size: 34px;
+          font-weight: 900;
+        }
+
+        .missing-product a {
+          display: inline-flex;
+          align-items: center;
+          padding: 0 22px;
+          text-decoration: none;
+        }
+
+        .detail-breadcrumb {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 24px;
+          color: var(--text-muted);
+          font-size: 13px;
+          font-weight: 700;
+        }
+
+        .detail-breadcrumb a {
+          text-decoration: none;
+        }
+
+        .detail-breadcrumb span {
+          min-width: 0;
+          overflow: hidden;
+          color: var(--text-secondary);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .detail-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+          gap: 42px;
+          align-items: start;
+        }
+
+        .detail-gallery,
+        .detail-info,
+        .detail-tabs {
+          border: 1px solid var(--line);
+          border-radius: 34px;
+          background: var(--bg-surface);
+          box-shadow: var(--shadow-card);
+        }
+
+        .detail-gallery {
+          padding: 14px;
+        }
+
+        .detail-main-image {
+          position: relative;
+          aspect-ratio: 1;
+          overflow: hidden;
+          border-radius: 26px;
+          background: linear-gradient(135deg, #fff2f8, #eaffd7);
+        }
+
+        .detail-main-image img {
+          object-fit: cover;
+        }
+
+        .detail-discount {
+          position: absolute;
+          top: 18px;
+          left: 18px;
+          padding: 9px 12px;
+          border-radius: 999px;
+          color: #fff;
+          background: var(--primary);
+          font-family: var(--font-display);
+          font-size: 13px;
+          font-weight: 900;
+        }
+
+        .detail-thumbs {
+          display: flex;
+          gap: 10px;
+          margin-top: 12px;
+        }
+
+        .detail-thumbs button {
+          position: relative;
+          width: 72px;
+          height: 72px;
+          overflow: hidden;
+          border: 2px solid transparent;
+          border-radius: 18px;
+          background: var(--bg-surface-hover);
+          cursor: pointer;
+          opacity: 0.72;
+        }
+
+        .detail-thumbs button.active {
+          border-color: var(--primary);
+          opacity: 1;
+        }
+
+        .detail-thumbs img {
+          object-fit: cover;
+        }
+
+        .detail-info {
+          padding: 30px;
+        }
+
+        .detail-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 12px;
+        }
+
+        .detail-brand {
+          color: var(--primary);
+          font-family: var(--font-display);
+          font-size: 13px;
+          font-weight: 900;
+          text-decoration: none;
+          text-transform: uppercase;
+        }
+
+        .detail-info h1 {
+          margin: 9px 0 12px;
+          color: var(--text-primary);
+          font-size: clamp(34px, 5vw, 58px);
+          font-weight: 900;
+          line-height: 0.98;
+        }
+
+        .detail-short {
+          color: var(--text-secondary);
+          font-size: 16px;
+          line-height: 1.6;
+        }
+
+        .detail-rating {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 18px;
+          color: var(--warning);
+        }
+
+        .detail-rating div {
+          display: flex;
+          gap: 2px;
+        }
+
+        .detail-rating strong {
+          color: var(--text-primary);
+          font-size: 14px;
+        }
+
+        .detail-rating span {
+          color: var(--text-muted);
+          font-size: 13px;
+        }
+
+        .detail-price {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 12px;
+          margin-top: 24px;
+        }
+
+        .detail-price strong {
+          color: var(--text-primary);
+          font-family: var(--font-display);
+          font-size: 40px;
+          font-weight: 900;
+          line-height: 1;
+        }
+
+        .detail-price span {
+          color: var(--text-muted);
+          font-size: 18px;
+          font-weight: 800;
+          text-decoration: line-through;
+        }
+
+        .detail-price em {
+          color: var(--success);
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 900;
+        }
+
+        .detail-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin: 22px 0;
+        }
+
+        .detail-tags span {
+          padding: 8px 11px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--text-secondary);
+          background: var(--bg-surface-hover);
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .detail-actions {
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          gap: 12px;
+          margin-top: 18px;
+        }
+
+        .quantity-stepper {
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: var(--bg-surface-hover);
+        }
+
+        .quantity-stepper button {
+          display: grid;
+          place-items: center;
+          width: 42px;
+          height: 46px;
+          border: 0;
+          color: var(--text-primary);
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .quantity-stepper span {
+          min-width: 34px;
+          text-align: center;
+          font-weight: 900;
+        }
+
+        .add-to-bag {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 20px;
+        }
+
+        .add-to-bag span {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .detail-heart {
+          display: grid;
+          place-items: center;
+          width: 48px;
+          height: 48px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--text-secondary);
+          background: var(--bg-surface-hover);
+          cursor: pointer;
+        }
+
+        .detail-heart.active {
+          color: var(--primary);
+          border-color: rgba(245, 31, 123, 0.26);
+          background: rgba(245, 31, 123, 0.1);
+        }
+
+        .detail-perks {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+          margin-top: 22px;
+        }
+
+        .detail-perks div {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          gap: 8px;
+          min-height: 104px;
+          padding: 15px 10px;
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          text-align: center;
+          background: var(--bg-surface-hover);
+        }
+
+        .detail-perks svg {
+          color: var(--success);
+        }
+
+        .detail-perks span {
+          color: var(--text-secondary);
+          font-size: 12px;
+          font-weight: 800;
+          line-height: 1.35;
+        }
+
+        .detail-tabs {
+          margin-top: 34px;
+          padding: 8px;
+        }
+
+        .tab-list {
+          display: flex;
+          gap: 6px;
+          overflow-x: auto;
+          padding: 4px;
+        }
+
+        .tab-list button {
+          min-height: 44px;
+          padding: 0 18px;
+          border: 0;
+          border-radius: 999px;
+          color: var(--text-muted);
+          background: transparent;
+          font-family: var(--font-display);
+          font-size: 14px;
+          font-weight: 900;
+          text-transform: capitalize;
+          cursor: pointer;
+        }
+
+        .tab-list button.active {
+          color: #fff;
+          background: var(--text-primary);
+        }
+
+        .tab-panel {
+          max-width: 850px;
+          padding: 22px;
+          color: var(--text-secondary);
+          font-size: 15px;
+          line-height: 1.8;
+        }
+
+        .tab-panel h3 {
+          margin: 22px 0 8px;
+          color: var(--text-primary);
+          font-size: 18px;
+          font-weight: 900;
+        }
+
+        .review-list {
+          display: grid;
+          gap: 12px;
+        }
+
+        .review-card {
+          padding: 18px;
+          border: 1px solid var(--line);
+          border-radius: 20px;
+          background: var(--bg-surface-hover);
+        }
+
+        .review-card div {
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 8px;
+        }
+
+        .review-card strong {
+          color: var(--text-primary);
+        }
+
+        .review-card span {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          color: var(--success);
+          font-size: 12px;
+          font-weight: 900;
+        }
+
+        .review-card h4 {
+          color: var(--text-primary);
+          font-size: 15px;
+          font-weight: 900;
+        }
+
+        .review-card p {
+          margin-top: 4px;
+        }
+
+        .related-section {
+          padding-bottom: 0;
+        }
+
+        @media (max-width: 980px) {
+          .detail-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .product-detail-page {
+            padding-top: 18px;
+          }
+
+          .detail-info {
+            padding: 22px;
+          }
+
+          .detail-actions {
+            grid-template-columns: 1fr auto;
+          }
+
+          .quantity-stepper {
+            grid-column: 1 / -1;
+            width: fit-content;
+          }
+
+          .detail-perks {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </div>

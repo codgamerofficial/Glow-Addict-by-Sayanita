@@ -1,218 +1,607 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Star, Zap, Gift, TrendingUp, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Brain, Clock, Gift, ShieldCheck, Sparkles, TimerReset, Truck, Zap } from 'lucide-react';
 import { products } from '@/data/products';
 import ProductCard from '@/components/product/ProductCard';
 import { ScrollReveal } from '@/components/shared/ScrollReveal';
 
-/* ============ TRENDING ============ */
+function SectionLink({ href = '/products', label = 'Shop all' }: { href?: string; label?: string }) {
+  return (
+    <Link href={href} className="section-link">
+      {label} <ArrowRight size={16} />
+      <style jsx global>{`
+        .section-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--primary);
+          font-family: var(--font-display);
+          font-size: 14px;
+          font-weight: 900;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+      `}</style>
+    </Link>
+  );
+}
+
+function ProductRail({ items }: { items: typeof products }) {
+  return (
+    <div className="product-grid">
+      {items.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
+}
+
 export function TrendingSection() {
-  const trending = products.filter(p => p.isBestseller).slice(0, 4);
+  const trending = products.filter((p) => p.isBestseller).slice(0, 4);
+
   return (
     <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
+      <section className="section-pad">
         <div className="container-main">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+          <div className="section-heading">
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <TrendingUp size={20} style={{ color: 'var(--primary)' }} />
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }}>Trending Now</h2>
-              </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>What everyone is loving right now</p>
+              <h2>Today&apos;s hot shelf</h2>
+              <p>Bestsellers with strong ratings, quick add actions, and polished beauty-card browsing.</p>
             </div>
-            <Link href="/products" style={{ color: 'var(--primary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              See All <ArrowRight size={16} />
-            </Link>
+            <SectionLink label="Explore bestsellers" />
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {trending.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
+          <ProductRail items={trending} />
         </div>
       </section>
     </ScrollReveal>
   );
 }
 
-/* ============ FLASH DEAL ============ */
 export function FlashDeal() {
   const [timeLeft, setTimeLeft] = useState({ h: 5, m: 42, s: 18 });
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         let { h, m, s } = prev;
-        s--;
-        if (s < 0) { s = 59; m--; }
-        if (m < 0) { m = 59; h--; }
-        if (h < 0) { h = 23; m = 59; s = 59; }
+        s -= 1;
+        if (s < 0) {
+          s = 59;
+          m -= 1;
+        }
+        if (m < 0) {
+          m = 59;
+          h -= 1;
+        }
+        if (h < 0) {
+          h = 23;
+          m = 59;
+          s = 59;
+        }
         return { h, m, s };
       });
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
+  const deals = products.filter((p) => p.salePrice).slice(0, 4);
+
   return (
     <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
+      <section className="section-pad deal-zone">
         <div className="container-main">
-          <motion.div
-            whileHover={{ scale: 1.005 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            className="glass-card"
-            style={{
-              background: 'linear-gradient(135deg, rgba(233,30,140,0.1), rgba(124,58,237,0.1))',
-              padding: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px',
-            }}
-          >
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <motion.div animate={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}>
-                  <Zap size={22} style={{ color: 'var(--accent-gold)' }} />
-                </motion.div>
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }}>Flash Deal</h2>
-                <span className="badge badge-gold sale-badge">UP TO 60% OFF</span>
+          <div className="deal-hero">
+            <div className="deal-copy">
+              <div className="deal-kicker">
+                <Zap size={18} /> First-purchase festival deal
               </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Grab premium beauty at unbelievable prices. Hurry, limited stock!</p>
+              <h2 className="sale-type">Up to 80% off</h2>
+              <p>Stack sale prices with an extra first-order code and unlock gifts on select days.</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Clock size={18} style={{ color: 'var(--primary)' }} />
-              <span style={{ fontSize: '14px', color: 'var(--text-muted)', marginRight: '8px' }}>Ends in:</span>
+
+            <div className="deal-clock" aria-label="Flash deal countdown">
+              <Clock size={18} />
               {[
-                { v: timeLeft.h, l: 'HRS' },
-                { v: timeLeft.m, l: 'MIN' },
-                { v: timeLeft.s, l: 'SEC' },
-              ].map((t, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{
-                    background: 'var(--bg-glass)', border: '1px solid var(--border-glass)',
-                    borderRadius: '8px', padding: '8px 12px', textAlign: 'center', minWidth: '52px',
-                  }}>
-                    <motion.div
-                      key={t.v}
-                      initial={{ y: -8, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                      style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 700, color: 'var(--primary)' }}
-                    >
-                      {String(t.v).padStart(2, '0')}
-                    </motion.div>
-                    <div style={{ fontSize: '9px', color: 'var(--text-muted)', fontWeight: 600 }}>{t.l}</div>
-                  </div>
-                  {i < 2 && <span style={{ fontSize: '20px', fontWeight: 700, color: 'var(--text-muted)' }}>:</span>}
+                { value: timeLeft.h, label: 'HRS' },
+                { value: timeLeft.m, label: 'MIN' },
+                { value: timeLeft.s, label: 'SEC' },
+              ].map((part) => (
+                <div key={part.label}>
+                  <motion.strong
+                    key={part.value}
+                    initial={{ y: -8, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    {String(part.value).padStart(2, '0')}
+                  </motion.strong>
+                  <span>{part.label}</span>
                 </div>
               ))}
             </div>
-          </motion.div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px', marginTop: '20px' }}>
-            {products.filter(p => p.salePrice).slice(0, 4).map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
+          <ProductRail items={deals} />
         </div>
+
+        <style jsx global>{`
+          .deal-zone {
+            background:
+              radial-gradient(circle at 8% 15%, rgba(255, 212, 71, 0.34), transparent 28%),
+              linear-gradient(135deg, #fff, #fff1f8 48%, #f0ffd9 100%);
+          }
+
+          [data-theme="dark"] .deal-zone {
+            background:
+              radial-gradient(circle at 8% 15%, rgba(255, 212, 71, 0.15), transparent 28%),
+              linear-gradient(135deg, #130816, #251129 58%, #142014);
+          }
+
+          .deal-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 28px;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 30px;
+            border: 1px solid rgba(245, 31, 123, 0.16);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: var(--shadow-soft);
+          }
+
+          [data-theme="dark"] .deal-hero {
+            background: rgba(255, 255, 255, 0.06);
+          }
+
+          .deal-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: var(--primary);
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 900;
+          }
+
+          .deal-copy h2 {
+            color: var(--primary);
+            font-size: clamp(42px, 8vw, 92px);
+            line-height: 0.9;
+          }
+
+          .deal-copy p {
+            max-width: 600px;
+            margin-top: 14px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+          }
+
+          .deal-clock {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--bg-surface);
+          }
+
+          .deal-clock > svg {
+            color: var(--primary);
+            margin: 0 4px;
+          }
+
+          .deal-clock div {
+            min-width: 64px;
+            padding: 10px 12px;
+            border-radius: 18px;
+            text-align: center;
+            background: linear-gradient(180deg, #fff8fc, #ffe7f2);
+          }
+
+          [data-theme="dark"] .deal-clock div {
+            background: rgba(255, 255, 255, 0.08);
+          }
+
+          .deal-clock strong {
+            display: block;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            font-size: 25px;
+            font-weight: 900;
+            line-height: 1;
+          }
+
+          .deal-clock span {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 900;
+          }
+
+          @media (max-width: 767px) {
+            .deal-hero {
+              grid-template-columns: 1fr;
+              padding: 22px;
+            }
+
+            .deal-clock {
+              width: 100%;
+              justify-content: space-between;
+              overflow-x: auto;
+            }
+
+            .deal-clock div {
+              min-width: 58px;
+            }
+          }
+        `}</style>
       </section>
     </ScrollReveal>
   );
 }
 
-/* ============ AI PICKS ============ */
 export function AIRecommendations() {
-  const aiPicks = products.filter(p => p.ratingAvg && p.ratingAvg >= 4.5).slice(0, 4);
-  return (
-    <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
-        <div className="container-main">
-          <motion.div
-            whileHover={{ scale: 1.005 }}
-            className="glass-card"
-            style={{
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.08), rgba(233,30,140,0.08))',
-              padding: '24px', marginBottom: '20px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                style={{
-                  width: '40px', height: '40px', borderRadius: '12px',
-                  background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}
-              >
-                <Sparkles size={20} color="white" />
-              </motion.div>
-              <div>
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '20px', fontWeight: 700 }}>AI Picks For You</h2>
-                <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Curated by our AI based on your skin profile</p>
-              </div>
-            </div>
-          </motion.div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {aiPicks.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
-        </div>
-      </section>
-    </ScrollReveal>
-  );
-}
+  const aiPicks = products.filter((p) => p.ratingAvg >= 4.5).slice(0, 4);
 
-/* ============ LOYALTY BANNER ============ */
-export function LoyaltyBanner() {
   return (
     <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
-        <div className="container-main">
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            className="glass-card"
-            style={{
-              background: 'linear-gradient(135deg, rgba(245,158,11,0.1), rgba(233,30,140,0.08))',
-              padding: '40px', textAlign: 'center',
-            }}
-          >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <Gift size={40} style={{ color: 'var(--accent-gold)', marginBottom: '16px' }} />
-            </motion.div>
-            <h2 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '12px' }}>
-              Join <span className="gradient-text">Glow Rewards</span>
-            </h2>
-            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto 24px', lineHeight: 1.6 }}>
-              Earn points on every purchase, get birthday gifts, early access to sales, and exclusive member-only deals. It&apos;s free to join!
+      <section className="section-pad ai-section">
+        <div className="container-main ai-layout">
+          <div className="ai-panel">
+            <div className="ai-icon">
+              <Brain size={28} />
+            </div>
+            <h2>Glow AI picks your perfect cart</h2>
+            <p>
+              Answer a few skin, shade and routine questions. The assistant builds a clean routine with products from this catalog.
             </p>
-            <motion.button whileTap={{ scale: 0.95 }} className="btn-gradient" style={{ padding: '14px 40px', fontSize: '15px' }}>
-              <span>Join Now — It&apos;s Free ✨</span>
-            </motion.button>
-          </motion.div>
+            <Link href="/ai-assistant" className="btn-gradient ai-button">
+              <span><Sparkles size={17} /> Start AI beauty match</span>
+            </Link>
+          </div>
+          <div>
+            <div className="section-heading ai-heading">
+              <div>
+                <h2>Smart recommendations</h2>
+                <p>Highly rated formulas that work beautifully as a personalized starter shelf.</p>
+              </div>
+            </div>
+            <ProductRail items={aiPicks} />
+          </div>
+        </div>
+
+        <style jsx global>{`
+          .ai-section {
+            background: var(--bg-primary);
+          }
+
+          .ai-layout {
+            display: grid;
+            grid-template-columns: 330px minmax(0, 1fr);
+            gap: 28px;
+            align-items: start;
+          }
+
+          .ai-panel {
+            position: sticky;
+            top: 126px;
+            padding: 28px;
+            border-radius: 30px;
+            color: #fff;
+            background:
+              radial-gradient(circle at 90% 12%, rgba(255, 212, 71, 0.46), transparent 28%),
+              linear-gradient(145deg, #211124, #7a2cff 48%, #f51f7b);
+            box-shadow: var(--shadow-soft);
+          }
+
+          .ai-icon {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin-bottom: 24px;
+            border-radius: 22px;
+            color: #261019;
+            background: #fff;
+          }
+
+          .ai-panel h2 {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1;
+          }
+
+          .ai-panel p {
+            margin-top: 14px;
+            color: rgba(255, 255, 255, 0.84);
+            font-size: 15px;
+            line-height: 1.65;
+          }
+
+          .ai-button {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 24px;
+            padding: 14px 18px;
+            color: var(--primary);
+            background: #fff;
+            box-shadow: none;
+            text-decoration: none;
+          }
+
+          .ai-button span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .ai-heading {
+            margin-bottom: 20px;
+          }
+
+          @media (max-width: 1050px) {
+            .ai-layout {
+              grid-template-columns: 1fr;
+            }
+
+            .ai-panel {
+              position: relative;
+              top: auto;
+            }
+          }
+        `}</style>
+      </section>
+    </ScrollReveal>
+  );
+}
+
+export function NewArrivals() {
+  const newProducts = products.filter((p) => p.isNew).slice(0, 4);
+
+  return (
+    <ScrollReveal>
+      <section className="section-pad arrivals-section">
+        <div className="container-main">
+          <div className="section-heading">
+            <div>
+              <h2>Fresh drops</h2>
+              <p>New formulas, new shades, and clean shelf upgrades for the season.</p>
+            </div>
+            <SectionLink label="See new arrivals" />
+          </div>
+          <ProductRail items={newProducts} />
         </div>
       </section>
     </ScrollReveal>
   );
 }
 
-/* ============ NEW ARRIVALS ============ */
-export function NewArrivals() {
-  const newProducts = products.filter(p => p.isNew).slice(0, 4);
+export function LoyaltyBanner() {
+  const heroProduct = products[4];
+
   return (
     <ScrollReveal>
-      <section style={{ padding: '48px 0' }}>
+      <section className="section-pad loyalty-wrap">
         <div className="container-main">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <Star size={20} style={{ color: 'var(--accent-gold)' }} />
-                <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', fontWeight: 700 }}>New Arrivals</h2>
+          <div className="loyalty-card">
+            <div className="loyalty-copy">
+              <div className="loyalty-mark">
+                <Gift size={26} />
               </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Fresh drops you don&apos;t want to miss</p>
+              <h2>Elite Pro perks, without the fuss.</h2>
+              <p>
+                Get free gifts, faster shipping, birthday surprises and early access to every Glow Addict sale event.
+              </p>
+              <div className="loyalty-benefits">
+                {[
+                  { icon: Gift, label: 'Free gift over 749' },
+                  { icon: Truck, label: 'Unlimited free shipping events' },
+                  { icon: ShieldCheck, label: 'Authentic beauty assurance' },
+                  { icon: TimerReset, label: 'Easy returns support' },
+                ].map(({ icon: Icon, label }) => (
+                  <span key={label}>
+                    <Icon size={16} /> {label}
+                  </span>
+                ))}
+              </div>
+              <Link href="/profile" className="btn-gradient loyalty-button">
+                <span>Join Glow Rewards <ArrowRight size={17} /></span>
+              </Link>
+            </div>
+            <div className="loyalty-visual">
+              <div className="loyalty-product">
+                <Image src={heroProduct.images[0]} alt={heroProduct.name} fill sizes="320px" />
+              </div>
+              <div className="loyalty-price">
+                <span>Member deal</span>
+                <strong>&#8377;{(heroProduct.salePrice || heroProduct.price).toLocaleString()}</strong>
+              </div>
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-            {newProducts.map((p) => <ProductCard key={p.id} product={p} />)}
-          </div>
         </div>
+
+        <style jsx global>{`
+          .loyalty-wrap {
+            padding-bottom: 80px;
+          }
+
+          .loyalty-card {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 360px;
+            gap: 34px;
+            overflow: hidden;
+            padding: 38px;
+            border-radius: 34px;
+            background:
+              radial-gradient(circle at 78% 22%, rgba(255, 212, 71, 0.55), transparent 24%),
+              linear-gradient(135deg, #ff347f, #ff7940 50%, #ffd447 100%);
+            box-shadow: var(--shadow-soft);
+          }
+
+          .loyalty-card::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 24px;
+            pointer-events: none;
+          }
+
+          .loyalty-copy,
+          .loyalty-visual {
+            position: relative;
+            z-index: 1;
+          }
+
+          .loyalty-mark {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin-bottom: 22px;
+            border-radius: 20px;
+            color: var(--primary);
+            background: #fff;
+          }
+
+          .loyalty-copy h2 {
+            max-width: 640px;
+            color: #fff;
+            font-size: clamp(38px, 5.5vw, 74px);
+            font-weight: 900;
+            line-height: 0.95;
+          }
+
+          .loyalty-copy p {
+            max-width: 560px;
+            margin-top: 18px;
+            color: rgba(255, 255, 255, 0.86);
+            font-size: 17px;
+            line-height: 1.6;
+          }
+
+          .loyalty-benefits {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            max-width: 620px;
+            margin-top: 24px;
+          }
+
+          .loyalty-benefits span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 13px;
+            font-weight: 800;
+            backdrop-filter: blur(10px);
+          }
+
+          .loyalty-button {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 26px;
+            padding: 15px 22px;
+            color: var(--primary);
+            background: #fff;
+            box-shadow: none;
+            text-decoration: none;
+          }
+
+          .loyalty-button span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .loyalty-visual {
+            min-height: 360px;
+          }
+
+          .loyalty-product {
+            position: absolute;
+            inset: 20px 38px 0 0;
+            overflow: hidden;
+            border: 10px solid rgba(255, 255, 255, 0.62);
+            border-radius: 42px;
+            background: #fff;
+            box-shadow: 0 26px 70px rgba(76, 19, 50, 0.28);
+            transform: rotate(7deg);
+          }
+
+          .loyalty-product img {
+            object-fit: cover;
+          }
+
+          .loyalty-price {
+            position: absolute;
+            right: 0;
+            bottom: 28px;
+            width: 170px;
+            padding: 18px;
+            border-radius: 24px;
+            color: #251018;
+            background: #fff;
+            box-shadow: var(--shadow-soft);
+          }
+
+          .loyalty-price span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+          }
+
+          .loyalty-price strong {
+            display: block;
+            margin-top: 4px;
+            color: var(--primary);
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 900;
+          }
+
+          @media (max-width: 900px) {
+            .loyalty-card {
+              grid-template-columns: 1fr;
+            }
+
+            .loyalty-visual {
+              min-height: 300px;
+            }
+          }
+
+          @media (max-width: 600px) {
+            .loyalty-card {
+              padding: 26px;
+              border-radius: 28px;
+            }
+
+            .loyalty-benefits {
+              grid-template-columns: 1fr;
+            }
+
+            .loyalty-product {
+              inset: 12px 56px 0 0;
+            }
+          }
+        `}</style>
       </section>
     </ScrollReveal>
   );

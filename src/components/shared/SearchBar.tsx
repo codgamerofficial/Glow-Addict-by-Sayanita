@@ -1,10 +1,10 @@
 'use client';
-import { useState, useMemo } from 'react';
+
+import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Search, TrendingUp, X } from 'lucide-react';
 import { products } from '@/data/products';
-
-import Image from 'next/image';
 
 export function SearchBar({ onClose }: { onClose?: () => void }) {
   const [query, setQuery] = useState('');
@@ -12,98 +12,65 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
   const results = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
-    return products.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.brandName.toLowerCase().includes(q) ||
-      p.categoryName.toLowerCase().includes(q) ||
-      p.tags.some(t => t.includes(q))
-    ).slice(0, 6);
+    return products
+      .filter(
+        (product) =>
+          product.name.toLowerCase().includes(q) ||
+          product.brandName.toLowerCase().includes(q) ||
+          product.categoryName.toLowerCase().includes(q) ||
+          product.tags.some((tag) => tag.includes(q)),
+      )
+      .slice(0, 6);
   }, [query]);
 
-  const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacidamide', 'Lipstick', 'Retinol'];
+  const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacinamide', 'Lipstick', 'Retinol'];
 
   return (
-    <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto', padding: '8px 0' }}>
-      <div style={{ position: 'relative' }}>
-        <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+    <div className="search-shell">
+      <div className="search-input-wrap">
+        <Search size={18} />
         <input
-          type="text" 
+          type="text"
           aria-label="Search products"
-          placeholder="Search for products, brands, concerns..."
-          value={query} onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search products, brands, concerns..."
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
           autoFocus
           className="input-glass"
-          style={{ paddingLeft: '42px', paddingRight: '40px', fontSize: '15px' }}
         />
         {onClose && (
-          <button aria-label="Close search" onClick={onClose} style={{
-            position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)',
-            background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px',
-          }}>
+          <button type="button" aria-label="Close search" onClick={onClose}>
             <X size={18} />
           </button>
         )}
       </div>
 
-      {/* Results / Trending */}
       {query.trim() && (
-        <div style={{
-          position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
-          background: 'var(--bg-surface)', border: '1px solid var(--border-glass)',
-          borderRadius: '12px', marginTop: '8px', overflow: 'hidden',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-        }}>
+        <div className="search-results">
           {results.length > 0 ? (
-            <div style={{ padding: '8px' }}>
-              {results.map((p) => (
-                <Link key={p.id} href={`/products/${p.slug}`} onClick={onClose}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '12px',
-                    padding: '10px 12px', borderRadius: '8px', textDecoration: 'none',
-                    color: 'var(--text-primary)', transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-glass)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-                >
-                  <div style={{
-                    width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden',
-                    background: 'var(--bg-glass)', flexShrink: 0, position: 'relative'
-                  }}>
-                    <Image 
-                      src={p.images[0]} 
-                      alt={p.name} 
-                      fill
-                      style={{ objectFit: 'cover' }} 
-                    />
+            <div className="search-result-list">
+              {results.map((product) => (
+                <Link key={product.id} href={`/products/${product.slug}`} onClick={onClose} className="search-result">
+                  <div className="search-thumb">
+                    <Image src={product.images[0]} alt={product.name} fill sizes="44px" />
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '14px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {p.name}
-                    </div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{p.brandName}</div>
+                  <div>
+                    <strong>{product.name}</strong>
+                    <span>{product.brandName}</span>
                   </div>
-                  <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--primary)' }}>
-                    ₹{p.salePrice || p.price}
-                  </div>
+                  <em>&#8377;{(product.salePrice || product.price).toLocaleString()}</em>
                 </Link>
               ))}
             </div>
           ) : (
-            <div style={{ padding: '16px' }}>
-              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <TrendingUp size={14} /> TRENDING SEARCHES
+            <div className="search-trending">
+              <div>
+                <TrendingUp size={14} /> Trending searches
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {trending.map((t) => (
-                  <button key={t} onClick={() => setQuery(t)} style={{
-                    background: 'var(--bg-glass)', border: '1px solid var(--border-glass)',
-                    borderRadius: '20px', padding: '6px 14px', fontSize: '13px',
-                    color: 'var(--text-secondary)', cursor: 'pointer', transition: 'all 0.2s',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = 'var(--primary)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-glass)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                  >
-                    {t}
+              <div>
+                {trending.map((item) => (
+                  <button key={item} type="button" onClick={() => setQuery(item)}>
+                    {item}
                   </button>
                 ))}
               </div>
@@ -111,6 +78,166 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
           )}
         </div>
       )}
+
+      <style jsx global>{`
+        .search-shell {
+          position: relative;
+          max-width: 720px;
+          margin: 0 auto;
+          padding: 8px 0;
+        }
+
+        .search-input-wrap {
+          position: relative;
+        }
+
+        .search-input-wrap > svg {
+          position: absolute;
+          top: 50%;
+          left: 16px;
+          z-index: 1;
+          color: var(--text-muted);
+          transform: translateY(-50%);
+        }
+
+        .search-input-wrap input {
+          padding-left: 46px;
+          padding-right: 44px;
+          font-size: 15px;
+        }
+
+        .search-input-wrap button {
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          display: grid;
+          place-items: center;
+          width: 34px;
+          height: 34px;
+          border: 0;
+          border-radius: 999px;
+          color: var(--text-muted);
+          background: transparent;
+          cursor: pointer;
+          transform: translateY(-50%);
+        }
+
+        .search-input-wrap button:hover {
+          color: var(--primary);
+          background: var(--bg-surface-hover);
+        }
+
+        .search-results {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 50;
+          overflow: hidden;
+          margin-top: 10px;
+          border: 1px solid var(--line);
+          border-radius: 22px;
+          background: var(--bg-surface);
+          box-shadow: var(--shadow-soft);
+        }
+
+        .search-result-list {
+          padding: 8px;
+        }
+
+        .search-result {
+          display: grid;
+          grid-template-columns: 44px minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 12px;
+          border-radius: 15px;
+          color: var(--text-primary);
+          text-decoration: none;
+          transition: background 0.2s var(--spring);
+        }
+
+        .search-result:hover {
+          background: var(--bg-surface-hover);
+        }
+
+        .search-thumb {
+          position: relative;
+          width: 44px;
+          height: 44px;
+          overflow: hidden;
+          border-radius: 12px;
+          background: var(--bg-surface-hover);
+        }
+
+        .search-thumb img {
+          object-fit: cover;
+        }
+
+        .search-result strong,
+        .search-result span {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .search-result strong {
+          font-size: 14px;
+          font-weight: 800;
+        }
+
+        .search-result span {
+          margin-top: 2px;
+          color: var(--text-muted);
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .search-result em {
+          color: var(--primary);
+          font-style: normal;
+          font-weight: 900;
+        }
+
+        .search-trending {
+          padding: 16px;
+        }
+
+        .search-trending > div:first-child {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 12px;
+          color: var(--text-muted);
+          font-size: 12px;
+          font-weight: 900;
+          text-transform: uppercase;
+        }
+
+        .search-trending > div:last-child {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .search-trending button {
+          min-height: 34px;
+          padding: 7px 13px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--text-secondary);
+          background: var(--bg-surface-hover);
+          font-size: 13px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .search-trending button:hover {
+          color: var(--primary);
+          border-color: rgba(245, 31, 123, 0.26);
+        }
+      `}</style>
     </div>
   );
 }
