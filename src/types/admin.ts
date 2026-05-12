@@ -81,6 +81,9 @@ export interface AdminOrder {
   paymentStatus?: string;
   paymentMethod?: string;
   codDepositAmount?: number | null;
+  transactionId?: string | null;
+  screenshotUrl?: string | null;
+  customerPhone?: string | null;
   items?: OrderItem[];
   shippingAddress?: ShippingAddress;
   trackingNumber?: string;
