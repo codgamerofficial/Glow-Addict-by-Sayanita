@@ -131,5 +131,6 @@ export interface AIMessage {
   products?: Product[];
 }
 
-
+export { Order } from './order';
+export type Address = ShippingAddress;
 
