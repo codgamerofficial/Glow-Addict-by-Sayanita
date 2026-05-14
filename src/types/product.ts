@@ -1,3 +1,9 @@
+export interface ComboItem {
+  productId: string;
+  name: string;
+  quantity: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -34,6 +40,8 @@ export interface Product {
   tags: string[];
   weightGrams?: number;
   variants?: ProductVariant[];
+  isCombo?: boolean;
+  comboIncludes?: ComboItem[];
   stockQuantity: number;
   inventoryCount?: number;
   gstPercent?: number;
@@ -59,6 +67,7 @@ export interface Category {
   icon: string;
   parentId?: string;
   productCount: number;
+  subcategories?: { id: string; name: string; slug: string }[];
 }
 
 export interface Brand {

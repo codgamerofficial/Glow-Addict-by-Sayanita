@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Menu, Moon, Search, ShoppingBag, Sparkles, Sun, User, X } from 'lucide-react';
@@ -11,7 +12,7 @@ import { SearchBar } from '@/components/shared/SearchBar';
 import { useHydrated } from '@/hooks/useHydrated';
 import { useAuthStore } from '@/features/auth/authStore';
 
-const navLinks = [
+const mainNavLinks = [
   { href: '/products?category=skincare', label: 'Skincare' },
   { href: '/products?category=makeup', label: 'Makeup' },
   { href: '/products?category=bodycare', label: 'Body' },
@@ -19,6 +20,37 @@ const navLinks = [
   { href: '/products?category=tools', label: 'Tools' },
   { href: '/products', label: 'Sale' },
   { href: '/ai-assistant', label: 'Glow AI' },
+];
+
+const collectionLinks = [
+  { href: '/products?subcategory=facewash', label: 'FACEWASH' },
+  { href: '/products?subcategory=sunscreen', label: 'SUNSCREEN' },
+  { href: '/products?subcategory=moisturizer', label: 'MOISTURIZER' },
+  { href: '/products?subcategory=serum', label: 'SERUM' },
+  { href: '/products?subcategory=body-mist', label: 'BODY MIST' },
+  { href: '/products?subcategory=face-scrub', label: 'FACE SCRUB' },
+  { href: '/products?subcategory=lip-balm', label: 'LIP BALM' },
+  { href: '/products?subcategory=lip-gloss', label: 'LIP GLOSS' },
+  { href: '/products?subcategory=face-mask', label: 'Face mask' },
+  { href: '/products?subcategory=sheet-mask', label: 'Sheet mask' },
+  { href: '/products?subcategory=strobe-cream', label: 'Strobe cream' },
+  { href: '/products?subcategory=night-cream', label: 'NIGHT CREAM' },
+  { href: '/products?subcategory=body-scrub', label: 'Body scrub' },
+  { href: '/products?subcategory=body-wash', label: 'Body wash' },
+  { href: '/products?subcategory=under-arm-roll-on', label: 'Under arm roll on' },
+  { href: '/products?subcategory=combo', label: 'Combo' },
+];
+
+const ribbonMessages = [
+  'Free scrunchies with every order',
+  'Order on product availability',
+  'Absolutely free delivery above ₹799',
+  'Get a LAKME Peach Milk Moisturiser as a free gift',
+  'Shop your favourites before the offer ends',
+  'Any 2 at 149/- each 89/-',
+  'No COD',
+  'No return',
+  'Delivery charges ₹45 below ₹799',
 ];
 
 function IconButton({
@@ -81,10 +113,9 @@ export default function Header() {
         <div className="top-ribbon-track">
           {[...Array(2)].map((_, group) => (
             <div key={group} className="top-ribbon-group">
-              <span>Pink Summer Sale live</span>
-              <span>Extra 20% off first order</span>
-              <span>Free gift above &#8377;749</span>
-              <span>15-day easy returns</span>
+              {ribbonMessages.map((message) => (
+                <span key={`${group}-${message}`}>{message}</span>
+              ))}
             </div>
           ))}
         </div>
@@ -103,15 +134,12 @@ export default function Header() {
           </motion.button>
 
           <Link href="/" className="header-logo" aria-label="Glow Addict home">
-            <span className="brand-wordmark">
-              <span>GLOW</span>
-              <span>ADDICT</span>
-            </span>
+            <Image src="/images/logo.png" alt="Glow Addict" width={170} height={60} priority className="header-logo-image" />
             <span className="header-logo-dot" />
           </Link>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {navLinks.map((link) => (
+            {mainNavLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 {link.label}
               </Link>
@@ -157,6 +185,16 @@ export default function Header() {
           </div>
         </div>
 
+        <div className="header-rail-wrap">
+          <div className="container-main header-rail" aria-label="Glow Addict collections">
+            {collectionLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="header-rail-link">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <AnimatePresence>
           {searchOpen && (
             <motion.div
@@ -184,12 +222,24 @@ export default function Header() {
               aria-label="Mobile navigation"
             >
               <div className="container-main mobile-menu-grid">
-                {navLinks.map((link, index) => (
+                {mainNavLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.035 }}
+                  >
+                    <Link href={link.href} onClick={() => setMenuOpen(false)}>
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
+                {collectionLinks.map((link, index) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (index + mainNavLinks.length) * 0.035 }}
                   >
                     <Link href={link.href} onClick={() => setMenuOpen(false)}>
                       {link.label}
@@ -289,6 +339,12 @@ export default function Header() {
           flex-shrink: 0;
         }
 
+        .header-logo-image {
+          width: auto;
+          height: 46px;
+          object-fit: contain;
+        }
+
         .header-logo-dot {
           width: 9px;
           height: 9px;
@@ -327,6 +383,55 @@ export default function Header() {
         .desktop-nav a:hover {
           color: var(--primary);
           background: var(--bg-surface-hover);
+        }
+
+        .header-rail-wrap {
+          border-top: 1px solid rgba(255, 255, 255, 0.14);
+          background: rgba(255, 255, 255, 0.18);
+        }
+
+        [data-theme="dark"] .header-rail-wrap {
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        .header-rail {
+          display: flex;
+          gap: 8px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+
+        .header-rail::-webkit-scrollbar {
+          display: none;
+        }
+
+        .header-rail-link {
+          flex: 0 0 auto;
+          padding: 8px 12px;
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          border-radius: 999px;
+          color: var(--text-secondary);
+          background: rgba(255, 255, 255, 0.64);
+          font-family: var(--font-display);
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 0.02em;
+          text-decoration: none;
+          white-space: nowrap;
+          transition: all 0.2s var(--spring);
+        }
+
+        [data-theme="dark"] .header-rail-link {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .header-rail-link:hover {
+          color: #fff;
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          border-color: transparent;
+          transform: translateY(-1px);
         }
 
         .header-actions {
@@ -458,7 +563,7 @@ export default function Header() {
         }
 
         .header-spacer {
-          height: 106px;
+          height: 154px;
         }
 
         .mobile-menu-btn {
@@ -496,8 +601,13 @@ export default function Header() {
             gap: 10px;
           }
 
-          .brand-wordmark {
-            font-size: 20px;
+          .header-rail {
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+
+          .header-logo-image {
+            height: 38px;
           }
 
           .header-icon-button,
@@ -511,7 +621,7 @@ export default function Header() {
           }
 
           .header-spacer {
-            height: 92px;
+            height: 136px;
           }
         }
       `}</style>

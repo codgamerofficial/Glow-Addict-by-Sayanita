@@ -62,7 +62,29 @@ export default function ProductsPageWrapper() {
 function ProductsPage() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const subcategoryParam = searchParams.get('subcategory');
   const initialCategory = categoryParam ? [categoryParam] : [];
+
+  const normalizeFilterValue = (value: string) => value.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+
+  const subcategoryTitles: Record<string, string> = {
+    facewash: 'FACEWASH',
+    sunscreen: 'SUNSCREEN',
+    moisturizer: 'MOISTURIZER',
+    serum: 'SERUM',
+    'body-mist': 'BODY MIST',
+    'face-scrub': 'FACE SCRUB',
+    'lip-balm': 'LIP BALM',
+    'lip-gloss': 'LIP GLOSS',
+    'face-mask': 'Face mask',
+    'sheet-mask': 'Sheet mask',
+    'strobe-cream': 'Strobe cream',
+    'night-cream': 'NIGHT CREAM',
+    'body-scrub': 'Body scrub',
+    'body-wash': 'Body wash',
+    'under-arm-roll-on': 'Under arm roll on',
+    combo: 'Combo',
+  };
 
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory);
@@ -79,9 +101,10 @@ function ProductsPage() {
   const filtered = useMemo(() => {
     let result = [...products];
     if (selectedCategories.length) {
-      result = result.filter((product) =>
-        selectedCategories.includes(product.categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')),
-      );
+      result = result.filter((product) => selectedCategories.includes(normalizeFilterValue(product.categoryName)));
+    }
+    if (subcategoryParam) {
+      result = result.filter((product) => normalizeFilterValue(product.subcategoryName || '') === subcategoryParam);
     }
     if (selectedBrands.length) result = result.filter((product) => selectedBrands.includes(product.brandName));
     if (selectedSkinTypes.length) result = result.filter((product) => product.skinTypes.some((type) => selectedSkinTypes.includes(type)));
@@ -117,7 +140,11 @@ function ProductsPage() {
     setSelectedConcerns([]);
     setPriceRange([0, 3000]);
   };
-  const title = categoryParam ? categories.find((c) => c.slug === categoryParam)?.name || 'Products' : 'All Beauty';
+  const title = subcategoryParam
+    ? subcategoryTitles[subcategoryParam] || 'Products'
+    : categoryParam
+      ? categories.find((c) => c.slug === categoryParam)?.name || 'Products'
+      : 'All Beauty';
 
   return (
     <div className="products-page animate-fade-in">

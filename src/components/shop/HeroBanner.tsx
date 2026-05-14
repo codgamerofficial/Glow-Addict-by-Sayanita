@@ -84,10 +84,7 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
             <div className="hero-phone-notch" />
             <div className="hero-phone-screen">
               <div className="hero-phone-header">
-                <span className="brand-wordmark">
-                  <span>GLOW</span>
-                  <span>ADDICT</span>
-                </span>
+                <Image src="/images/logo.png" alt="Glow Addict" width={128} height={44} className="hero-phone-logo" />
                 <span className="hero-phone-bag">3</span>
               </div>
               <div className="hero-phone-banner">
@@ -311,8 +308,10 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           padding: 52px 20px 16px;
         }
 
-        .hero-phone-header .brand-wordmark {
-          font-size: 18px;
+        .hero-phone-logo {
+          width: auto;
+          height: 34px;
+          object-fit: contain;
         }
 
         .hero-phone-bag {
