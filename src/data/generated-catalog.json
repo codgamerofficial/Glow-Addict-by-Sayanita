@@ -1,0 +1,4578 @@
+{
+  "generatedAt": "2026-05-17T19:59:46.717Z",
+  "siteName": "Glow Addict by Sayanita",
+  "media": {
+    "logo": "/images/logo.png",
+    "freebies": "/images/freebies-alert.jpeg",
+    "combo": "/images/logo.png"
+  },
+  "stats": {
+    "totalImageFiles": 82,
+    "totalProductImages": 80,
+    "totalProducts": 80,
+    "totalBrands": 11,
+    "totalCategories": 20
+  },
+  "businessRules": {
+    "noReturn": true,
+    "noReplacement": true,
+    "freeDeliveryAbove": 799,
+    "shippingChargeBelow": 45,
+    "codAvailable": false
+  },
+  "contact": {
+    "email": "support@glowaddict.in",
+    "phone": "+91 98765 43210",
+    "instagram": "https://www.instagram.com/glow_addict_by_sayanita",
+    "whatsapp": "https://wa.me/919876543210"
+  },
+  "products": [
+    {
+      "id": "cetaphil-cetaphil-gentle-cleanser",
+      "title": "Cetaphil Gentle Cleanser",
+      "brand": "Cetaphil",
+      "category": "Cleanser",
+      "subcategory": "Cleanser",
+      "originalPrice": 839,
+      "offerPrice": 554,
+      "discount": 34,
+      "image": "/images/cetaphil-gentle-cleanser.jpeg",
+      "tags": [
+        "cleanser",
+        "cetaphil",
+        "best-seller"
+      ],
+      "skinType": [
+        "Sensitive",
+        "Dry",
+        "Normal"
+      ],
+      "ingredients": "Mild Surfactants, Glycerin, Panthenol",
+      "benefits": [
+        "Gentle cleanse",
+        "Barrier friendly",
+        "Hydration support"
+      ],
+      "shades": [],
+      "usageInstructions": "Massage on skin, wipe or rinse gently, then pat dry.",
+      "seoKeywords": [
+        "cetaphil gentle cleanser online india",
+        "cetaphil cleanser",
+        "best cleanser for glowing skin",
+        "cetaphil beauty products",
+        "cetaphil gentle cleanser offer price"
+      ],
+      "seo": {
+        "seoTitle": "Cetaphil Gentle Cleanser | Glow Addict by Sayanita",
+        "metaDescription": "Buy Cetaphil Gentle Cleanser at Glow Addict by Sayanita. Authentic Cetaphil cleanser with premium offers and fast delivery across India.",
+        "slug": "cetaphil-cetaphil-gentle-cleanser",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/cetaphil-cetaphil-gentle-cleanser",
+        "openGraphImage": "/images/cetaphil-gentle-cleanser.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 156,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 84,
+      "sku": "GA-0001"
+    },
+    {
+      "id": "cetaphil-cetaphil-radiance-serum",
+      "title": "Cetaphil Radiance Serum",
+      "brand": "Cetaphil",
+      "category": "Serum",
+      "subcategory": "Serum",
+      "originalPrice": 1079,
+      "offerPrice": 885,
+      "discount": 18,
+      "image": "/images/cetaphil-radiance-serum.jpeg",
+      "tags": [
+        "serum",
+        "cetaphil",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All",
+        "Combination",
+        "Dry"
+      ],
+      "ingredients": "Targeted treatment, Improves texture, Visible radiance",
+      "benefits": [
+        "Targeted treatment",
+        "Improves texture",
+        "Visible radiance"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply 2-3 drops on clean skin and follow with moisturizer.",
+      "seoKeywords": [
+        "cetaphil radiance serum online india",
+        "cetaphil serum",
+        "best serum for glowing skin",
+        "cetaphil beauty products",
+        "cetaphil radiance serum offer price"
+      ],
+      "seo": {
+        "seoTitle": "Cetaphil Radiance Serum | Glow Addict by Sayanita",
+        "metaDescription": "Buy Cetaphil Radiance Serum at Glow Addict by Sayanita. Authentic Cetaphil serum with premium offers and fast delivery across India.",
+        "slug": "cetaphil-cetaphil-radiance-serum",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/cetaphil-cetaphil-radiance-serum",
+        "openGraphImage": "/images/cetaphil-radiance-serum.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 320,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": true,
+      "stockQuantity": 8,
+      "sku": "GA-0002"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-barrier-facewash",
+      "title": "Dot & Key Barrier Facewash",
+      "brand": "Dot & Key",
+      "category": "Face Wash",
+      "subcategory": "Face Wash",
+      "originalPrice": 419,
+      "offerPrice": 239,
+      "discount": 43,
+      "image": "/images/dotkey-barrier-facewash.jpeg",
+      "tags": [
+        "face-wash",
+        "dot-and-key",
+        "trending"
+      ],
+      "skinType": [
+        "Oily",
+        "Combination",
+        "Normal"
+      ],
+      "ingredients": "Mild Surfactants, Glycerin, Panthenol",
+      "benefits": [
+        "Deep cleanse",
+        "Removes excess oil",
+        "Fresh glow"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply on damp face, massage for 30 seconds, and rinse thoroughly.",
+      "seoKeywords": [
+        "dot & key barrier facewash online india",
+        "dot & key face wash",
+        "best face wash for glowing skin",
+        "dot & key beauty products",
+        "dot & key barrier facewash offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Barrier Facewash | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Barrier Facewash at Glow Addict by Sayanita. Authentic Dot & Key face wash with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-barrier-facewash",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-barrier-facewash",
+        "openGraphImage": "/images/dotkey-barrier-facewash.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 295,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": true,
+      "stockQuantity": 63,
+      "sku": "GA-0003"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-blueberry-serum",
+      "title": "Dot & Key Blueberry Serum",
+      "brand": "Dot & Key",
+      "category": "Serum",
+      "subcategory": "Barrier Care",
+      "originalPrice": 1079,
+      "offerPrice": 593,
+      "discount": 45,
+      "image": "/images/dotkey-blueberry-serum.jpeg",
+      "tags": [
+        "serum",
+        "barrier-care",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "All",
+        "Combination",
+        "Dry"
+      ],
+      "ingredients": "Blueberry Extract, Ceramides, Squalane",
+      "benefits": [
+        "Targeted treatment",
+        "Improves texture",
+        "Visible radiance"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply 2-3 drops on clean skin and follow with moisturizer.",
+      "seoKeywords": [
+        "dot & key blueberry serum online india",
+        "dot & key serum",
+        "best serum for glowing skin",
+        "dot & key beauty products",
+        "dot & key blueberry serum offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Blueberry Serum | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Blueberry Serum at Glow Addict by Sayanita. Authentic Dot & Key serum with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-blueberry-serum",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-blueberry-serum",
+        "openGraphImage": "/images/dotkey-blueberry-serum.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 467,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 75,
+      "sku": "GA-0004"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-cica-facewash",
+      "title": "Dot & Key Cica Facewash",
+      "brand": "Dot & Key",
+      "category": "Face Wash",
+      "subcategory": "Cica Care",
+      "originalPrice": 719,
+      "offerPrice": 460,
+      "discount": 36,
+      "image": "/images/dotkey-cica-facewash.jpeg",
+      "tags": [
+        "face-wash",
+        "cica-care",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "Oily",
+        "Combination",
+        "Normal"
+      ],
+      "ingredients": "Cica, Panthenol, Allantoin",
+      "benefits": [
+        "Deep cleanse",
+        "Removes excess oil",
+        "Fresh glow"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply on damp face, massage for 30 seconds, and rinse thoroughly.",
+      "seoKeywords": [
+        "dot & key cica facewash online india",
+        "dot & key face wash",
+        "best face wash for glowing skin",
+        "dot & key beauty products",
+        "dot & key cica facewash offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Cica Facewash | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Cica Facewash at Glow Addict by Sayanita. Authentic Dot & Key face wash with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-cica-facewash",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-cica-facewash",
+        "openGraphImage": "/images/dotkey-cica-facewash.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 478,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 46,
+      "sku": "GA-0005"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-hydrating-moisturizer",
+      "title": "Dot & Key Hydrating Moisturizer",
+      "brand": "Dot & Key",
+      "category": "Moisturizer",
+      "subcategory": "Moisturizer",
+      "originalPrice": 839,
+      "offerPrice": 587,
+      "discount": 30,
+      "image": "/images/dotkey-hydrating-moisturizer.jpeg",
+      "tags": [
+        "moisturizer",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "Dry",
+        "Normal",
+        "Combination"
+      ],
+      "ingredients": "Ceramides, Hyaluronic Acid, Shea Butter",
+      "benefits": [
+        "Long hydration",
+        "Soft skin finish",
+        "Barrier support"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply after serum on face and neck using upward strokes.",
+      "seoKeywords": [
+        "dot & key hydrating moisturizer online india",
+        "dot & key moisturizer",
+        "best moisturizer for glowing skin",
+        "dot & key beauty products",
+        "dot & key hydrating moisturizer offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Hydrating Moisturizer | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Hydrating Moisturizer at Glow Addict by Sayanita. Authentic Dot & Key moisturizer with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-hydrating-moisturizer",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-hydrating-moisturizer",
+        "openGraphImage": "/images/dotkey-hydrating-moisturizer.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 322,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 50,
+      "sku": "GA-0006"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-vitamin-c-facewash",
+      "title": "Dot & Key Vitamin C Facewash",
+      "brand": "Dot & Key",
+      "category": "Face Wash",
+      "subcategory": "Vitamin C",
+      "originalPrice": 599,
+      "offerPrice": 419,
+      "discount": 30,
+      "image": "/images/dotkey-vitamin-c-facewash.jpeg",
+      "tags": [
+        "face-wash",
+        "vitamin-c",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "Oily",
+        "Combination",
+        "Normal"
+      ],
+      "ingredients": "Vitamin C, Kakadu Plum, Ferulic Acid",
+      "benefits": [
+        "Deep cleanse",
+        "Removes excess oil",
+        "Fresh glow"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply on damp face, massage for 30 seconds, and rinse thoroughly.",
+      "seoKeywords": [
+        "dot & key vitamin c facewash online india",
+        "dot & key face wash",
+        "best face wash for glowing skin",
+        "dot & key beauty products",
+        "dot & key vitamin c facewash offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Vitamin C Facewash | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Vitamin C Facewash at Glow Addict by Sayanita. Authentic Dot & Key face wash with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-vitamin-c-facewash",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-vitamin-c-facewash",
+        "openGraphImage": "/images/dotkey-vitamin-c-facewash.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 422,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 70,
+      "sku": "GA-0007"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-vitamin-c-serum",
+      "title": "Dot & Key Vitamin C Serum",
+      "brand": "Dot & Key",
+      "category": "Serum",
+      "subcategory": "Vitamin C",
+      "originalPrice": 659,
+      "offerPrice": 402,
+      "discount": 39,
+      "image": "/images/dotkey-vitamin-c-serum.jpeg",
+      "tags": [
+        "serum",
+        "vitamin-c",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "All",
+        "Combination",
+        "Dry"
+      ],
+      "ingredients": "Vitamin C, Kakadu Plum, Ferulic Acid",
+      "benefits": [
+        "Targeted treatment",
+        "Improves texture",
+        "Visible radiance"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply 2-3 drops on clean skin and follow with moisturizer.",
+      "seoKeywords": [
+        "dot & key vitamin c serum online india",
+        "dot & key serum",
+        "best serum for glowing skin",
+        "dot & key beauty products",
+        "dot & key vitamin c serum offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Vitamin C Serum | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Vitamin C Serum at Glow Addict by Sayanita. Authentic Dot & Key serum with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-vitamin-c-serum",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-vitamin-c-serum",
+        "openGraphImage": "/images/dotkey-vitamin-c-serum.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 491,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 19,
+      "sku": "GA-0008"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-vitamin-c-sunscreen",
+      "title": "Dot & Key Vitamin C Sunscreen",
+      "brand": "Dot & Key",
+      "category": "Sunscreen",
+      "subcategory": "Vitamin C",
+      "originalPrice": 479,
+      "offerPrice": 278,
+      "discount": 42,
+      "image": "/images/dotkey-vitamin-c-sunscreen.jpeg",
+      "tags": [
+        "sunscreen",
+        "vitamin-c",
+        "dot-and-key",
+        "spf50",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Vitamin C, Kakadu Plum, Ferulic Acid",
+      "benefits": [
+        "UVA/UVB protection",
+        "Prevents tanning",
+        "Daily defense"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply generously 15 minutes before sun exposure and reapply every 3-4 hours.",
+      "seoKeywords": [
+        "dot & key vitamin c sunscreen online india",
+        "dot & key sunscreen",
+        "best sunscreen for glowing skin",
+        "dot & key beauty products",
+        "dot & key vitamin c sunscreen offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Vitamin C Sunscreen | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Vitamin C Sunscreen at Glow Addict by Sayanita. Authentic Dot & Key sunscreen with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-vitamin-c-sunscreen",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-vitamin-c-sunscreen",
+        "openGraphImage": "/images/dotkey-vitamin-c-sunscreen.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 204,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 12,
+      "sku": "GA-0009"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-watermelon-facewash",
+      "title": "Dot & Key Watermelon Facewash",
+      "brand": "Dot & Key",
+      "category": "Face Wash",
+      "subcategory": "Watermelon",
+      "originalPrice": 779,
+      "offerPrice": 506,
+      "discount": 35,
+      "image": "/images/dotkey-watermelon-facewash.jpeg",
+      "tags": [
+        "face-wash",
+        "watermelon",
+        "dot-and-key"
+      ],
+      "skinType": [
+        "Oily",
+        "Combination",
+        "Normal"
+      ],
+      "ingredients": "Watermelon Extract, Hyaluronic Acid, Aloe Vera",
+      "benefits": [
+        "Deep cleanse",
+        "Removes excess oil",
+        "Fresh glow"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply on damp face, massage for 30 seconds, and rinse thoroughly.",
+      "seoKeywords": [
+        "dot & key watermelon facewash online india",
+        "dot & key face wash",
+        "best face wash for glowing skin",
+        "dot & key beauty products",
+        "dot & key watermelon facewash offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Watermelon Facewash | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Watermelon Facewash at Glow Addict by Sayanita. Authentic Dot & Key face wash with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-watermelon-facewash",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-watermelon-facewash",
+        "openGraphImage": "/images/dotkey-watermelon-facewash.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 487,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 75,
+      "sku": "GA-0010"
+    },
+    {
+      "id": "dot-and-key-dot-and-key-watermelon-sunscreen",
+      "title": "Dot & Key Watermelon Sunscreen",
+      "brand": "Dot & Key",
+      "category": "Sunscreen",
+      "subcategory": "Watermelon",
+      "originalPrice": 1019,
+      "offerPrice": 662,
+      "discount": 35,
+      "image": "/images/dotkey-watermelon-sunscreen.jpeg",
+      "tags": [
+        "sunscreen",
+        "watermelon",
+        "dot-and-key",
+        "spf50"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Watermelon Extract, Hyaluronic Acid, Aloe Vera",
+      "benefits": [
+        "UVA/UVB protection",
+        "Prevents tanning",
+        "Daily defense"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply generously 15 minutes before sun exposure and reapply every 3-4 hours.",
+      "seoKeywords": [
+        "dot & key watermelon sunscreen online india",
+        "dot & key sunscreen",
+        "best sunscreen for glowing skin",
+        "dot & key beauty products",
+        "dot & key watermelon sunscreen offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dot & Key Watermelon Sunscreen | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dot & Key Watermelon Sunscreen at Glow Addict by Sayanita. Authentic Dot & Key sunscreen with premium offers and fast delivery across India.",
+        "slug": "dot-and-key-dot-and-key-watermelon-sunscreen",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dot-and-key-dot-and-key-watermelon-sunscreen",
+        "openGraphImage": "/images/dotkey-watermelon-sunscreen.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 47,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 75,
+      "sku": "GA-0011"
+    },
+    {
+      "id": "dove-dove-body-polish",
+      "title": "Dove Body Polish",
+      "brand": "Dove",
+      "category": "Body Care",
+      "subcategory": "Body Care",
+      "originalPrice": 359,
+      "offerPrice": 233,
+      "discount": 35,
+      "image": "/images/dove-body-polish.jpeg",
+      "tags": [
+        "body-care",
+        "dove"
+      ],
+      "skinType": [
+        "All",
+        "Dry"
+      ],
+      "ingredients": "Smooth texture, Hydrates body skin, Healthy sheen",
+      "benefits": [
+        "Smooth texture",
+        "Hydrates body skin",
+        "Healthy sheen"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply on damp skin and massage until absorbed.",
+      "seoKeywords": [
+        "dove body polish online india",
+        "dove body care",
+        "best body care for glowing skin",
+        "dove beauty products",
+        "dove body polish offer price"
+      ],
+      "seo": {
+        "seoTitle": "Dove Body Polish | Glow Addict by Sayanita",
+        "metaDescription": "Buy Dove Body Polish at Glow Addict by Sayanita. Authentic Dove body care with premium offers and fast delivery across India.",
+        "slug": "dove-dove-body-polish",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/dove-dove-body-polish",
+        "openGraphImage": "/images/dove-body-polish.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 197,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 65,
+      "sku": "GA-0012"
+    },
+    {
+      "id": "glow-addict-glow-addict-face-roller",
+      "title": "Glow Addict Face Roller",
+      "brand": "Glow Addict",
+      "category": "Beauty Tools",
+      "subcategory": "Accessories",
+      "originalPrice": 779,
+      "offerPrice": 428,
+      "discount": 45,
+      "image": "/images/face-roller.jpeg",
+      "tags": [
+        "beauty-tools",
+        "accessories",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Easy application, Better precision, Reusable utility",
+      "benefits": [
+        "Easy application",
+        "Better precision",
+        "Reusable utility"
+      ],
+      "shades": [],
+      "usageInstructions": "Use with clean skin and sanitize after every use.",
+      "seoKeywords": [
+        "glow addict face roller online india",
+        "glow addict beauty tools",
+        "best beauty tools for glowing skin",
+        "glow addict beauty products",
+        "glow addict face roller offer price"
+      ],
+      "seo": {
+        "seoTitle": "Glow Addict Face Roller | Glow Addict by Sayanita",
+        "metaDescription": "Buy Glow Addict Face Roller at Glow Addict by Sayanita. Authentic Glow Addict beauty tools with premium offers and fast delivery across India.",
+        "slug": "glow-addict-glow-addict-face-roller",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-glow-addict-face-roller",
+        "openGraphImage": "/images/face-roller.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 317,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 45,
+      "sku": "GA-0013"
+    },
+    {
+      "id": "foxtale-foxtale-radiance-mask",
+      "title": "Foxtale Radiance Mask",
+      "brand": "Foxtale",
+      "category": "Face Mask",
+      "subcategory": "Face Mask",
+      "originalPrice": 659,
+      "offerPrice": 474,
+      "discount": 28,
+      "image": "/images/foxtale-radiance-mask.jpeg",
+      "tags": [
+        "face-mask",
+        "foxtale",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All",
+        "Dry",
+        "Combination"
+      ],
+      "ingredients": "Kaolin, Fruit Extracts, Humectants",
+      "benefits": [
+        "Instant glow",
+        "Quick refresh",
+        "Skin comfort"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply evenly, leave for 10-15 minutes, then rinse.",
+      "seoKeywords": [
+        "foxtale radiance mask online india",
+        "foxtale face mask",
+        "best face mask for glowing skin",
+        "foxtale beauty products",
+        "foxtale radiance mask offer price"
+      ],
+      "seo": {
+        "seoTitle": "Foxtale Radiance Mask | Glow Addict by Sayanita",
+        "metaDescription": "Buy Foxtale Radiance Mask at Glow Addict by Sayanita. Authentic Foxtale face mask with premium offers and fast delivery across India.",
+        "slug": "foxtale-foxtale-radiance-mask",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/foxtale-foxtale-radiance-mask",
+        "openGraphImage": "/images/foxtale-radiance-mask.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 380,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": true,
+      "stockQuantity": 8,
+      "sku": "GA-0014"
+    },
+    {
+      "id": "insight-insight-highlighter-blush",
+      "title": "Insight Highlighter Blush",
+      "brand": "Insight",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 436,
+      "discount": 22,
+      "image": "/images/insight-highlighter-blush.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "insight"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Champagne Glow",
+        "Rose Gold"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "insight highlighter blush online india",
+        "insight makeup",
+        "best makeup for glowing skin",
+        "insight beauty products",
+        "insight highlighter blush offer price"
+      ],
+      "seo": {
+        "seoTitle": "Insight Highlighter Blush | Glow Addict by Sayanita",
+        "metaDescription": "Buy Insight Highlighter Blush at Glow Addict by Sayanita. Authentic Insight makeup with premium offers and fast delivery across India.",
+        "slug": "insight-insight-highlighter-blush",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/insight-insight-highlighter-blush",
+        "openGraphImage": "/images/insight-highlighter-blush.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 354,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 42,
+      "sku": "GA-0015"
+    },
+    {
+      "id": "mars-mars-eyeliner",
+      "title": "MARS Eyeliner",
+      "brand": "MARS",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 365,
+      "discount": 41,
+      "image": "/images/mars-eyeliner.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "mars"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Carbon Black Pigments, Film Formers",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "mars eyeliner online india",
+        "mars makeup",
+        "best makeup for glowing skin",
+        "mars beauty products",
+        "mars eyeliner offer price"
+      ],
+      "seo": {
+        "seoTitle": "MARS Eyeliner | Glow Addict by Sayanita",
+        "metaDescription": "Buy MARS Eyeliner at Glow Addict by Sayanita. Authentic MARS makeup with premium offers and fast delivery across India.",
+        "slug": "mars-mars-eyeliner",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/mars-mars-eyeliner",
+        "openGraphImage": "/images/mars-eyeliner.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 313,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": true,
+      "stockQuantity": 81,
+      "sku": "GA-0016"
+    },
+    {
+      "id": "mars-mars-matte-lipstick",
+      "title": "MARS Matte Lipstick",
+      "brand": "MARS",
+      "category": "Lipstick",
+      "subcategory": "Lipstick",
+      "originalPrice": 599,
+      "offerPrice": 455,
+      "discount": 24,
+      "image": "/images/mars-matte-lipstick.jpeg",
+      "tags": [
+        "lipstick",
+        "mars"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Color Pigments, Emollients, Vitamin E",
+      "benefits": [
+        "Rich pigment",
+        "Comfort wear",
+        "Soft matte finish"
+      ],
+      "shades": [
+        "Rose Nude",
+        "Deep Berry",
+        "Coral Pink"
+      ],
+      "usageInstructions": "Outline lips and fill with even strokes.",
+      "seoKeywords": [
+        "mars matte lipstick online india",
+        "mars lipstick",
+        "best lipstick for glowing skin",
+        "mars beauty products",
+        "mars matte lipstick offer price"
+      ],
+      "seo": {
+        "seoTitle": "MARS Matte Lipstick | Glow Addict by Sayanita",
+        "metaDescription": "Buy MARS Matte Lipstick at Glow Addict by Sayanita. Authentic MARS lipstick with premium offers and fast delivery across India.",
+        "slug": "mars-mars-matte-lipstick",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/mars-mars-matte-lipstick",
+        "openGraphImage": "/images/mars-matte-lipstick.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 366,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 34,
+      "sku": "GA-0017"
+    },
+    {
+      "id": "mars-mars-trio-treat",
+      "title": "MARS Trio Treat",
+      "brand": "MARS",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 799,
+      "offerPrice": 647,
+      "discount": 19,
+      "image": "/images/mars-trio-treat.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "mars"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "mars trio treat online india",
+        "mars makeup",
+        "best makeup for glowing skin",
+        "mars beauty products",
+        "mars trio treat offer price"
+      ],
+      "seo": {
+        "seoTitle": "MARS Trio Treat | Glow Addict by Sayanita",
+        "metaDescription": "Buy MARS Trio Treat at Glow Addict by Sayanita. Authentic MARS makeup with premium offers and fast delivery across India.",
+        "slug": "mars-mars-trio-treat",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/mars-mars-trio-treat",
+        "openGraphImage": "/images/mars-trio-treat.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 181,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 9,
+      "sku": "GA-0018"
+    },
+    {
+      "id": "glow-addict-glow-addict-mini-fan",
+      "title": "Glow Addict Mini Fan",
+      "brand": "Glow Addict",
+      "category": "Beauty Tools",
+      "subcategory": "Accessories",
+      "originalPrice": 539,
+      "offerPrice": 323,
+      "discount": 40,
+      "image": "/images/mini-fan.jpeg",
+      "tags": [
+        "beauty-tools",
+        "accessories",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Easy application, Better precision, Reusable utility",
+      "benefits": [
+        "Easy application",
+        "Better precision",
+        "Reusable utility"
+      ],
+      "shades": [],
+      "usageInstructions": "Use with clean skin and sanitize after every use.",
+      "seoKeywords": [
+        "glow addict mini fan online india",
+        "glow addict beauty tools",
+        "best beauty tools for glowing skin",
+        "glow addict beauty products",
+        "glow addict mini fan offer price"
+      ],
+      "seo": {
+        "seoTitle": "Glow Addict Mini Fan | Glow Addict by Sayanita",
+        "metaDescription": "Buy Glow Addict Mini Fan at Glow Addict by Sayanita. Authentic Glow Addict beauty tools with premium offers and fast delivery across India.",
+        "slug": "glow-addict-glow-addict-mini-fan",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-glow-addict-mini-fan",
+        "openGraphImage": "/images/mini-fan.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 152,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 60,
+      "sku": "GA-0019"
+    },
+    {
+      "id": "plum-plum-moisture-gel",
+      "title": "Plum Moisture Gel",
+      "brand": "Plum",
+      "category": "Moisturizer",
+      "subcategory": "Moisturizer",
+      "originalPrice": 539,
+      "offerPrice": 410,
+      "discount": 24,
+      "image": "/images/plum-moisture-gel.jpeg",
+      "tags": [
+        "moisturizer",
+        "plum"
+      ],
+      "skinType": [
+        "Dry",
+        "Normal",
+        "Combination"
+      ],
+      "ingredients": "Ceramides, Hyaluronic Acid, Shea Butter",
+      "benefits": [
+        "Long hydration",
+        "Soft skin finish",
+        "Barrier support"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply after serum on face and neck using upward strokes.",
+      "seoKeywords": [
+        "plum moisture gel online india",
+        "plum moisturizer",
+        "best moisturizer for glowing skin",
+        "plum beauty products",
+        "plum moisture gel offer price"
+      ],
+      "seo": {
+        "seoTitle": "Plum Moisture Gel | Glow Addict by Sayanita",
+        "metaDescription": "Buy Plum Moisture Gel at Glow Addict by Sayanita. Authentic Plum moisturizer with premium offers and fast delivery across India.",
+        "slug": "plum-plum-moisture-gel",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/plum-plum-moisture-gel",
+        "openGraphImage": "/images/plum-moisture-gel.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 526,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 74,
+      "sku": "GA-0020"
+    },
+    {
+      "id": "plum-plum-niacinamide-serum",
+      "title": "Plum Niacinamide Serum",
+      "brand": "Plum",
+      "category": "Serum",
+      "subcategory": "Niacinamide",
+      "originalPrice": 479,
+      "offerPrice": 345,
+      "discount": 28,
+      "image": "/images/plum-niacinamide-serum.jpeg",
+      "tags": [
+        "serum",
+        "niacinamide",
+        "plum",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All",
+        "Combination",
+        "Dry"
+      ],
+      "ingredients": "Niacinamide, Zinc PCA, Green Tea",
+      "benefits": [
+        "Targeted treatment",
+        "Improves texture",
+        "Visible radiance"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply 2-3 drops on clean skin and follow with moisturizer.",
+      "seoKeywords": [
+        "plum niacinamide serum online india",
+        "plum serum",
+        "best serum for glowing skin",
+        "plum beauty products",
+        "plum niacinamide serum offer price"
+      ],
+      "seo": {
+        "seoTitle": "Plum Niacinamide Serum | Glow Addict by Sayanita",
+        "metaDescription": "Buy Plum Niacinamide Serum at Glow Addict by Sayanita. Authentic Plum serum with premium offers and fast delivery across India.",
+        "slug": "plum-plum-niacinamide-serum",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/plum-plum-niacinamide-serum",
+        "openGraphImage": "/images/plum-niacinamide-serum.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 480,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 68,
+      "sku": "GA-0021"
+    },
+    {
+      "id": "plum-plum-rose-toner",
+      "title": "Plum Rose Toner",
+      "brand": "Plum",
+      "category": "Toner",
+      "subcategory": "Toner",
+      "originalPrice": 359,
+      "offerPrice": 208,
+      "discount": 42,
+      "image": "/images/plum-rose-toner.jpeg",
+      "tags": [
+        "toner",
+        "plum"
+      ],
+      "skinType": [
+        "Combination",
+        "Oily",
+        "Normal"
+      ],
+      "ingredients": "Refines pores, Balances skin, Boosts absorption",
+      "benefits": [
+        "Refines pores",
+        "Balances skin",
+        "Boosts absorption"
+      ],
+      "shades": [],
+      "usageInstructions": "Pat onto cleansed skin with palms or cotton pad.",
+      "seoKeywords": [
+        "plum rose toner online india",
+        "plum toner",
+        "best toner for glowing skin",
+        "plum beauty products",
+        "plum rose toner offer price"
+      ],
+      "seo": {
+        "seoTitle": "Plum Rose Toner | Glow Addict by Sayanita",
+        "metaDescription": "Buy Plum Rose Toner at Glow Addict by Sayanita. Authentic Plum toner with premium offers and fast delivery across India.",
+        "slug": "plum-plum-rose-toner",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/plum-plum-rose-toner",
+        "openGraphImage": "/images/plum-rose-toner.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 414,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 62,
+      "sku": "GA-0022"
+    },
+    {
+      "id": "glow-addict-glow-addict-soft-nylon-bristles",
+      "title": "Glow Addict Soft Nylon Bristles",
+      "brand": "Glow Addict",
+      "category": "Beauty Tools",
+      "subcategory": "Accessories",
+      "originalPrice": 359,
+      "offerPrice": 237,
+      "discount": 34,
+      "image": "/images/soft-nylon-bristles.jpeg",
+      "tags": [
+        "beauty-tools",
+        "accessories",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Easy application, Better precision, Reusable utility",
+      "benefits": [
+        "Easy application",
+        "Better precision",
+        "Reusable utility"
+      ],
+      "shades": [],
+      "usageInstructions": "Use with clean skin and sanitize after every use.",
+      "seoKeywords": [
+        "glow addict soft nylon bristles online india",
+        "glow addict beauty tools",
+        "best beauty tools for glowing skin",
+        "glow addict beauty products",
+        "glow addict soft nylon bristles offer price"
+      ],
+      "seo": {
+        "seoTitle": "Glow Addict Soft Nylon Bristles | Glow Addict by Sayanita",
+        "metaDescription": "Buy Glow Addict Soft Nylon Bristles at Glow Addict by Sayanita. Authentic Glow Addict beauty tools with premium offers and fast delivery across India.",
+        "slug": "glow-addict-glow-addict-soft-nylon-bristles",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-glow-addict-soft-nylon-bristles",
+        "openGraphImage": "/images/soft-nylon-bristles.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 276,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 24,
+      "sku": "GA-0023"
+    },
+    {
+      "id": "glow-addict-beauty-essential-24",
+      "title": "Beauty Essential 24",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 311,
+      "discount": 18,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.05%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 24 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 24 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 24 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 24 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-24",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-24",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.05%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 320,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 28,
+      "sku": "GA-0024"
+    },
+    {
+      "id": "glow-addict-beauty-essential-25",
+      "title": "Beauty Essential 25",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 399,
+      "discount": 20,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.06%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 25 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 25 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 25 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 25 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-25",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-25",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.06%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 472,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 60,
+      "sku": "GA-0025"
+    },
+    {
+      "id": "glow-addict-beauty-essential-26",
+      "title": "Beauty Essential 26",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 483,
+      "discount": 22,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.07%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 26 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 26 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 26 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 26 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-26",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-26",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.07%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 124,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 12,
+      "sku": "GA-0026"
+    },
+    {
+      "id": "glow-addict-beauty-essential-27",
+      "title": "Beauty Essential 27",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 562,
+      "discount": 24,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.08%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 27 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 27 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 27 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 27 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-27",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-27",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.08%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 276,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 44,
+      "sku": "GA-0027"
+    },
+    {
+      "id": "glow-addict-beauty-essential-28",
+      "title": "Beauty Essential 28",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 859,
+      "offerPrice": 704,
+      "discount": 18,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.10%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 28 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 28 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 28 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 28 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-28",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-28",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.10%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 250,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 38,
+      "sku": "GA-0028"
+    },
+    {
+      "id": "glow-addict-beauty-essential-29",
+      "title": "Beauty Essential 29",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 979,
+      "offerPrice": 783,
+      "discount": 20,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.11%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 29 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 29 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 29 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 29 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-29",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-29",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.11%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 402,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 70,
+      "sku": "GA-0029"
+    },
+    {
+      "id": "glow-addict-beauty-essential-30",
+      "title": "Beauty Essential 30",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 384,
+      "discount": 23,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.13%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 30 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 30 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 30 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 30 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-30",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-30",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.13%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 205,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 53,
+      "sku": "GA-0030"
+    },
+    {
+      "id": "glow-addict-beauty-essential-31",
+      "title": "Beauty Essential 31",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 328,
+      "discount": 47,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.15%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 31 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 31 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 31 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 31 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-31",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-31",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.15%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 529,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 57,
+      "sku": "GA-0031"
+    },
+    {
+      "id": "glow-addict-beauty-essential-32",
+      "title": "Beauty Essential 32",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 599,
+      "discount": 19,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.16%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 32 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 32 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 32 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 32 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-32",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-32",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.16%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 181,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 9,
+      "sku": "GA-0032"
+    },
+    {
+      "id": "glow-addict-beauty-essential-33",
+      "title": "Beauty Essential 33",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 344,
+      "discount": 31,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.17%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 33 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 33 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 33 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 33 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-33",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-33",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.17%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 263,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 51,
+      "sku": "GA-0033"
+    },
+    {
+      "id": "glow-addict-beauty-essential-34",
+      "title": "Beauty Essential 34",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 919,
+      "offerPrice": 717,
+      "discount": 22,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.17%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 34 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 34 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 34 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 34 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-34",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-34",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.17%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 334,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 42,
+      "sku": "GA-0034"
+    },
+    {
+      "id": "glow-addict-beauty-essential-35",
+      "title": "Beauty Essential 35",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 288,
+      "discount": 24,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.18%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 35 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 35 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 35 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 35 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-35",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-35",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.18%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 486,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 74,
+      "sku": "GA-0035"
+    },
+    {
+      "id": "glow-addict-beauty-essential-36",
+      "title": "Beauty Essential 36",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 369,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.19%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 36 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 36 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 36 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 36 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-36",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-36",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.19%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 138,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 26,
+      "sku": "GA-0036"
+    },
+    {
+      "id": "glow-addict-beauty-essential-37",
+      "title": "Beauty Essential 37",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 453,
+      "discount": 19,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.20%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 37 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 37 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 37 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 37 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-37",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-37",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.20%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 461,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 69,
+      "sku": "GA-0037"
+    },
+    {
+      "id": "glow-addict-beauty-essential-38",
+      "title": "Beauty Essential 38",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 495,
+      "discount": 20,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.22%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 38 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 38 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 38 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 38 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-38",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-38",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.22%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 72,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 40,
+      "sku": "GA-0038"
+    },
+    {
+      "id": "glow-addict-beauty-essential-39",
+      "title": "Beauty Essential 39",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 859,
+      "offerPrice": 610,
+      "discount": 29,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.22%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 39 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 39 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 39 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 39 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-39",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-39",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.22%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 111,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 59,
+      "sku": "GA-0039"
+    },
+    {
+      "id": "glow-addict-beauty-essential-40",
+      "title": "Beauty Essential 40",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 539,
+      "discount": 27,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.23%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 40 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 40 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 40 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 40 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-40",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-40",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.23%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 459,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 27,
+      "sku": "GA-0040"
+    },
+    {
+      "id": "glow-addict-beauty-essential-41",
+      "title": "Beauty Essential 41",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 448,
+      "discount": 34,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.24%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 41 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 41 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 41 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 41 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-41",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-41",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.24%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 286,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 54,
+      "sku": "GA-0041"
+    },
+    {
+      "id": "glow-addict-beauty-essential-42",
+      "title": "Beauty Essential 42",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 344,
+      "discount": 31,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.26%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 42 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 42 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 42 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 42 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-42",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-42",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.26%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 483,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 71,
+      "sku": "GA-0042"
+    },
+    {
+      "id": "glow-addict-beauty-essential-43",
+      "title": "Beauty Essential 43",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 269,
+      "discount": 29,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.27%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 43 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 43 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 43 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 43 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-43",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-43",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.27%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 331,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 39,
+      "sku": "GA-0043"
+    },
+    {
+      "id": "glow-addict-beauty-essential-44",
+      "title": "Beauty Essential 44",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 859,
+      "offerPrice": 636,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.29%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 44 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 44 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 44 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 44 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-44",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-44",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.29%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 528,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 56,
+      "sku": "GA-0044"
+    },
+    {
+      "id": "glow-addict-beauty-essential-45",
+      "title": "Beauty Essential 45",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 503,
+      "discount": 32,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.31%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 45 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 45 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 45 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 45 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-45",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-45",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.31%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 54,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 62,
+      "sku": "GA-0045"
+    },
+    {
+      "id": "glow-addict-beauty-essential-46",
+      "title": "Beauty Essential 46",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 397,
+      "discount": 29,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.33%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 46 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 46 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 46 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 46 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-46",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-46",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.33%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 251,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 79,
+      "sku": "GA-0046"
+    },
+    {
+      "id": "glow-addict-beauty-essential-47",
+      "title": "Beauty Essential 47",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 280,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.35%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 47 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 47 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 47 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 47 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-47",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-47",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.35%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 448,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 16,
+      "sku": "GA-0047"
+    },
+    {
+      "id": "glow-addict-beauty-essential-48",
+      "title": "Beauty Essential 48",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 799,
+      "offerPrice": 623,
+      "discount": 22,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.38%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 48 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 48 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 48 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 48 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-48",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-48",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.38%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 494,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 82,
+      "sku": "GA-0048"
+    },
+    {
+      "id": "glow-addict-beauty-essential-49",
+      "title": "Beauty Essential 49",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 489,
+      "discount": 28,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.40%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 49 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 49 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 49 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 49 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-49",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-49",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.40%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 520,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 8,
+      "sku": "GA-0049"
+    },
+    {
+      "id": "glow-addict-beauty-essential-50",
+      "title": "Beauty Essential 50",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 414,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.41%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 50 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 50 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 50 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 50 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-50",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-50",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.41%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 368,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 56,
+      "sku": "GA-0050"
+    },
+    {
+      "id": "glow-addict-beauty-essential-51",
+      "title": "Beauty Essential 51",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 334,
+      "discount": 33,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.42%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 51 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 51 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 51 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 51 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-51",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-51",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.42%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 195,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 83,
+      "sku": "GA-0051"
+    },
+    {
+      "id": "glow-addict-beauty-essential-52",
+      "title": "Beauty Essential 52",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 262,
+      "discount": 31,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.43%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 52 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 52 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 52 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 52 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-52",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-52",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.43%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 43,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 51,
+      "sku": "GA-0052"
+    },
+    {
+      "id": "glow-addict-beauty-essential-53",
+      "title": "Beauty Essential 53",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 859,
+      "offerPrice": 618,
+      "discount": 28,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.45%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 53 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 53 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 53 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 53 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-53",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-53",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.45%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 240,
+      "isBestSeller": true,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 68,
+      "sku": "GA-0053"
+    },
+    {
+      "id": "glow-addict-beauty-essential-54",
+      "title": "Beauty Essential 54",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 349,
+      "discount": 30,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.46%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 54 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 54 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 54 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 54 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-54",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-54",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.46%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 332,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 80,
+      "sku": "GA-0054"
+    },
+    {
+      "id": "glow-addict-beauty-essential-55",
+      "title": "Beauty Essential 55",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 509,
+      "discount": 25,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.46%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 55 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 55 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 55 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 55 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-55",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-55",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.46%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 87,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 35,
+      "sku": "GA-0055"
+    },
+    {
+      "id": "glow-addict-beauty-essential-56",
+      "title": "Beauty Essential 56",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 430,
+      "discount": 23,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.47%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 56 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 56 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 56 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 56 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-56",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-56",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.47%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 435,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 83,
+      "sku": "GA-0056"
+    },
+    {
+      "id": "glow-addict-beauty-essential-57",
+      "title": "Beauty Essential 57",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 439,
+      "offerPrice": 347,
+      "discount": 21,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.48%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 57 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 57 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 57 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 57 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-57",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-57",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.48%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 283,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 51,
+      "sku": "GA-0057"
+    },
+    {
+      "id": "glow-addict-beauty-essential-58",
+      "title": "Beauty Essential 58",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 979,
+      "offerPrice": 793,
+      "discount": 19,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.49%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 58 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 58 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 58 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 58 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-58",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-58",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.49%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 131,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 19,
+      "sku": "GA-0058"
+    },
+    {
+      "id": "glow-addict-beauty-essential-59",
+      "title": "Beauty Essential 59",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 299,
+      "discount": 40,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.50%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 59 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 59 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 59 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 59 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-59",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-59",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.50%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 272,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 40,
+      "sku": "GA-0059"
+    },
+    {
+      "id": "glow-addict-beauty-essential-60",
+      "title": "Beauty Essential 60",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 359,
+      "discount": 42,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.51%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 60 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 60 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 60 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 60 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-60",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-60",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.51%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.4,
+      "ratingCount": 424,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 72,
+      "sku": "GA-0060"
+    },
+    {
+      "id": "glow-addict-beauty-essential-61",
+      "title": "Beauty Essential 61",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 441,
+      "discount": 35,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.52%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 61 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 61 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 61 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 61 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-61",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-61",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.52%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 97,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 45,
+      "sku": "GA-0061"
+    },
+    {
+      "id": "glow-addict-beauty-essential-62",
+      "title": "Beauty Essential 62",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 799,
+      "offerPrice": 503,
+      "discount": 37,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.53%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 62 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 62 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 62 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 62 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-62",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-62",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.53%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 249,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 77,
+      "sku": "GA-0062"
+    },
+    {
+      "id": "glow-addict-beauty-essential-63",
+      "title": "Beauty Essential 63",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 919,
+      "offerPrice": 561,
+      "discount": 39,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.54%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 63 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 63 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 63 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 63 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-63",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-63",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.54%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 401,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 29,
+      "sku": "GA-0063"
+    },
+    {
+      "id": "glow-addict-beauty-essential-64",
+      "title": "Beauty Essential 64",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 379,
+      "offerPrice": 224,
+      "discount": 41,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.55%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 64 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 64 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 64 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 64 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-64",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-64",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.55%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.3,
+      "ratingCount": 53,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 61,
+      "sku": "GA-0064"
+    },
+    {
+      "id": "glow-addict-beauty-essential-65",
+      "title": "Beauty Essential 65",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 499,
+      "offerPrice": 284,
+      "discount": 43,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.56%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 65 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 65 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 65 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 65 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-65",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-65",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.56%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 205,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 13,
+      "sku": "GA-0065"
+    },
+    {
+      "id": "glow-addict-beauty-essential-66",
+      "title": "Beauty Essential 66",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 340,
+      "discount": 45,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.57%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 66 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 66 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 66 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 66 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-66",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-66",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.57%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.7,
+      "ratingCount": 357,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 45,
+      "sku": "GA-0066"
+    },
+    {
+      "id": "glow-addict-beauty-essential-67",
+      "title": "Beauty Essential 67",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 392,
+      "discount": 47,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.58%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 67 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 67 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 67 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 67 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-67",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-67",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.58%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 509,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 77,
+      "sku": "GA-0067"
+    },
+    {
+      "id": "glow-addict-beauty-essential-68",
+      "title": "Beauty Essential 68",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 859,
+      "offerPrice": 696,
+      "discount": 19,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.59%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 68 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 68 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 68 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 68 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-68",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-68",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.29.59%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 161,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 29,
+      "sku": "GA-0068"
+    },
+    {
+      "id": "glow-addict-beauty-essential-69",
+      "title": "Beauty Essential 69",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 502,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.30.00%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 69 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 69 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 69 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 69 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-69",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-69",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.30.00%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 408,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 56,
+      "sku": "GA-0069"
+    },
+    {
+      "id": "glow-addict-beauty-essential-70",
+      "title": "Beauty Essential 70",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 559,
+      "offerPrice": 425,
+      "discount": 24,
+      "image": "/images/WhatsApp%20Image%202026-05-13%20at%2011.30.01%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 70 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 70 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 70 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 70 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-70",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-70",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-13%20at%2011.30.01%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.6,
+      "ratingCount": 256,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 24,
+      "sku": "GA-0070"
+    },
+    {
+      "id": "glow-addict-beauty-essential-71",
+      "title": "Beauty Essential 71",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 919,
+      "offerPrice": 496,
+      "discount": 46,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.55.12%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 71 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 71 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 71 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 71 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-71",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-71",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.55.12%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 328,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 16,
+      "sku": "GA-0071"
+    },
+    {
+      "id": "glow-addict-beauty-essential-72",
+      "title": "Beauty Essential 72",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 390,
+      "discount": 37,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.55.14%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 72 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 72 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 72 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 72 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-72",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-72",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.55.14%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 409,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 37,
+      "sku": "GA-0072"
+    },
+    {
+      "id": "glow-addict-beauty-essential-73",
+      "title": "Beauty Essential 73",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 439,
+      "offerPrice": 294,
+      "discount": 33,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.29%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 73 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 73 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 73 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 73 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-73",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-73",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.29%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 435,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 23,
+      "sku": "GA-0073"
+    },
+    {
+      "id": "glow-addict-beauty-essential-74",
+      "title": "Beauty Essential 74",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 919,
+      "offerPrice": 680,
+      "discount": 26,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.30%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "best-seller"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 74 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 74 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 74 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 74 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-74",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-74",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.30%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 188,
+      "isBestSeller": true,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 56,
+      "sku": "GA-0074"
+    },
+    {
+      "id": "glow-addict-beauty-essential-75",
+      "title": "Beauty Essential 75",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 979,
+      "offerPrice": 597,
+      "discount": 39,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.30%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 75 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 75 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 75 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 75 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-75",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-75",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.30%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.1,
+      "ratingCount": 111,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 59,
+      "sku": "GA-0075"
+    },
+    {
+      "id": "glow-addict-beauty-essential-76",
+      "title": "Beauty Essential 76",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 739,
+      "offerPrice": 466,
+      "discount": 37,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.31%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 76 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 76 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 76 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 76 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-76",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-76",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.31%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.9,
+      "ratingCount": 229,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 57,
+      "sku": "GA-0076"
+    },
+    {
+      "id": "glow-addict-beauty-essential-77",
+      "title": "Beauty Essential 77",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 799,
+      "offerPrice": 511,
+      "discount": 36,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.31%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 77 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 77 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 77 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 77 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-77",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-77",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.31%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.8,
+      "ratingCount": 458,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 26,
+      "sku": "GA-0077"
+    },
+    {
+      "id": "glow-addict-beauty-essential-78",
+      "title": "Beauty Essential 78",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 679,
+      "offerPrice": 557,
+      "discount": 18,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.32%20PM%20(1).jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 78 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 78 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 78 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 78 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-78",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-78",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.32%20PM%20(1).jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4,
+      "ratingCount": 310,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 38,
+      "sku": "GA-0078"
+    },
+    {
+      "id": "glow-addict-beauty-essential-79",
+      "title": "Beauty Essential 79",
+      "brand": "Glow Addict",
+      "category": "Makeup",
+      "subcategory": "Color Cosmetics",
+      "originalPrice": 619,
+      "offerPrice": 415,
+      "discount": 33,
+      "image": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.32%20PM.jpeg",
+      "tags": [
+        "makeup",
+        "color-cosmetics",
+        "glow-addict",
+        "trending"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "Buildable payoff, Blendable texture, Event-ready look",
+      "benefits": [
+        "Buildable payoff",
+        "Blendable texture",
+        "Event-ready look"
+      ],
+      "shades": [
+        "Classic",
+        "Natural"
+      ],
+      "usageInstructions": "Apply over primed skin and blend as needed.",
+      "seoKeywords": [
+        "beauty essential 79 online india",
+        "glow addict makeup",
+        "best makeup for glowing skin",
+        "glow addict beauty products",
+        "beauty essential 79 offer price"
+      ],
+      "seo": {
+        "seoTitle": "Beauty Essential 79 | Glow Addict by Sayanita",
+        "metaDescription": "Buy Beauty Essential 79 at Glow Addict by Sayanita. Authentic Glow Addict makeup with premium offers and fast delivery across India.",
+        "slug": "glow-addict-beauty-essential-79",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/glow-addict-beauty-essential-79",
+        "openGraphImage": "/images/WhatsApp%20Image%202026-05-15%20at%209.56.32%20PM.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.5,
+      "ratingCount": 305,
+      "isBestSeller": false,
+      "isTrending": true,
+      "isNewArrival": false,
+      "stockQuantity": 73,
+      "sku": "GA-0079"
+    },
+    {
+      "id": "wishcare-wishcare-fluid-sunscreen",
+      "title": "WishCare Fluid Sunscreen",
+      "brand": "WishCare",
+      "category": "Sunscreen",
+      "subcategory": "Sunscreen",
+      "originalPrice": 899,
+      "offerPrice": 539,
+      "discount": 40,
+      "image": "/images/wishcare-fluid-sunscreen.jpeg",
+      "tags": [
+        "sunscreen",
+        "wishcare",
+        "spf50"
+      ],
+      "skinType": [
+        "All"
+      ],
+      "ingredients": "UVA/UVB Filters, Vitamin E, Hydrators",
+      "benefits": [
+        "UVA/UVB protection",
+        "Prevents tanning",
+        "Daily defense"
+      ],
+      "shades": [],
+      "usageInstructions": "Apply generously 15 minutes before sun exposure and reapply every 3-4 hours.",
+      "seoKeywords": [
+        "wishcare fluid sunscreen online india",
+        "wishcare sunscreen",
+        "best sunscreen for glowing skin",
+        "wishcare beauty products",
+        "wishcare fluid sunscreen offer price"
+      ],
+      "seo": {
+        "seoTitle": "WishCare Fluid Sunscreen | Glow Addict by Sayanita",
+        "metaDescription": "Buy WishCare Fluid Sunscreen at Glow Addict by Sayanita. Authentic WishCare sunscreen with premium offers and fast delivery across India.",
+        "slug": "wishcare-wishcare-fluid-sunscreen",
+        "canonicalUrl": "https://glowaddictbysayanita.vercel.app/products/wishcare-wishcare-fluid-sunscreen",
+        "openGraphImage": "/images/wishcare-fluid-sunscreen.jpeg",
+        "twitterCard": "summary_large_image",
+        "schemaType": "Product"
+      },
+      "ratingAvg": 4.2,
+      "ratingCount": 322,
+      "isBestSeller": false,
+      "isTrending": false,
+      "isNewArrival": false,
+      "stockQuantity": 70,
+      "sku": "GA-0080"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-001",
+      "name": "Face Wash",
+      "slug": "face-wash",
+      "imageUrl": "/images/dotkey-barrier-facewash.jpeg",
+      "icon": "F",
+      "description": "Face Wash collection by Glow Addict by Sayanita",
+      "productCount": 4
+    },
+    {
+      "id": "cat-002",
+      "name": "Cleanser",
+      "slug": "cleanser",
+      "imageUrl": "/images/cetaphil-gentle-cleanser.jpeg",
+      "icon": "C",
+      "description": "Cleanser collection by Glow Addict by Sayanita",
+      "productCount": 1
+    },
+    {
+      "id": "cat-003",
+      "name": "Serum",
+      "slug": "serum",
+      "imageUrl": "/images/cetaphil-radiance-serum.jpeg",
+      "icon": "S",
+      "description": "Serum collection by Glow Addict by Sayanita",
+      "productCount": 4
+    },
+    {
+      "id": "cat-004",
+      "name": "Sunscreen",
+      "slug": "sunscreen",
+      "imageUrl": "/images/dotkey-vitamin-c-sunscreen.jpeg",
+      "icon": "S",
+      "description": "Sunscreen collection by Glow Addict by Sayanita",
+      "productCount": 3
+    },
+    {
+      "id": "cat-005",
+      "name": "Moisturizer",
+      "slug": "moisturizer",
+      "imageUrl": "/images/dotkey-hydrating-moisturizer.jpeg",
+      "icon": "M",
+      "description": "Moisturizer collection by Glow Addict by Sayanita",
+      "productCount": 2
+    },
+    {
+      "id": "cat-006",
+      "name": "Toner",
+      "slug": "toner",
+      "imageUrl": "/images/plum-rose-toner.jpeg",
+      "icon": "T",
+      "description": "Toner collection by Glow Addict by Sayanita",
+      "productCount": 1
+    },
+    {
+      "id": "cat-007",
+      "name": "Lip Care",
+      "slug": "lip-care",
+      "imageUrl": "/images/logo.png",
+      "icon": "L",
+      "description": "Lip Care collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-008",
+      "name": "Lipstick",
+      "slug": "lipstick",
+      "imageUrl": "/images/mars-matte-lipstick.jpeg",
+      "icon": "L",
+      "description": "Lipstick collection by Glow Addict by Sayanita",
+      "productCount": 1
+    },
+    {
+      "id": "cat-009",
+      "name": "Face Mask",
+      "slug": "face-mask",
+      "imageUrl": "/images/foxtale-radiance-mask.jpeg",
+      "icon": "F",
+      "description": "Face Mask collection by Glow Addict by Sayanita",
+      "productCount": 1
+    },
+    {
+      "id": "cat-010",
+      "name": "Body Care",
+      "slug": "body-care",
+      "imageUrl": "/images/dove-body-polish.jpeg",
+      "icon": "B",
+      "description": "Body Care collection by Glow Addict by Sayanita",
+      "productCount": 1
+    },
+    {
+      "id": "cat-011",
+      "name": "Roll On",
+      "slug": "roll-on",
+      "imageUrl": "/images/logo.png",
+      "icon": "R",
+      "description": "Roll On collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-012",
+      "name": "Nail Extensions",
+      "slug": "nail-extensions",
+      "imageUrl": "/images/logo.png",
+      "icon": "N",
+      "description": "Nail Extensions collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-013",
+      "name": "Makeup",
+      "slug": "makeup",
+      "imageUrl": "/images/insight-highlighter-blush.jpeg",
+      "icon": "M",
+      "description": "Makeup collection by Glow Addict by Sayanita",
+      "productCount": 59
+    },
+    {
+      "id": "cat-014",
+      "name": "Beauty Tools",
+      "slug": "beauty-tools",
+      "imageUrl": "/images/face-roller.jpeg",
+      "icon": "B",
+      "description": "Beauty Tools collection by Glow Addict by Sayanita",
+      "productCount": 3
+    },
+    {
+      "id": "cat-015",
+      "name": "Body Mist",
+      "slug": "body-mist",
+      "imageUrl": "/images/logo.png",
+      "icon": "B",
+      "description": "Body Mist collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-016",
+      "name": "Combos",
+      "slug": "combos",
+      "imageUrl": "/images/logo.png",
+      "icon": "C",
+      "description": "Combos collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-017",
+      "name": "Offers",
+      "slug": "offers",
+      "imageUrl": "/images/logo.png",
+      "icon": "O",
+      "description": "Offers collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-018",
+      "name": "Best Sellers",
+      "slug": "best-sellers",
+      "imageUrl": "/images/logo.png",
+      "icon": "B",
+      "description": "Best Sellers collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-019",
+      "name": "Trending",
+      "slug": "trending",
+      "imageUrl": "/images/logo.png",
+      "icon": "T",
+      "description": "Trending collection by Glow Addict by Sayanita",
+      "productCount": 0
+    },
+    {
+      "id": "cat-020",
+      "name": "New Arrivals",
+      "slug": "new-arrivals",
+      "imageUrl": "/images/logo.png",
+      "icon": "N",
+      "description": "New Arrivals collection by Glow Addict by Sayanita",
+      "productCount": 0
+    }
+  ],
+  "brands": [
+    {
+      "id": "brand-cetaphil",
+      "name": "Cetaphil",
+      "slug": "cetaphil",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Cetaphil beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-dot-and-key",
+      "name": "Dot & Key",
+      "slug": "dot-and-key",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Dot & Key beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-dove",
+      "name": "Dove",
+      "slug": "dove",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Dove beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-foxtale",
+      "name": "Foxtale",
+      "slug": "foxtale",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Foxtale beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-insight",
+      "name": "Insight",
+      "slug": "insight",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Insight beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-mars",
+      "name": "MARS",
+      "slug": "mars",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "MARS beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-plum",
+      "name": "Plum",
+      "slug": "plum",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Plum beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-wishcare",
+      "name": "WishCare",
+      "slug": "wishcare",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "WishCare beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-alps",
+      "name": "ALPS",
+      "slug": "alps",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "ALPS beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-derma-co",
+      "name": "Derma Co",
+      "slug": "derma-co",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Derma Co beauty products curated by Glow Addict by Sayanita"
+    },
+    {
+      "id": "brand-aqulogica",
+      "name": "Aqulogica",
+      "slug": "aqulogica",
+      "isPremium": true,
+      "logoUrl": "/images/logo.png",
+      "description": "Aqulogica beauty products curated by Glow Addict by Sayanita"
+    }
+  ],
+  "comboBundles": [
+    {
+      "id": "combo-glow-ritual",
+      "title": "Glow Ritual Combo",
+      "productIds": [
+        "cetaphil-cetaphil-radiance-serum",
+        "dot-and-key-dot-and-key-barrier-facewash",
+        "dot-and-key-dot-and-key-blueberry-serum"
+      ],
+      "discountPercent": 18,
+      "image": "/images/cetaphil-radiance-serum.jpeg"
+    },
+    {
+      "id": "combo-daily-defense",
+      "title": "Daily Defense Combo",
+      "productIds": [
+        "dot-and-key-dot-and-key-cica-facewash",
+        "dot-and-key-dot-and-key-hydrating-moisturizer",
+        "dot-and-key-dot-and-key-vitamin-c-facewash"
+      ],
+      "discountPercent": 22,
+      "image": "/images/dotkey-barrier-facewash.jpeg"
+    },
+    {
+      "id": "combo-weekend-radiance",
+      "title": "Weekend Radiance Combo",
+      "productIds": [
+        "dot-and-key-dot-and-key-vitamin-c-serum",
+        "dot-and-key-dot-and-key-vitamin-c-sunscreen",
+        "dot-and-key-dot-and-key-watermelon-facewash"
+      ],
+      "discountPercent": 25,
+      "image": "/images/dotkey-blueberry-serum.jpeg"
+    }
+  ]
+}

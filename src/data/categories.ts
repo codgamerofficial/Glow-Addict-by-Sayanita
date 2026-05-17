@@ -1,4 +1,5 @@
 export { categories } from './catalog';
+export { catalog as products } from './catalog';
 
 export const skinTypes = ['Oily', 'Dry', 'Combination', 'Sensitive', 'Normal'];
 export const skinConcerns = [

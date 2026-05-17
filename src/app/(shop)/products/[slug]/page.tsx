@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import { Check, ChevronRight, Heart, Minus, Plus, RotateCcw, Shield, ShoppingBag, Star, Truck } from 'lucide-react';
 import { products } from '@/data/products';
 import { reviews } from '@/data/reviews';
+import { businessRules } from '@/data/catalog';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import ProductCard from '@/components/product/ProductCard';
@@ -63,7 +64,7 @@ export default function ProductDetailPage() {
             </div>
             {product.images.length > 1 && (
               <div className="detail-thumbs">
-                {product.images.map((image, index) => (
+                {product.images.map((image: string, index: number) => (
                   <button
                     key={image}
                     type="button"
@@ -80,7 +81,7 @@ export default function ProductDetailPage() {
 
           <div className="detail-info">
             <div className="detail-badges">
-              {product.badges?.map((badge) => (
+              {product.badges?.map((badge: string) => (
                 <span key={badge} className={badge === 'Bestseller' ? 'badge badge-gold' : badge === 'New Arrival' ? 'badge badge-new' : 'badge badge-primary'}>
                   {badge.toUpperCase()}
                 </span>
@@ -94,7 +95,7 @@ export default function ProductDetailPage() {
             <h1>{product.name}</h1>
             <p className="detail-short">{product.shortDesc}</p>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px' }}>
-              {product.subcategoryName}{product.sku ? ` • SKU ${product.sku}` : ''}
+              {product.sku ? `SKU ${product.sku}` : ''}
             </p>
 
             <div className="detail-rating">
@@ -119,10 +120,10 @@ export default function ProductDetailPage() {
             </div>
 
             <div className="detail-tags">
-              {product.skinTypes.slice(0, 5).map((type) => (
+              {product.skinTypes.slice(0, 5).map((type: string) => (
                 <span key={type}>{type}</span>
               ))}
-              {product.concerns.slice(0, 4).map((concern) => (
+              {product.concerns.slice(0, 4).map((concern: string) => (
                 <span key={concern}>{concern}</span>
               ))}
               {product.gender && <span>{product.gender}</span>}
@@ -149,9 +150,9 @@ export default function ProductDetailPage() {
 
             <div className="detail-perks">
               {[
-                { icon: Truck, text: 'Free delivery above 499' },
+                { icon: Truck, text: `Free delivery above ₹${businessRules.freeDeliveryAbove} | ₹${businessRules.shippingChargeBelow} shipping below` },
                 { icon: Shield, text: 'Authentic product guarantee' },
-                { icon: RotateCcw, text: 'Easy 15-day returns' },
+                { icon: RotateCcw, text: 'No return • No replacement • No COD' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text}>
                   <Icon size={19} />

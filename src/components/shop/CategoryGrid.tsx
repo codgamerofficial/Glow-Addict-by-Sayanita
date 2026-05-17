@@ -74,10 +74,10 @@ export function CategoryGrid({ collections }: { collections: AdminCollection[] }
           .category-view-link {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: clamp(4px, 0.8vw, 8px);
             color: var(--primary);
             font-family: var(--font-display);
-            font-size: 14px;
+            font-size: clamp(12px, 1vw, 14px);
             font-weight: 900;
             text-decoration: none;
           }
@@ -85,16 +85,16 @@ export function CategoryGrid({ collections }: { collections: AdminCollection[] }
           .category-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
+            gap: clamp(14px, 2vw, 18px);
           }
 
           .category-card {
             position: relative;
             display: block;
-            min-height: 280px;
+            min-height: clamp(220px, 35vw, 300px);
             overflow: hidden;
             border: 1px solid var(--line);
-            border-radius: 28px;
+            border-radius: clamp(24px, 3vw, 30px);
             color: #fff;
             text-decoration: none;
             background: #1b1018;
@@ -131,64 +131,102 @@ export function CategoryGrid({ collections }: { collections: AdminCollection[] }
             position: absolute;
             inset: auto 0 0;
             z-index: 2;
-            padding: 22px;
+            padding: clamp(16px, 2vw, 24px);
           }
 
           .category-content svg {
             color: var(--citrus);
-            margin-bottom: 8px;
+            margin-bottom: clamp(6px, 1vw, 10px);
+            width: clamp(14px, 2vw, 18px);
+            height: clamp(14px, 2vw, 18px);
           }
 
           .category-content h3 {
-            font-size: 26px;
+            font-size: clamp(20px, 3vw, 28px);
             font-weight: 900;
             line-height: 1;
           }
 
           .category-content p {
-            margin-top: 8px;
+            margin-top: clamp(6px, 1vw, 10px);
             color: rgba(255, 255, 255, 0.82);
-            font-size: 13px;
+            font-size: clamp(12px, 0.9vw, 14px);
             line-height: 1.45;
           }
 
           .category-content span {
             display: inline-flex;
-            margin-top: 14px;
-            padding: 7px 10px;
+            margin-top: clamp(10px, 1.5vw, 14px);
+            padding: clamp(6px, 0.9vw, 8px) clamp(8px, 1.2vw, 12px);
             border-radius: 999px;
             color: #251018;
             background: #fff;
-            font-size: 12px;
+            font-size: clamp(11px, 0.85vw, 13px);
             font-weight: 900;
+          }
+
+          @media (max-width: 1280px) {
+            .category-grid {
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
           }
 
           @media (max-width: 1024px) {
             .category-grid {
               grid-template-columns: repeat(2, minmax(0, 1fr));
+              gap: clamp(12px, 2vw, 16px);
             }
           }
 
-          @media (max-width: 560px) {
+          @media (max-width: 768px) {
+            .category-card {
+              min-height: clamp(200px, 40vw, 260px);
+            }
+          }
+
+          @media (max-width: 640px) {
             .category-grid {
               grid-template-columns: repeat(2, minmax(0, 1fr));
-              gap: 12px;
+              gap: clamp(10px, 1.5vw, 14px);
             }
 
             .category-card {
-              min-height: 220px;
-              border-radius: 22px;
+              min-height: clamp(180px, 45vw, 240px);
+              border-radius: clamp(20px, 2.5vw, 24px);
             }
 
             .category-content {
-              padding: 16px;
+              padding: clamp(12px, 1.5vw, 18px);
             }
 
             .category-content h3 {
-              font-size: 20px;
+              font-size: clamp(16px, 2.5vw, 22px);
             }
 
             .category-content p {
+              display: none;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .category-grid {
+              gap: clamp(8px, 1.5vw, 12px);
+            }
+
+            .category-card {
+              min-height: clamp(160px, 50vw, 220px);
+              border-radius: clamp(18px, 2vw, 22px);
+            }
+
+            .category-content {
+              padding: clamp(10px, 1.2vw, 14px);
+            }
+
+            .category-content h3 {
+              font-size: clamp(14px, 2vw, 18px);
+            }
+
+            .category-content svg {
               display: none;
             }
           }

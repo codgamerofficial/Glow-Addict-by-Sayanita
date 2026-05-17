@@ -1,3 +1,37 @@
+import React from 'react';
+import AdminSidebar from '@/components/admin/AdminSidebar';
+import AdminTopNav from '@/components/admin/AdminTopNav';
+import { createClient } from '@/lib/supabase-server';
+import { redirect } from 'next/navigation';
+
+export const metadata = { title: 'Admin - Glow Addict' };
+
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  // Protect admin routes server-side when Supabase is configured
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    const user = data?.user;
+    if (!user) {
+      redirect('/admin/login');
+    }
+  } catch (err) {
+    // If supabase not configured, allow dev access (fallback)
+    // console.warn('Supabase not configured for admin auth.');
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="flex">
+        <AdminSidebar />
+        <div className="flex-1">
+          <AdminTopNav />
+          <main className="p-6">{children}</main>
+        </div>
+      </div>
+    </div>
+  );
+}
 'use client';
 import React, { useState, createContext, useContext } from 'react';
 import { AdminSidebar } from '@/components/admin/layout/AdminSidebar';

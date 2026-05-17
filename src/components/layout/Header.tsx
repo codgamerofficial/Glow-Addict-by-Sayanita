@@ -10,6 +10,7 @@ import { useThemeStore } from '@/features/theme/themeStore';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { useHydrated } from '@/hooks/useHydrated';
 import { useAuthStore } from '@/features/auth/authStore';
+import { businessRules, catalogMedia } from '@/data/catalog';
 
 const navLinks = [
   { href: '/products?category=skincare', label: 'Skincare' },
@@ -83,8 +84,9 @@ export default function Header() {
             <div key={group} className="top-ribbon-group">
               <span>Pink Summer Sale live</span>
               <span>Extra 20% off first order</span>
-              <span>Free gift above &#8377;749</span>
-              <span>15-day easy returns</span>
+              <span>Free delivery above &#8377;{businessRules.freeDeliveryAbove}</span>
+              <span>Shipping &#8377;{businessRules.shippingChargeBelow} below &#8377;{businessRules.freeDeliveryAbove}</span>
+              <span>No return • No replacement • No COD</span>
             </div>
           ))}
         </div>
@@ -102,10 +104,11 @@ export default function Header() {
             {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </motion.button>
 
-          <Link href="/" className="header-logo" aria-label="Glow Addict home">
+          <Link href="/" className="header-logo" aria-label="Glow Addict by Sayanita home">
+            <img src={catalogMedia.logo} alt="Glow Addict by Sayanita logo" className="header-brand-logo" />
             <span className="brand-wordmark">
-              <span>GLOW</span>
-              <span>ADDICT</span>
+              <span>Glow Addict</span>
+              <span>by Sayanita</span>
             </span>
             <span className="header-logo-dot" />
           </Link>
@@ -261,6 +264,15 @@ export default function Header() {
           backdrop-filter: blur(22px);
           -webkit-backdrop-filter: blur(22px);
           transition: all 0.35s var(--spring);
+        }
+
+        .header-brand-logo {
+          width: 42px;
+          height: 42px;
+          object-fit: contain;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.45);
+          background: rgba(255, 255, 255, 0.72);
         }
 
         [data-theme="dark"] .site-header {

@@ -38,7 +38,7 @@ export default function ProductCard({ product }: { product: Product }) {
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 280px"
+          sizes="(max-width: 374px) 45vw, (max-width: 640px) 48vw, (max-width: 768px) 32vw, (max-width: 1024px) 25vw, (max-width: 1440px) 20vw, 18vw"
         />
         <div className="product-badges">
           {discount > 0 && <span className="badge badge-primary">{discount}% OFF</span>}
@@ -95,25 +95,27 @@ export default function ProductCard({ product }: { product: Product }) {
           min-width: 0;
           overflow: hidden;
           border: 1px solid var(--line);
-          border-radius: 24px;
+          border-radius: clamp(16px, 2vw, 24px);
           background: var(--bg-surface);
           box-shadow: var(--shadow-card);
           transition: transform 0.32s var(--spring), box-shadow 0.32s var(--spring), border-color 0.32s var(--spring);
         }
 
-        .product-card:hover {
-          transform: translateY(-5px);
-          border-color: rgba(245, 31, 123, 0.22);
-          box-shadow: var(--shadow-soft);
+        @media (hover: hover) {
+          .product-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(245, 31, 123, 0.22);
+            box-shadow: var(--shadow-soft);
+          }
         }
 
         .product-media {
           position: relative;
           display: block;
-          aspect-ratio: 0.9;
-          margin: 10px 10px 0;
+          aspect-ratio: 0.9 / 1;
+          margin: clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px) 0;
           overflow: hidden;
-          border-radius: 20px;
+          border-radius: clamp(14px, 1.8vw, 20px);
           background: linear-gradient(135deg, #fff2f8, #eaffd7);
           text-decoration: none;
         }
@@ -124,24 +126,24 @@ export default function ProductCard({ product }: { product: Product }) {
 
         .product-badges {
           position: absolute;
-          top: 10px;
-          left: 10px;
+          top: clamp(8px, 1.5vw, 12px);
+          left: clamp(8px, 1.5vw, 12px);
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          gap: 6px;
-          max-width: calc(100% - 56px);
+          gap: 4px;
+          max-width: calc(100% - clamp(40px, 8vw, 56px));
         }
 
         .wishlist-button {
           position: absolute;
-          top: 20px;
-          right: 20px;
+          top: clamp(12px, 2vw, 20px);
+          right: clamp(12px, 2vw, 20px);
           z-index: 2;
           display: grid;
           place-items: center;
-          width: 38px;
-          height: 38px;
+          width: clamp(34px, 5vw, 40px);
+          height: clamp(34px, 5vw, 40px);
           border: 1px solid rgba(255, 255, 255, 0.68);
           border-radius: 999px;
           color: var(--text-secondary);
@@ -149,6 +151,7 @@ export default function ProductCard({ product }: { product: Product }) {
           box-shadow: 0 10px 24px rgba(42, 18, 38, 0.12);
           cursor: pointer;
           transition: all 0.22s var(--spring);
+          font-size: clamp(14px, 2vw, 18px);
         }
 
         .wishlist-button:hover,
@@ -157,19 +160,23 @@ export default function ProductCard({ product }: { product: Product }) {
           transform: scale(1.05);
         }
 
+        .wishlist-button:active {
+          transform: scale(0.95);
+        }
+
         .product-content {
           display: flex;
           flex: 1;
           flex-direction: column;
-          gap: 8px;
-          padding: 14px 16px 16px;
+          gap: clamp(6px, 1vw, 10px);
+          padding: clamp(10px, 1.5vw, 16px);
         }
 
         .product-brand-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 10px;
+          gap: clamp(8px, 1.5vw, 12px);
         }
 
         .product-brand-row > span:first-child {
@@ -177,7 +184,7 @@ export default function ProductCard({ product }: { product: Product }) {
           overflow: hidden;
           color: var(--primary);
           font-family: var(--font-display);
-          font-size: 12px;
+          font-size: clamp(10px, 0.9vw, 12px);
           font-weight: 900;
           text-overflow: ellipsis;
           text-transform: uppercase;
@@ -187,14 +194,15 @@ export default function ProductCard({ product }: { product: Product }) {
         .rating-pill {
           display: inline-flex;
           align-items: center;
-          gap: 4px;
-          padding: 5px 7px;
+          gap: 3px;
+          padding: clamp(4px, 0.6vw, 6px) clamp(6px, 1vw, 8px);
           border-radius: 999px;
           color: #0b6b49;
           background: #e1f8ec;
-          font-size: 12px;
+          font-size: clamp(10px, 0.85vw, 12px);
           font-weight: 900;
           line-height: 1;
+          flex-shrink: 0;
         }
 
         .product-title-link {
@@ -204,33 +212,33 @@ export default function ProductCard({ product }: { product: Product }) {
 
         .product-title-link h3 {
           display: -webkit-box;
-          min-height: 42px;
+          min-height: auto;
           overflow: hidden;
-          font-size: 16px;
+          font-size: clamp(13px, 1.1vw, 16px);
           font-weight: 900;
-          line-height: 1.28;
+          line-height: clamp(1.2, 1.3, 1.4);
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
         }
 
         .product-content p {
           display: -webkit-box;
-          min-height: 37px;
           overflow: hidden;
           color: var(--text-muted);
-          font-size: 13px;
-          line-height: 1.42;
+          font-size: clamp(12px, 0.95vw, 13px);
+          line-height: 1.4;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
+          margin: 0;
         }
 
         .product-bottom {
           display: flex;
           align-items: end;
           justify-content: space-between;
-          gap: 12px;
+          gap: clamp(8px, 1.2vw, 12px);
           margin-top: auto;
-          padding-top: 6px;
+          padding-top: clamp(6px, 1vw, 8px);
         }
 
         .price-block {
@@ -241,16 +249,16 @@ export default function ProductCard({ product }: { product: Product }) {
           display: block;
           color: var(--text-primary);
           font-family: var(--font-display);
-          font-size: 20px;
+          font-size: clamp(16px, 1.8vw, 20px);
           font-weight: 900;
           line-height: 1;
         }
 
         .price-block span {
           display: block;
-          margin-top: 4px;
+          margin-top: 2px;
           color: var(--text-muted);
-          font-size: 13px;
+          font-size: clamp(11px, 0.9vw, 13px);
           font-weight: 700;
           text-decoration: line-through;
         }
@@ -259,72 +267,50 @@ export default function ProductCard({ product }: { product: Product }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          min-width: 76px;
-          min-height: 42px;
-          padding: 0 14px;
+          gap: clamp(4px, 0.8vw, 6px);
+          min-width: clamp(36px, 5vw, 44px);
+          min-height: clamp(36px, 5vw, 44px);
+          padding: 0 clamp(10px, 1.5vw, 14px);
           border: 0;
           border-radius: 999px;
           color: #fff;
           background: var(--text-primary);
           font-family: var(--font-display);
-          font-size: 13px;
+          font-size: clamp(11px, 0.9vw, 13px);
           font-weight: 900;
           cursor: pointer;
           transition: all 0.22s var(--spring);
+          touch-action: manipulation;
         }
 
-        .quick-add:hover {
-          background: var(--primary);
-          box-shadow: 0 12px 26px rgba(245, 31, 123, 0.22);
+        @media (hover: hover) {
+          .quick-add:hover {
+            background: var(--primary);
+            box-shadow: 0 12px 26px rgba(245, 31, 123, 0.22);
+          }
+        }
+
+        .quick-add:active {
+          transform: scale(0.96);
         }
 
         .quick-add-done {
           background: var(--success);
         }
 
-        @media (max-width: 560px) {
-          .product-card {
-            border-radius: 18px;
-          }
+        .quick-add span {
+          display: inline;
+        }
 
-          .product-media {
-            margin: 7px 7px 0;
-            border-radius: 15px;
-          }
-
-          .wishlist-button {
-            top: 14px;
-            right: 14px;
-            width: 34px;
-            height: 34px;
-          }
-
-          .product-content {
-            padding: 11px;
-          }
-
-          .product-title-link h3 {
-            min-height: 38px;
-            font-size: 14px;
-          }
-
-          .product-content p {
+        @media (max-width: 374px) {
+          .quick-add span {
             display: none;
-          }
-
-          .price-block strong {
-            font-size: 17px;
           }
 
           .quick-add {
-            min-width: 42px;
-            width: 42px;
+            min-width: 36px;
+            width: 36px;
             padding: 0;
-          }
-
-          .quick-add span {
-            display: none;
           }
         }
       `}</style>

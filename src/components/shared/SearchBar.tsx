@@ -18,7 +18,7 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
           product.name.toLowerCase().includes(q) ||
           product.brandName.toLowerCase().includes(q) ||
           product.categoryName.toLowerCase().includes(q) ||
-          product.tags.some((tag) => tag.includes(q)),
+          product.tags.some((tag: string) => tag.includes(q)),
       )
       .slice(0, 6);
   }, [query]);

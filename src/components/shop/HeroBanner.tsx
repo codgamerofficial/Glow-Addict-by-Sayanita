@@ -118,8 +118,8 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         .hero-shell {
           position: relative;
           overflow: hidden;
-          min-height: calc(100vh - 106px);
-          padding: 48px 0 70px;
+          min-height: clamp(60vh, 100vh - 106px, 100vh);
+          padding: clamp(32px, 8vw, 48px) 0 clamp(44px, 8vw, 70px);
           background:
             radial-gradient(circle at 84% 12%, rgba(255, 212, 71, 0.45), transparent 28%),
             radial-gradient(circle at 0% 30%, rgba(122, 44, 255, 0.16), transparent 30%),
@@ -140,7 +140,7 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           background-image:
             linear-gradient(rgba(245, 31, 123, 0.14) 1px, transparent 1px),
             linear-gradient(90deg, rgba(245, 31, 123, 0.14) 1px, transparent 1px);
-          background-size: 48px 48px;
+          background-size: clamp(32px, 4vw, 48px) clamp(32px, 4vw, 48px);
           mask-image: linear-gradient(to bottom, #000 0%, transparent 80%);
         }
 
@@ -152,20 +152,20 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         }
 
         .hero-float-one {
-          width: 150px;
-          height: 150px;
-          top: 14%;
-          right: 5%;
+          width: clamp(100px, 15vw, 150px);
+          height: clamp(100px, 15vw, 150px);
+          top: clamp(8%, 12%, 14%);
+          right: clamp(2%, 5%, 8%);
           border: 1px solid rgba(245, 31, 123, 0.18);
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 111, 97, 0.2));
           box-shadow: inset 20px 20px 40px rgba(255, 255, 255, 0.7), var(--shadow-soft);
         }
 
         .hero-float-two {
-          width: 94px;
-          height: 94px;
-          left: 48%;
-          bottom: 10%;
+          width: clamp(60px, 10vw, 94px);
+          height: clamp(60px, 10vw, 94px);
+          left: clamp(40%, 48%, 52%);
+          bottom: clamp(5%, 10%, 15%);
           background: linear-gradient(135deg, rgba(255, 212, 71, 0.8), rgba(245, 31, 123, 0.24));
           box-shadow: var(--shadow-card);
         }
@@ -174,9 +174,9 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+          grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
           align-items: center;
-          gap: 48px;
+          gap: clamp(20px, 4vw, 48px);
         }
 
         .hero-copy {
@@ -184,20 +184,22 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         }
 
         .hero-sale-line {
-          margin-bottom: 16px;
+          margin-bottom: clamp(10px, 1.5vw, 16px);
           color: var(--primary-dark);
           font-family: var(--font-display);
-          font-size: 14px;
+          font-size: clamp(12px, 1vw, 14px);
           font-weight: 900;
           text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         .hero-copy h1 {
           max-width: 660px;
           color: var(--text-primary);
-          font-size: clamp(50px, 8.2vw, 104px);
+          font-size: clamp(36px, 7vw, 104px);
           font-weight: 900;
           line-height: 0.9;
+          letter-spacing: -0.5px;
         }
 
         .hero-copy h1 span {
@@ -210,17 +212,17 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-subtitle {
           max-width: 560px;
-          margin-top: 24px;
+          margin-top: clamp(16px, 2vw, 24px);
           color: var(--text-secondary);
-          font-size: 18px;
+          font-size: clamp(15px, 1.2vw, 18px);
           line-height: 1.7;
         }
 
         .hero-actions {
           display: flex;
           flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 32px;
+          gap: clamp(8px, 1.5vw, 12px);
+          margin-top: clamp(20px, 3vw, 32px);
         }
 
         .hero-primary,
@@ -228,36 +230,38 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          min-width: 176px;
-          padding: 15px 24px;
+          gap: clamp(6px, 1vw, 8px);
+          min-width: clamp(140px, 20vw, 176px);
+          padding: clamp(12px, 1.5vw, 15px) clamp(18px, 2vw, 24px);
           text-decoration: none;
+          font-size: clamp(13px, 1vw, 15px);
+          font-weight: 700;
         }
 
         .hero-primary span {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: clamp(6px, 1vw, 8px);
         }
 
         .hero-trust-row {
           display: flex;
           flex-wrap: wrap;
-          gap: 10px;
-          margin-top: 28px;
+          gap: clamp(6px, 1.2vw, 10px);
+          margin-top: clamp(20px, 3vw, 28px);
         }
 
         .hero-trust-row span {
           display: inline-flex;
           align-items: center;
-          gap: 7px;
-          min-height: 36px;
-          padding: 9px 12px;
+          gap: clamp(5px, 0.8vw, 7px);
+          min-height: clamp(32px, 5vw, 36px);
+          padding: clamp(8px, 1vw, 9px) clamp(10px, 1.5vw, 12px);
           border: 1px solid rgba(245, 31, 123, 0.16);
           border-radius: 999px;
           color: var(--text-secondary);
           background: rgba(255, 255, 255, 0.64);
-          font-size: 13px;
+          font-size: clamp(12px, 0.9vw, 13px);
           font-weight: 700;
         }
 
@@ -267,18 +271,18 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-stage {
           position: relative;
-          min-height: 580px;
+          min-height: clamp(350px, 60vw, 580px);
         }
 
         .hero-phone {
           position: absolute;
-          right: 6%;
+          right: clamp(0%, 6%, 10%);
           bottom: 0;
-          width: min(390px, 74vw);
-          height: 560px;
-          padding: 16px;
-          border: 12px solid #171018;
-          border-radius: 46px;
+          width: min(390px, 85vw);
+          height: clamp(350px, 70vw, 560px);
+          padding: clamp(12px, 2vw, 16px);
+          border: clamp(8px, 1.5vw, 12px) solid #171018;
+          border-radius: clamp(36px, 5vw, 46px);
           background: #fff;
           box-shadow: 0 32px 90px rgba(45, 17, 42, 0.28);
           transform: rotate(-7deg);
@@ -286,10 +290,10 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-phone-notch {
           position: absolute;
-          top: 16px;
+          top: clamp(12px, 2vw, 16px);
           left: 50%;
-          width: 88px;
-          height: 24px;
+          width: clamp(70px, 12vw, 88px);
+          height: clamp(18px, 3vw, 24px);
           border-radius: 999px;
           background: #171018;
           transform: translateX(-50%);
@@ -300,7 +304,7 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           position: relative;
           height: 100%;
           overflow: hidden;
-          border-radius: 31px;
+          border-radius: clamp(24px, 4vw, 31px);
           background: linear-gradient(180deg, #fff, #fff1f8 48%, #e9ffd6);
         }
 
@@ -308,29 +312,31 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 52px 20px 16px;
+          padding: clamp(40px, 6vw, 52px) clamp(14px, 2vw, 20px) clamp(12px, 2vw, 16px);
         }
 
         .hero-phone-header .brand-wordmark {
-          font-size: 18px;
+          font-size: clamp(14px, 2vw, 18px);
+          font-weight: 900;
+          font-family: var(--font-display);
         }
 
         .hero-phone-bag {
           display: grid;
           place-items: center;
-          width: 28px;
-          height: 28px;
+          width: clamp(24px, 4vw, 28px);
+          height: clamp(24px, 4vw, 28px);
           border-radius: 999px;
           color: #fff;
           background: var(--primary);
-          font-size: 12px;
+          font-size: clamp(10px, 1.2vw, 12px);
           font-weight: 900;
         }
 
         .hero-phone-banner {
-          margin: 0 18px 18px;
-          padding: 16px;
-          border-radius: 22px;
+          margin: 0 clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px);
+          padding: clamp(12px, 1.8vw, 16px);
+          border-radius: clamp(16px, 3vw, 22px);
           color: #fff;
           text-align: center;
           background: linear-gradient(135deg, #ff2b7d, #ff763b);
@@ -340,29 +346,29 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         .hero-phone-banner strong {
           display: block;
           font-family: var(--font-display);
-          font-size: 56px;
+          font-size: clamp(40px, 6vw, 56px);
           font-weight: 900;
           line-height: 0.9;
         }
 
         .hero-phone-banner span {
           font-family: var(--font-display);
-          font-size: 16px;
+          font-size: clamp(14px, 1.5vw, 16px);
           font-weight: 900;
         }
 
         .hero-product-stack {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 12px;
-          padding: 0 18px;
+          gap: clamp(8px, 1.5vw, 12px);
+          padding: 0 clamp(12px, 2vw, 18px);
         }
 
         .hero-mini-product {
-          min-height: 140px;
-          padding: 10px;
+          min-height: clamp(100px, 15vw, 140px);
+          padding: clamp(8px, 1vw, 10px);
           border: 1px solid rgba(42, 18, 38, 0.08);
-          border-radius: 22px;
+          border-radius: clamp(16px, 2.5vw, 22px);
           background: rgba(255, 255, 255, 0.78);
           box-shadow: 0 12px 30px rgba(88, 29, 63, 0.08);
           animation: float 4s ease-in-out infinite;
@@ -370,9 +376,9 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-mini-product div {
           position: relative;
-          height: 88px;
+          height: clamp(60px, 10vw, 88px);
           overflow: hidden;
-          border-radius: 16px;
+          border-radius: clamp(12px, 2vw, 16px);
           background: #fff5fb;
         }
 
@@ -382,9 +388,9 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-mini-product span {
           display: block;
-          margin-top: 9px;
+          margin-top: clamp(6px, 1vw, 9px);
           color: var(--text-primary);
-          font-size: 12px;
+          font-size: clamp(11px, 0.9vw, 12px);
           font-weight: 900;
           white-space: nowrap;
           overflow: hidden;
@@ -393,12 +399,12 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         .hero-image-orbit {
           position: absolute;
-          left: 0;
-          bottom: 42px;
-          width: 270px;
-          height: 350px;
+          left: clamp(-2%, 0%, 2%);
+          bottom: clamp(20px, 3vw, 42px);
+          width: clamp(180px, 25vw, 270px);
+          height: clamp(240px, 35vw, 350px);
           overflow: hidden;
-          border: 10px solid rgba(255, 255, 255, 0.86);
+          border: clamp(6px, 1.5vw, 10px) solid rgba(255, 255, 255, 0.86);
           border-radius: 42% 58% 52% 48%;
           background: #fff;
           box-shadow: var(--shadow-soft);
@@ -411,12 +417,12 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         .hero-offer-card {
           position: absolute;
           z-index: 4;
-          top: 78px;
-          left: 6%;
-          width: 190px;
-          padding: 18px;
+          top: clamp(20px, 3vw, 78px);
+          left: clamp(2%, 4%, 6%);
+          width: clamp(140px, 20vw, 190px);
+          padding: clamp(14px, 2vw, 18px);
           border: 1px solid rgba(255, 255, 255, 0.64);
-          border-radius: 24px;
+          border-radius: clamp(18px, 3vw, 24px);
           color: #fff;
           background: linear-gradient(135deg, #9211ce, #f51f7b);
           box-shadow: 0 22px 50px rgba(122, 44, 255, 0.24);
@@ -432,21 +438,32 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
         }
 
         .hero-offer-card span {
-          font-size: 13px;
+          font-size: clamp(11px, 1vw, 13px);
         }
 
         .hero-offer-card strong {
           display: block;
           margin: 2px 0;
           font-family: var(--font-display);
-          font-size: 36px;
+          font-size: clamp(28px, 4vw, 36px);
           font-weight: 900;
           line-height: 0.95;
         }
 
         .hero-offer-card small {
           color: #ffe7f4;
-          font-size: 12px;
+          font-size: clamp(10px, 0.9vw, 12px);
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
+        }
+
+        @media (max-width: 1024px) {
+          .hero-layout {
+            gap: clamp(16px, 3vw, 32px);
+          }
         }
 
         @media (max-width: 980px) {
@@ -456,10 +473,11 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
           .hero-layout {
             grid-template-columns: 1fr;
+            gap: clamp(16px, 2.5vw, 24px);
           }
 
           .hero-stage {
-            min-height: 620px;
+            min-height: clamp(400px, 80vw, 620px);
           }
 
           .hero-copy {
@@ -469,56 +487,90 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
 
         @media (max-width: 767px) {
           .hero-shell {
-            padding: 34px 0 44px;
+            padding: clamp(24px, 5vw, 34px) 0 clamp(32px, 6vw, 44px);
           }
 
           .hero-layout {
-            gap: 24px;
+            gap: clamp(16px, 3vw, 24px);
           }
 
           .hero-copy h1 {
-            font-size: clamp(44px, 16vw, 64px);
+            font-size: clamp(28px, 8vw, 56px);
           }
 
           .hero-subtitle {
-            font-size: 16px;
+            font-size: clamp(14px, 1.2vw, 16px);
           }
 
           .hero-stage {
-            min-height: 500px;
+            min-height: clamp(380px, 100vw, 500px);
           }
 
           .hero-phone {
-            right: -8%;
-            width: 330px;
-            height: 470px;
-            border-width: 10px;
-            border-radius: 40px;
+            right: clamp(-8%, -5%, 2%);
+            width: clamp(280px, 80vw, 330px);
+            height: clamp(320px, 85vw, 470px);
+            border-width: clamp(8px, 1.5vw, 10px);
+            border-radius: clamp(32px, 4vw, 40px);
           }
 
           .hero-image-orbit {
-            width: 178px;
-            height: 250px;
-            left: -3%;
-            bottom: 36px;
+            width: clamp(140px, 30vw, 178px);
+            height: clamp(200px, 40vw, 250px);
+            left: clamp(-5%, -2%, 0%);
+            bottom: clamp(20px, 3vw, 36px);
           }
 
           .hero-offer-card {
-            top: 28px;
-            left: 2%;
-            width: 156px;
+            top: clamp(16px, 2.5vw, 28px);
+            left: clamp(1%, 2%, 3%);
+            width: clamp(130px, 25vw, 156px);
           }
 
           .hero-offer-card strong {
-            font-size: 30px;
+            font-size: clamp(24px, 4vw, 30px);
           }
 
           .hero-mini-product {
-            min-height: 116px;
+            min-height: clamp(90px, 15vw, 116px);
           }
 
           .hero-mini-product div {
-            height: 68px;
+            height: clamp(52px, 10vw, 68px);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-shell {
+            padding: clamp(16px, 4vw, 24px) 0 clamp(20px, 4vw, 32px);
+          }
+
+          .hero-copy h1 {
+            font-size: clamp(24px, 7vw, 44px);
+          }
+
+          .hero-subtitle {
+            display: none;
+          }
+
+          .hero-actions {
+            flex-direction: column;
+            gap: clamp(6px, 1vw, 8px);
+          }
+
+          .hero-primary,
+          .hero-secondary {
+            width: 100%;
+          }
+
+          .hero-trust-row {
+            flex-direction: column;
+            gap: clamp(6px, 1vw, 8px);
+          }
+
+          .hero-trust-row span {
+            width: 100%;
+            justify-content: flex-start;
           }
         }
       `}</style>

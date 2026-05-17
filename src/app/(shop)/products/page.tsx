@@ -1,6 +1,7 @@
 'use client';
 
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useMemo, useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { ChevronDown, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -33,7 +34,7 @@ function FilterSection({
       <h4>{title}</h4>
       <div>
         {items.map((item) => {
-          const active = selected.includes(item);
+          const active = selected.includes(item?.toString().trim().toLowerCase().replace(/ & /g, '-').replace(/[^a-z0-9-]+/g, '-').replace(/(^-|-$)/g, ''));
           return (
             <button key={item} type="button" onClick={() => onToggle(item)} className={active ? 'filter-chip active' : 'filter-chip'}>
               {item}
@@ -62,30 +63,60 @@ export default function ProductsPageWrapper() {
 function ProductsPage() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
-  const initialCategory = categoryParam ? [categoryParam] : [];
+  const normalizedCategoryParam = categoryParam ? categoryParam.trim().toLowerCase() : null;
+  const initialCategory = normalizedCategoryParam ? [normalizedCategoryParam] : [];
 
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const brandParam = searchParams.get('brand');
+  const initialBrands = brandParam ? brandParam.split(',').map((b) => b.trim().toLowerCase()) : [];
+
+  const maxPriceParam = searchParams.get('maxPrice');
+  const initialMaxPrice = maxPriceParam ? Number(maxPriceParam) : 3000;
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(initialBrands);
   const [selectedSkinTypes, setSelectedSkinTypes] = useState<string[]>([]);
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('relevance');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, initialMaxPrice]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // ensure we don't show empty state before initial "fetch" (hydration)
+    const t = setTimeout(() => setLoading(false), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  // sync filters to URL for deep linking
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedCategories.length) params.set('category', selectedCategories[0]);
+    if (selectedBrands.length) params.set('brand', selectedBrands.map((b) => slugify(b)).join(','));
+    if (priceRange[1] !== 3000) params.set('maxPrice', String(priceRange[1]));
+    const qs = params.toString();
+    const url = qs ? `${pathname}?${qs}` : pathname;
+    // replace without history entry
+    router.replace(url);
+  }, [selectedCategories, selectedBrands, priceRange, pathname, router]);
+
+  const slugify = (input: string | undefined | null) =>
+    (input || '').toString().trim().toLowerCase().replace(/ & /g, '-').replace(/[^a-z0-9-]+/g, '-').replace(/(^-|-$)/g, '');
 
   const toggleFilter = (arr: string[], value: string, setter: (next: string[]) => void) => {
-    setter(arr.includes(value) ? arr.filter((item) => item !== value) : [...arr, value]);
+    const v = slugify(value);
+    setter(arr.includes(v) ? arr.filter((item) => item !== v) : [...arr, v]);
   };
 
   const filtered = useMemo(() => {
     let result = [...products];
     if (selectedCategories.length) {
-      result = result.filter((product) =>
-        selectedCategories.includes(product.categoryName.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')),
-      );
+      result = result.filter((product) => selectedCategories.includes(slugify(product.categoryName)));
     }
-    if (selectedBrands.length) result = result.filter((product) => selectedBrands.includes(product.brandName));
-    if (selectedSkinTypes.length) result = result.filter((product) => product.skinTypes.some((type) => selectedSkinTypes.includes(type)));
-    if (selectedConcerns.length) result = result.filter((product) => product.concerns.some((concern) => selectedConcerns.includes(concern)));
+    if (selectedBrands.length) result = result.filter((product) => selectedBrands.map((b) => slugify(b)).includes(slugify(product.brandName)));
+    if (selectedSkinTypes.length) result = result.filter((product) => product.skinTypes.some((type: string) => selectedSkinTypes.map(slugify).includes(slugify(type))));
+    if (selectedConcerns.length) result = result.filter((product) => product.concerns.some((concern: string) => selectedConcerns.map(slugify).includes(slugify(concern))));
     result = result.filter((product) => {
       const price = product.salePrice || product.price;
       return price >= priceRange[0] && price <= priceRange[1];
@@ -117,7 +148,7 @@ function ProductsPage() {
     setSelectedConcerns([]);
     setPriceRange([0, 3000]);
   };
-  const title = categoryParam ? categories.find((c) => c.slug === categoryParam)?.name || 'Products' : 'All Beauty';
+  const title = normalizedCategoryParam ? (categories.find((c) => c.slug === normalizedCategoryParam)?.name || 'Products') : 'All Beauty';
 
   return (
     <div className="products-page animate-fade-in">
@@ -184,19 +215,45 @@ function ProductsPage() {
         </motion.aside>
 
         <div className="products-results">
-          {filtered.length > 0 ? (
+          {loading ? (
+            <div className="product-grid">
+              {Array.from({ length: 8 }).map((_, i) => (
+                // lightweight shimmer placeholders
+                <div key={i} className="product-skeleton">
+                  <div className="skeleton image" />
+                  <div className="skeleton line" />
+                  <div className="skeleton line short" />
+                </div>
+              ))}
+            </div>
+          ) : filtered.length > 0 ? (
             <div className="product-grid">
               {filtered.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
           ) : (
-            <div className="empty-state">
-              <h3>No matches yet</h3>
-              <p>Try removing a filter or widening your budget range.</p>
-              <button type="button" onClick={clearFilters} className="btn-gradient">
-                <span>Reset filters</span>
-              </button>
+            <div className="premium-empty">
+              <div className="empty-illustration">
+                <img src="/images/freebies-alert.jpeg" alt="No products" />
+              </div>
+              <div className="empty-copy">
+                <h3>Nothing here yet — curated picks incoming</h3>
+                <p>We couldn't find products matching your filters. Try clearing filters or explore our recommended picks below.</p>
+                <div className="empty-actions">
+                  <button type="button" onClick={clearFilters} className="btn-outline">Clear filters</button>
+                  <a href="/products" className="btn-gradient">Continue shopping</a>
+                </div>
+                <h4>Recommended for you</h4>
+                <div className="recommended-grid">
+                  {products
+                    .filter((p) => p.isBestseller || p.isTrending)
+                    .slice(0, 6)
+                    .map((p) => (
+                      <ProductCard key={p.id} product={p} />
+                    ))}
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -330,6 +387,41 @@ function ProductsPage() {
           gap: 24px;
           align-items: start;
         }
+
+        .product-grid {
+          display: grid;
+          gap: 18px;
+          grid-template-columns: repeat(5, 1fr);
+        }
+
+        @media (max-width: 1200px) {
+          .product-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+          .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .product-skeleton {
+          border-radius: 12px;
+          padding: 12px;
+          background: linear-gradient(180deg, var(--bg-surface), rgba(255,255,255,0.02));
+          box-shadow: var(--shadow-card);
+        }
+
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 37%, #f0f0f0 63%); background-size: 400% 100%; animation: shimmer 1.2s linear infinite; }
+        .skeleton.image { height: 160px; border-radius: 10px; margin-bottom: 10px; }
+        .skeleton.line { height: 14px; border-radius: 8px; margin-bottom: 8px; }
+        .skeleton.line.short { width: 60%; }
+
+        @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+
+        .premium-empty { display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: start; }
+        .empty-illustration img { width: 100%; border-radius: 18px; box-shadow: var(--shadow-card); }
+        .empty-copy h3 { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+        .empty-actions { display: flex; gap: 12px; margin: 14px 0 18px; }
+        .recommended-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
 
         .filter-sidebar {
           position: sticky;

@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import { catalogMedia } from '@/data/catalog';
 
 export function GlowAddictBrand() {
   return (
@@ -14,13 +15,12 @@ export function GlowAddictBrand() {
         marginBottom: '48px'
       }}
     >
-      {/* Logo Animation */}
       <motion.div
         animate={{ rotate: [0, 5, -5, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         style={{
-          width: '120px',
-          height: '120px',
+          width: '112px',
+          height: '112px',
           marginBottom: '24px',
           display: 'flex',
           alignItems: 'center',
@@ -32,37 +32,7 @@ export function GlowAddictBrand() {
           overflow: 'hidden'
         }}
       >
-        <svg
-          viewBox="0 0 200 200"
-          style={{ width: '100%', height: '100%' }}
-        >
-          {/* Cream/Product */}
-          <circle cx="100" cy="70" r="35" fill="#E8D5B7" opacity="0.9" />
-          {/* Top swirl */}
-          <path d="M 100 40 Q 95 50 100 60 Q 105 50 100 40" fill="#F5E6D3" opacity="0.7" />
-          <path d="M 110 45 Q 115 55 110 65 Q 105 55 110 45" fill="#F5E6D3" opacity="0.7" />
-
-          {/* Purple circle bowl */}
-          <circle cx="100" cy="95" r="40" fill="none" stroke="#7C2CFF" strokeWidth="8" opacity="0.8" />
-
-          {/* Left character (woman with mask) */}
-          <circle cx="60" cy="110" r="15" fill="#D4A574" /> {/* head */}
-          <rect x="50" y="120" width="20" height="25" fill="#F5F5F5" /> {/* body */}
-          {/* mask */}
-          <ellipse cx="60" cy="110" rx="18" ry="12" fill="#8B6D47" opacity="0.6" />
-
-          {/* Right character (young woman) */}
-          <circle cx="140" cy="110" r="15" fill="#D4A574" /> {/* head */}
-          <rect x="130" y="120" width="20" height="25" fill="#394B93" /> {/* body */}
-          {/* hair */}
-          <ellipse cx="140" cy="95" rx="18" ry="15" fill="#2D2D2D" />
-
-          {/* Decorative elements - sparkles */}
-          <circle cx="170" cy="50" r="3" fill="#FFD700" />
-          <circle cx="30" cy="50" r="3" fill="#FFD700" />
-          <path d="M 170 45 L 175 50 L 170 55 L 165 50 Z" fill="#FFD700" opacity="0.6" />
-          <path d="M 30 145 L 35 150 L 30 155 L 25 150 Z" fill="#FFD700" opacity="0.6" />
-        </svg>
+        <img src={catalogMedia.logo} alt="Glow Addict by Sayanita" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
       </motion.div>
 
       {/* Brand Name */}
@@ -85,7 +55,7 @@ export function GlowAddictBrand() {
             letterSpacing: '-0.5px'
           }}
         >
-          Glow Addict
+          Glow Addict by Sayanita
         </h1>
         <p
           style={{

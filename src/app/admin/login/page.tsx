@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase'; // Using the client for client-side auth flow
+import { catalogMedia } from '@/data/catalog';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -44,10 +45,8 @@ export default function AdminLogin() {
         
         {/* Logo/Brand */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 64, height: 64, borderRadius: 20, background: 'linear-gradient(135deg, #E91E8C, #7C3AED)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', color: '#fff' }}>
-            <Lock size={32} />
-          </div>
-          <h1 style={{ fontFamily: 'Outfit', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Glow Addict Admin</h1>
+          <img src={catalogMedia.logo} alt="Glow Addict by Sayanita" style={{ width: 64, height: 64, borderRadius: 20, objectFit: 'contain', margin: '0 auto 16px', background: 'rgba(255,255,255,0.04)' }} />
+          <h1 style={{ fontFamily: 'Outfit', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Glow Addict by Sayanita Admin</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>Secure portal access required</p>
         </div>
 

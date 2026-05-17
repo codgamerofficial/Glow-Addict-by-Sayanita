@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Home, Search, ShoppingBag, Sparkles, User } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
 import { useHydrated } from '@/hooks/useHydrated';
+import { catalogMedia } from '@/data/catalog';
 
 const tabs = [
   { href: '/', icon: Home, label: 'Home' },
@@ -23,6 +24,9 @@ export default function MobileNav() {
   return (
     <>
       <nav className="mobile-bottom-nav" aria-label="Mobile quick navigation">
+        <div className="mobile-brand-pill" aria-hidden="true">
+          <img src={catalogMedia.logo} alt="" />
+        </div>
         {tabs.map((tab) => {
           const active = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
           const Icon = tab.icon;
@@ -57,7 +61,7 @@ export default function MobileNav() {
           display: none;
           align-items: center;
           justify-content: space-between;
-          padding: 8px;
+          padding: 8px 8px 8px 48px;
           padding-bottom: calc(8px + env(safe-area-inset-bottom));
           border: 1px solid var(--line);
           border-radius: 28px;
@@ -65,6 +69,25 @@ export default function MobileNav() {
           box-shadow: 0 20px 60px rgba(55, 21, 43, 0.18);
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
+        }
+
+        .mobile-brand-pill {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          width: 30px;
+          height: 30px;
+          border-radius: 999px;
+          overflow: hidden;
+          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.84);
+          transform: translateY(-50%);
+        }
+
+        .mobile-brand-pill img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         .mobile-tab {

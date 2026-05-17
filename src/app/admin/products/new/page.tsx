@@ -1,3 +1,16 @@
+import React from 'react';
+import ProductForm from '@/components/admin/ProductForm';
+
+export default function NewProductPage() {
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold mb-4">Add Product</h1>
+      <div className="bg-white p-4 rounded shadow">
+        <ProductForm />
+      </div>
+    </div>
+  );
+}
 'use client';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';

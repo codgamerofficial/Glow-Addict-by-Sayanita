@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Tag, Megaphone, Bot, Bell, Settings, ChevronLeft, ChevronRight, Sparkles, Layers, UserCheck, FileText, TrendingUp, ScrollText, Shield } from 'lucide-react';
+import { catalogMedia } from '@/data/catalog';
 
 const navSections = [
   { label: 'Main', items: [
@@ -51,9 +52,9 @@ export function AdminSidebar({ open, onToggle }: Props) {
     }}>
       {/* Logo */}
       <div style={{ padding: '20px 16px', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg, #E91E8C, #7C3AED)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 16, color: '#fff', flexShrink: 0 }}>G</div>
+        <img src={catalogMedia.logo} alt="Glow Addict by Sayanita" style={{ width: 36, height: 36, borderRadius: 10, objectFit: 'contain', background: 'rgba(255,255,255,0.06)', flexShrink: 0 }} />
         {open && <div style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
-          <div style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 16, color: '#fff' }}>Glow Addict</div>
+          <div style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 16, color: '#fff' }}>Glow Addict by Sayanita</div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Admin Panel</div>
         </div>}
       </div>

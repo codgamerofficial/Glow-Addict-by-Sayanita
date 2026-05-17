@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Camera, Mail, MessageCircle, Phone, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { businessRules, catalogMedia, contactDetails } from '@/data/catalog';
 
 const columns = [
   {
@@ -43,7 +44,7 @@ export default function Footer() {
         <div className="footer-promise">
           {[
             { icon: ShieldCheck, label: '100% authentic products' },
-            { icon: Truck, label: 'Free shipping events' },
+            { icon: Truck, label: `Free delivery above ₹${businessRules.freeDeliveryAbove}` },
             { icon: Sparkles, label: 'AI beauty matching' },
           ].map(({ icon: Icon, label }) => (
             <span key={label}>
@@ -54,25 +55,29 @@ export default function Footer() {
 
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link href="/" className="brand-wordmark footer-logo">
-              <span>GLOW</span>
-              <span>ADDICT</span>
+            <Link href="/" className="brand-wordmark footer-logo" aria-label="Glow Addict by Sayanita home">
+              <img src={catalogMedia.logo} alt="Glow Addict by Sayanita logo" className="footer-brand-logo" />
+              <span>Glow Addict</span>
+              <span>by Sayanita</span>
             </Link>
-            <p className="footer-founder">By Sayanita</p>
             <p>
               A polished beauty destination for premium skincare, makeup and AI-personalized routines, built for fast, confident shopping.
             </p>
+            <p className="footer-rules">
+              No Return • No Replacement • No COD<br />
+              Shipping ₹{businessRules.shippingChargeBelow} below ₹{businessRules.freeDeliveryAbove}
+            </p>
             <div className="footer-social">
-              <a href="https://www.instagram.com/glow_addict_by_sayanita" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href={contactDetails.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <Camera size={19} />
               </a>
-              <a href="mailto:support@glowaddict.in" aria-label="Email support">
+              <a href={`mailto:${contactDetails.email}`} aria-label="Email support">
                 <Mail size={19} />
               </a>
-              <a href="tel:+919876543210" aria-label="Phone support">
+              <a href={`tel:${contactDetails.phone.replace(/\s+/g, '')}`} aria-label="Phone support">
                 <Phone size={19} />
               </a>
-              <a href="/contact" aria-label="Contact support">
+              <a href={contactDetails.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
                 <MessageCircle size={19} />
               </a>
             </div>
@@ -103,7 +108,7 @@ export default function Footer() {
         .site-footer {
           position: relative;
           overflow: hidden;
-          padding: 34px 0 28px;
+          padding: clamp(28px, 6vw, 40px) clamp(12px, 3vw, 20px);
           color: #fff;
           background:
             radial-gradient(circle at 80% 0%, rgba(245, 31, 123, 0.36), transparent 28%),
@@ -113,139 +118,191 @@ export default function Footer() {
         .footer-promise {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 12px;
-          margin-bottom: 34px;
+          gap: clamp(8px, 1.5vw, 16px);
+          margin-bottom: clamp(28px, 5vw, 40px);
         }
 
         .footer-promise span {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          min-height: 54px;
-          padding: 12px;
+          gap: clamp(6px, 1vw, 8px);
+          min-height: clamp(48px, 10vw, 56px);
+          padding: clamp(10px, 1.5vw, 14px);
           border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 18px;
+          border-radius: clamp(14px, 2vw, 20px);
           background: rgba(255, 255, 255, 0.08);
           font-family: var(--font-display);
-          font-size: 13px;
+          font-size: clamp(11px, 0.9vw, 14px);
           font-weight: 900;
           text-align: center;
+          line-height: 1.2;
         }
 
         .footer-grid {
           display: grid;
-          grid-template-columns: minmax(260px, 1.5fr) repeat(3, minmax(150px, 1fr));
-          gap: 32px;
+          grid-template-columns: minmax(240px, 1.5fr) repeat(3, minmax(140px, 1fr));
+          gap: clamp(24px, 4vw, 40px);
         }
 
         .footer-logo {
+          display: inline-flex;
+          align-items: center;
+          gap: clamp(8px, 1vw, 12px);
           text-decoration: none;
+          flex-wrap: wrap;
         }
 
         .footer-logo span:last-child {
           color: #fff;
-        }
-
-        .footer-founder {
-          margin: 18px 0 6px;
-          color: var(--citrus);
-          font-family: var(--font-display);
+          font-size: clamp(12px, 1.1vw, 14px);
           font-weight: 900;
+          font-family: var(--font-display);
         }
 
-        .footer-brand > p:last-of-type {
-          max-width: 390px;
+        .footer-brand-logo {
+          width: clamp(36px, 6vw, 48px);
+          height: clamp(36px, 6vw, 48px);
+          object-fit: contain;
+          border-radius: clamp(10px, 1.5vw, 14px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        .footer-brand > p {
+          margin: 0;
+          margin-top: clamp(8px, 1.5vw, 12px);
           color: rgba(255, 255, 255, 0.72);
-          font-size: 14px;
-          line-height: 1.7;
+          font-size: clamp(13px, 1vw, 15px);
+          line-height: 1.6;
+          max-width: 420px;
+        }
+
+        .footer-rules {
+          margin-top: clamp(8px, 1.5vw, 12px);
+          color: rgba(255, 255, 255, 0.82);
+          font-size: clamp(12px, 0.95vw, 14px);
+          line-height: 1.5;
+          font-weight: 500;
         }
 
         .footer-social {
           display: flex;
-          gap: 10px;
-          margin-top: 18px;
+          gap: clamp(8px, 1.2vw, 12px);
+          margin-top: clamp(14px, 2.5vw, 20px);
         }
 
         .footer-social a {
           display: grid;
           place-items: center;
-          width: 40px;
-          height: 40px;
+          width: clamp(36px, 5vw, 44px);
+          height: clamp(36px, 5vw, 44px);
           border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 999px;
           color: #fff;
           background: rgba(255, 255, 255, 0.08);
-          transition: all 0.2s var(--spring);
+          transition: all 0.22s var(--spring);
+          font-size: clamp(16px, 2vw, 20px);
         }
 
-        .footer-social a:hover {
-          color: var(--primary);
-          background: #fff;
-          transform: translateY(-2px);
+        @media (hover: hover) {
+          .footer-social a:hover {
+            color: var(--primary);
+            background: #fff;
+            transform: translateY(-2px);
+          }
         }
 
         .footer-column h4 {
-          margin-bottom: 14px;
+          margin-bottom: clamp(10px, 1.5vw, 16px);
           color: #fff;
           font-family: var(--font-display);
-          font-size: 13px;
+          font-size: clamp(11px, 0.9vw, 13px);
           font-weight: 900;
           text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         .footer-column a {
           display: block;
           width: fit-content;
-          padding: 5px 0;
+          padding: clamp(4px, 0.8vw, 6px) 0;
           color: rgba(255, 255, 255, 0.68);
-          font-size: 14px;
+          font-size: clamp(12px, 1vw, 14px);
           text-decoration: none;
-          transition: all 0.2s var(--spring);
+          transition: all 0.22s var(--spring);
         }
 
-        .footer-column a:hover {
-          color: #fff;
-          transform: translateX(3px);
+        @media (hover: hover) {
+          .footer-column a:hover {
+            color: #fff;
+            transform: translateX(3px);
+          }
         }
 
         .footer-bottom {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 16px;
-          margin-top: 36px;
-          padding-top: 20px;
+          gap: clamp(12px, 2vw, 20px);
+          margin-top: clamp(28px, 5vw, 40px);
+          padding-top: clamp(16px, 2.5vw, 24px);
           border-top: 1px solid rgba(255, 255, 255, 0.12);
           color: rgba(255, 255, 255, 0.56);
-          font-size: 13px;
+          font-size: clamp(11px, 0.9vw, 13px);
         }
 
         .footer-bottom div {
           display: flex;
-          gap: 16px;
+          gap: clamp(12px, 2vw, 20px);
         }
 
         .footer-bottom a {
           color: inherit;
           text-decoration: none;
+          transition: color 0.22s var(--spring);
         }
 
-        .footer-bottom a:hover {
-          color: #fff;
+        @media (hover: hover) {
+          .footer-bottom a:hover {
+            color: #fff;
+          }
         }
 
         @media (max-width: 900px) {
-          .footer-promise,
+          .footer-promise {
+            grid-template-columns: 1fr;
+          }
+
           .footer-grid {
             grid-template-columns: 1fr;
           }
         }
 
         @media (max-width: 600px) {
-          .footer-bottom {
-            align-items: flex-start;
+          .footer-promise span {
             flex-direction: column;
+            gap: clamp(6px, 1vw, 8px);
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .footer-bottom > p {
+            order: 2;
+          }
+
+          .footer-bottom div {
+            order: 1;
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 374px) {
+          .footer-promise {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

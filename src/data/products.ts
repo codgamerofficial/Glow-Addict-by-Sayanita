@@ -1,1 +1,2 @@
-export { brands, categories, products } from './catalog';
+export { catalog as products, brands, categories } from './catalog';
+export { default as catalog } from './catalog';

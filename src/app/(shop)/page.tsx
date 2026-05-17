@@ -9,6 +9,7 @@ import {
   NewArrivals,
   LoyaltyBanner
 } from '@/components/shop/HomeSections';
+import { ComboOffersSection } from '@/components/shop/ComboOffersSection';
 
 export default async function HomePage() {
   const [liveBanners, liveCollections] = await Promise.all([
@@ -22,6 +23,7 @@ export default async function HomePage() {
       <CategoryGrid collections={liveCollections} />
       <TrendingSection />
       <FlashDeal />
+      <ComboOffersSection />
       <AIRecommendations />
       <InstagramGrid />
       <NewArrivals />

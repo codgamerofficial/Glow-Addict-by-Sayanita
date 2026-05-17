@@ -25,34 +25,72 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <PageTransition>
-        <div className="container-main" style={{ textAlign: 'center', padding: '80px 20px' }}>
+        <div className="cart-empty-container">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', damping: 12 }}
           >
-            <ShoppingBag size={64} style={{ color: 'var(--text-muted)', marginBottom: '20px' }} />
+            <ShoppingBag className="cart-empty-icon" />
           </motion.div>
-          <h2 style={{ fontFamily: 'Outfit', fontSize: '24px', marginBottom: '8px' }}>Your cart is empty</h2>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>Add some amazing products to get started!</p>
-          <Link href="/products" className="btn-gradient" style={{ textDecoration: 'none', padding: '14px 32px', fontSize: '15px' }}>
+          <h2 className="cart-empty-title">Your cart is empty</h2>
+          <p className="cart-empty-desc">Add some amazing products to get started!</p>
+          <Link href="/products" className="btn-gradient cart-empty-btn">
             <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Start Shopping <ArrowRight size={18} /></span>
           </Link>
         </div>
+
+        <style jsx>{`
+          .cart-empty-container {
+            display: grid;
+            place-items: center;
+            gap: clamp(12px, 2vw, 20px);
+            min-height: 60vh;
+            padding: clamp(40px, 10vw, 80px) clamp(16px, 3vw, 20px);
+            text-align: center;
+          }
+
+          .cart-empty-icon {
+            width: clamp(48px, 12vw, 80px);
+            height: clamp(48px, 12vw, 80px);
+            color: var(--text-muted);
+            margin-bottom: clamp(12px, 2vw, 20px);
+          }
+
+          .cart-empty-title {
+            font-family: var(--font-display);
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: 900;
+            margin-bottom: clamp(6px, 1vw, 12px);
+          }
+
+          .cart-empty-desc {
+            color: var(--text-muted);
+            font-size: clamp(14px, 1.1vw, 16px);
+            margin-bottom: clamp(16px, 2.5vw, 24px);
+            max-width: 420px;
+          }
+
+          .cart-empty-btn {
+            text-decoration: none;
+            padding: clamp(12px, 1.8vw, 16px) clamp(24px, 3vw, 32px);
+            font-size: clamp(14px, 1vw, 16px);
+          }
+        `}</style>
       </PageTransition>
     );
   }
 
   return (
     <PageTransition>
-      <div className="container-main" style={{ padding: '24px 16px' }}>
-        <h1 style={{ fontFamily: 'Outfit', fontSize: '28px', fontWeight: 700, marginBottom: '24px' }}>
-          Shopping Cart <span style={{ fontSize: '16px', color: 'var(--text-muted)', fontWeight: 400 }}>({itemCount} items)</span>
+      <div className="cart-page-wrapper">
+        <h1 className="cart-page-title">
+          Shopping Cart <span className="cart-page-count">({itemCount} items)</span>
         </h1>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }} className="cart-grid">
+        <div className="cart-layout">
           {/* Items */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="cart-items-container">
             <AnimatePresence mode="popLayout">
               {items.map(item => {
                 const price = item.product.salePrice || item.product.price;
@@ -64,28 +102,24 @@ export default function CartPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 200, scale: 0.8 }}
                     transition={{ type: 'spring', damping: 20, stiffness: 200 }}
-                    className="glass-card"
-                    style={{ padding: '16px', display: 'flex', gap: '16px', alignItems: 'center' }}
+                    className="cart-item glass-card"
                   >
-                    <Link href={`/products/${item.product.slug}`}>
-                      <motion.div
-                        whileTap={{ scale: 0.95 }}
-                        style={{ width: '90px', height: '90px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}
-                      >
-                        <img src={item.product.images[0]} alt={item.product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </motion.div>
+                    <Link href={`/products/${item.product.slug}`} className="cart-item-image-link">
+                      <div className="cart-item-image">
+                        <img src={item.product.images[0]} alt={item.product.name} />
+                      </div>
                     </Link>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--primary)', textTransform: 'uppercase' }}>{item.product.brandName}</div>
-                      <Link href={`/products/${item.product.slug}`} style={{ textDecoration: 'none', color: 'var(--text-primary)' }}>
-                        <h3 style={{ fontSize: '14px', fontWeight: 500, marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{item.product.name}</h3>
+                    <div className="cart-item-content">
+                      <div className="cart-item-brand">{item.product.brandName}</div>
+                      <Link href={`/products/${item.product.slug}`} className="cart-item-name-link">
+                        <h3 className="cart-item-name">{item.product.name}</h3>
                       </Link>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border-glass)', borderRadius: '8px', overflow: 'hidden' }}>
+                      <div className="cart-item-controls">
+                        <div className="quantity-control">
                           <motion.button
                             whileTap={{ scale: 0.85 }}
                             onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                            style={{ background: 'var(--bg-glass)', border: 'none', padding: '6px 10px', cursor: 'pointer', color: 'var(--text-primary)' }}
+                            className="qty-btn"
                           >
                             <Minus size={14} />
                           </motion.button>
@@ -93,14 +127,14 @@ export default function CartPage() {
                             key={item.quantity}
                             initial={{ scale: 1.3 }}
                             animate={{ scale: 1 }}
-                            style={{ padding: '6px 12px', fontSize: '13px', fontWeight: 600 }}
+                            className="qty-display"
                           >
                             {item.quantity}
                           </motion.span>
                           <motion.button
                             whileTap={{ scale: 0.85 }}
                             onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                            style={{ background: 'var(--bg-glass)', border: 'none', padding: '6px 10px', cursor: 'pointer', color: 'var(--text-primary)' }}
+                            className="qty-btn"
                           >
                             <Plus size={14} />
                           </motion.button>
@@ -109,12 +143,12 @@ export default function CartPage() {
                           key={price * item.quantity}
                           initial={{ scale: 1.1, color: 'var(--primary)' }}
                           animate={{ scale: 1, color: 'var(--text-primary)' }}
-                          style={{ fontFamily: 'Outfit', fontSize: '16px', fontWeight: 700 }}
+                          className="item-total"
                         >
                           ₹{(price * item.quantity).toLocaleString()}
                         </motion.span>
                         {item.product.salePrice && (
-                          <span style={{ fontSize: '12px', color: 'var(--text-muted)', textDecoration: 'line-through' }}>
+                          <span className="item-original-price">
                             ₹{(item.product.price * item.quantity).toLocaleString()}
                           </span>
                         )}
@@ -124,12 +158,8 @@ export default function CartPage() {
                       whileTap={{ scale: 0.8 }}
                       whileHover={{ scale: 1.1 }}
                       onClick={() => handleRemove(item.product.id, item.product.name)}
-                      style={{
-                        background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer',
-                        padding: '8px', borderRadius: '8px', transition: 'all 0.2s',
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--error)'; e.currentTarget.style.background = 'rgba(239,68,68,0.1)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.background = 'none'; }}
+                      className="cart-remove-btn"
+                      aria-label="Remove from cart"
                     >
                       <Trash2 size={18} />
                     </motion.button>
@@ -144,27 +174,28 @@ export default function CartPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="glass-card"
-            style={{ padding: '24px', alignSelf: 'flex-start', position: 'sticky', top: '82px' }}
+            className="cart-summary glass-card"
           >
-            <h3 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '20px' }}>Order Summary</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
-                <span style={{ color: 'var(--text-secondary)' }}>Subtotal</span>
-                <span style={{ fontWeight: 500 }}>₹{subtotal.toLocaleString()}</span>
+            <h3 className="summary-title">Order Summary</h3>
+            <div className="summary-rows">
+              <div className="summary-row">
+                <span className="summary-label">Subtotal</span>
+                <span className="summary-value">₹{subtotal.toLocaleString()}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
-                <span style={{ color: 'var(--text-secondary)' }}>Shipping</span>
-                <span style={{ fontWeight: 500, color: shipping === 0 ? 'var(--success)' : undefined }}>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
+              <div className="summary-row">
+                <span className="summary-label">Shipping</span>
+                <span className={`summary-value ${shipping === 0 ? 'summary-free' : ''}`}>
+                  {shipping === 0 ? 'FREE' : `₹${shipping}`}
+                </span>
               </div>
               {shipping > 0 && (
-                <div style={{ background: 'rgba(233,30,140,0.06)', borderRadius: '8px', padding: '8px 12px' }}>
-                  <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                    <Truck size={12} style={{ marginRight: '4px' }} /> Add ₹{499 - subtotal} more for free shipping
+                <div className="shipping-hint">
+                  <p>
+                    <Truck size={12} /> Add ₹{499 - subtotal} more for free shipping
                   </p>
                 </div>
               )}
-              <div style={{ borderTop: '1px solid var(--border-glass)', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontFamily: 'Outfit', fontWeight: 700 }}>
+              <div className="summary-total">
                 <span>Total</span>
                 <motion.span
                   key={total}
@@ -177,24 +208,26 @@ export default function CartPage() {
               </div>
             </div>
             {/* Coupon */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-              <input placeholder="Coupon code" className="input-glass" style={{ flex: 1, padding: '10px 14px', fontSize: '13px' }} />
-              <motion.button whileTap={{ scale: 0.95 }} className="btn-outline" style={{ padding: '10px 16px', fontSize: '13px', flexShrink: 0 }}>
+            <div className="coupon-section">
+              <input placeholder="Coupon code" className="input-glass coupon-input" />
+              <motion.button whileTap={{ scale: 0.95 }} className="btn-outline coupon-btn">
                 <Tag size={14} /> Apply
               </motion.button>
             </div>
             {isInitialized && isAuthenticated ? (
-              <Link href="/checkout" className="btn-gradient" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '14px', fontSize: '15px', textDecoration: 'none' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Proceed to Checkout <ArrowRight size={18} /></span>
+              <Link href="/checkout" className="btn-gradient checkout-btn">
+                <span>Proceed to Checkout</span>
+                <ArrowRight size={18} />
               </Link>
             ) : (
-              <Link href="/login?redirect=/checkout" className="btn-gradient" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '14px', fontSize: '15px', textDecoration: 'none' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>Sign in to Checkout <ArrowRight size={18} /></span>
+              <Link href="/login?redirect=/checkout" className="btn-gradient checkout-btn">
+                <span>Sign in to Checkout</span>
+                <ArrowRight size={18} />
               </Link>
             )}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '12px', justifyContent: 'center' }}>
-              <Truck size={14} style={{ color: 'var(--success)' }} />
-              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Estimated delivery: 3-5 business days</span>
+            <div className="delivery-info">
+              <Truck size={14} />
+              <span>Estimated delivery: 3-5 business days</span>
             </div>
           </motion.div>
 
@@ -202,8 +235,297 @@ export default function CartPage() {
           <CartWhatsAppShare />
         </div>
 
-        <style jsx global>{`
-          @media (min-width: 768px) { .cart-grid { grid-template-columns: 1fr 380px !important; } }
+        <style jsx>{`
+          .cart-page-wrapper {
+            max-width: var(--container-2xl);
+            margin: 0 auto;
+            padding: clamp(16px, 3vw, 28px);
+          }
+
+          .cart-page-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 5vw, 36px);
+            font-weight: 900;
+            margin-bottom: clamp(16px, 2.5vw, 28px);
+            letter-spacing: -0.5px;
+          }
+
+          .cart-page-count {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-muted);
+            font-weight: 500;
+          }
+
+          .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: clamp(16px, 2.5vw, 24px);
+          }
+
+          @media (min-width: 768px) {
+            .cart-layout {
+              grid-template-columns: 1fr 380px;
+            }
+          }
+
+          .cart-items-container {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 1.5vw, 14px);
+          }
+
+          .cart-item {
+            display: grid;
+            grid-template-columns: clamp(70px, 15vw, 90px) 1fr clamp(32px, 6vw, 44px);
+            gap: clamp(12px, 2vw, 16px);
+            padding: clamp(12px, 2vw, 16px);
+            align-items: start;
+          }
+
+          @media (max-width: 374px) {
+            .cart-item {
+              grid-template-columns: clamp(60px, 13vw, 70px) 1fr 32px;
+            }
+          }
+
+          .cart-item-image-link {
+            text-decoration: none;
+          }
+
+          .cart-item-image {
+            width: 100%;
+            aspect-ratio: 0.9;
+            border-radius: clamp(10px, 1.5vw, 14px);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--bg-ghost);
+          }
+
+          .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .cart-item-content {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vw, 10px);
+            min-width: 0;
+          }
+
+          .cart-item-brand {
+            font-size: clamp(10px, 0.85vw, 12px);
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+          }
+
+          .cart-item-name-link {
+            text-decoration: none;
+            color: inherit;
+          }
+
+          .cart-item-name {
+            font-size: clamp(13px, 1vw, 15px);
+            font-weight: 600;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+
+          .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 1.5vw, 12px);
+            flex-wrap: wrap;
+          }
+
+          .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-glass);
+            border-radius: clamp(8px, 1.2vw, 10px);
+            overflow: hidden;
+          }
+
+          .qty-btn {
+            background: var(--bg-glass);
+            border: none;
+            padding: clamp(6px, 1vw, 8px) clamp(8px, 1.2vw, 10px);
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s var(--spring);
+            display: grid;
+            place-items: center;
+          }
+
+          @media (hover: hover) {
+            .qty-btn:hover {
+              background: var(--bg-base);
+            }
+          }
+
+          .qty-display {
+            padding: clamp(6px, 1vw, 8px) clamp(10px, 1.5vw, 12px);
+            font-size: clamp(12px, 1vw, 14px);
+            font-weight: 600;
+          }
+
+          .item-total {
+            font-family: var(--font-display);
+            font-size: clamp(14px, 1.2vw, 16px);
+            font-weight: 700;
+          }
+
+          .item-original-price {
+            font-size: clamp(11px, 0.9vw, 13px);
+            color: var(--text-muted);
+            text-decoration: line-through;
+          }
+
+          .cart-remove-btn {
+            width: clamp(32px, 6vw, 40px);
+            height: clamp(32px, 6vw, 40px);
+            display: grid;
+            place-items: center;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: clamp(8px, 1.2vw, 10px);
+            transition: all 0.22s var(--spring);
+          }
+
+          @media (hover: hover) {
+            .cart-remove-btn:hover {
+              color: var(--error);
+              background: rgba(239, 68, 68, 0.1);
+            }
+          }
+
+          .cart-summary {
+            padding: clamp(16px, 2vw, 24px);
+            height: fit-content;
+            position: sticky;
+            top: clamp(80px, 10vw, 120px);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(12px, 1.8vw, 16px);
+          }
+
+          .summary-title {
+            font-family: var(--font-display);
+            font-size: clamp(16px, 1.2vw, 18px);
+            font-weight: 900;
+            margin: 0 0 clamp(12px, 1.8vw, 16px) 0;
+            letter-spacing: -0.3px;
+          }
+
+          .summary-rows {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 1.5vw, 12px);
+          }
+
+          .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(12px, 1vw, 14px);
+          }
+
+          .summary-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+          }
+
+          .summary-value {
+            font-weight: 600;
+            text-align: right;
+          }
+
+          .summary-free {
+            color: var(--success);
+            font-weight: 700;
+          }
+
+          .shipping-hint {
+            background: rgba(233, 30, 140, 0.06);
+            border-radius: clamp(8px, 1.2vw, 10px);
+            padding: clamp(8px, 1.2vw, 10px) clamp(10px, 1.5vw, 12px);
+          }
+
+          .shipping-hint p {
+            margin: 0;
+            font-size: clamp(11px, 0.9vw, 12px);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+
+          .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-glass);
+            padding-top: clamp(10px, 1.5vw, 12px);
+            font-size: clamp(16px, 1.3vw, 18px);
+            font-family: var(--font-display);
+            font-weight: 900;
+          }
+
+          .coupon-section {
+            display: flex;
+            gap: clamp(8px, 1.2vw, 10px);
+            margin: clamp(12px, 1.8vw, 16px) 0;
+          }
+
+          .coupon-input {
+            flex: 1;
+            padding: clamp(10px, 1.5vw, 12px) clamp(12px, 1.8vw, 14px);
+            font-size: clamp(12px, 1vw, 14px);
+            border-radius: clamp(8px, 1.2vw, 10px);
+          }
+
+          .coupon-btn {
+            padding: clamp(10px, 1.5vw, 12px) clamp(12px, 1.8vw, 14px);
+            font-size: clamp(12px, 1vw, 14px);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+          }
+
+          .checkout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1.2vw, 10px);
+            width: 100%;
+            padding: clamp(12px, 1.8vw, 14px);
+            font-size: clamp(13px, 1vw, 15px);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 700;
+          }
+
+          .delivery-info {
+            display: flex;
+            align-items: center;
+            gap: clamp(6px, 1vw, 8px);
+            margin-top: clamp(8px, 1.2vw, 10px);
+            justify-content: center;
+            font-size: clamp(11px, 0.9vw, 12px);
+            color: var(--text-muted);
+          }
+
+          .delivery-info svg {
+            color: var(--success);
+            flex-shrink: 0;
+          }
         `}</style>
       </div>
     </PageTransition>

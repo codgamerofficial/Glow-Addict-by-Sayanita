@@ -1,4 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabase';
+import { withRetry } from '@/utils/retry';
 import { products as mockProducts } from '@/data/products';
 import { categories as mockCategories } from '@/data/categories';
 import { brands as mockBrands } from '@/data/brands';
@@ -70,38 +71,42 @@ export async function getProducts(filters?: {
   if (!isSupabaseConfigured()) return mockProducts;
 
   try {
-    let query = supabase.from('products').select('*');
+    const fetchProducts = async () => {
+      let query = supabase.from('products').select('*');
 
-    if (filters?.category) {
-      query = query.ilike('category_name', `%${filters.category}%`);
-    }
-    if (filters?.brand) {
-      query = query.eq('brand_name', filters.brand);
-    }
-    if (filters?.skinType) {
-      query = query.contains('skin_types', [filters.skinType]);
-    }
-    if (filters?.concern) {
-      query = query.contains('concerns', [filters.concern]);
-    }
-    if (filters?.search) {
-      query = query.or(`name.ilike.%${filters.search}%,tags.cs.{${filters.search.toLowerCase()}}`);
-    }
-    if (filters?.limit) {
-      query = query.limit(filters.limit);
-    }
+      if (filters?.category) {
+        query = query.ilike('category_name', `%${filters.category}%`);
+      }
+      if (filters?.brand) {
+        query = query.eq('brand_name', filters.brand);
+      }
+      if (filters?.skinType) {
+        query = query.contains('skin_types', [filters.skinType]);
+      }
+      if (filters?.concern) {
+        query = query.contains('concerns', [filters.concern]);
+      }
+      if (filters?.search) {
+        query = query.or(`name.ilike.%${filters.search}%,tags.cs.{${filters.search.toLowerCase()}}`);
+      }
+      if (filters?.limit) {
+        query = query.limit(filters.limit);
+      }
 
-    switch (filters?.sortBy) {
-      case 'price-asc': query = query.order('price', { ascending: true }); break;
-      case 'price-desc': query = query.order('price', { ascending: false }); break;
-      case 'rating': query = query.order('rating_avg', { ascending: false }); break;
-      case 'newest': query = query.order('created_at', { ascending: false }); break;
-      default: query = query.order('rating_count', { ascending: false }); break;
-    }
+      switch (filters?.sortBy) {
+        case 'price-asc': query = query.order('price', { ascending: true }); break;
+        case 'price-desc': query = query.order('price', { ascending: false }); break;
+        case 'rating': query = query.order('rating_avg', { ascending: false }); break;
+        case 'newest': query = query.order('created_at', { ascending: false }); break;
+        default: query = query.order('rating_count', { ascending: false }); break;
+      }
 
-    const { data, error } = await query;
-    if (error) throw error;
-    return (data || []).map(mapProduct);
+      const { data, error } = await query;
+      if (error) throw error;
+      return (data || []).map(mapProduct);
+    };
+
+    return await withRetry(fetchProducts, { maxAttempts: 2, baseDelayMs: 500 });
   } catch (e) {
     console.warn('Supabase fetch failed, using mock data:', e);
     return mockProducts;
@@ -115,14 +120,18 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   }
 
   try {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('slug', slug)
-      .single();
+    const fetchProduct = async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('slug', slug)
+        .single();
 
-    if (error) throw error;
-    return data ? mapProduct(data) : null;
+      if (error) throw error;
+      return data ? mapProduct(data) : null;
+    };
+
+    return await withRetry(fetchProduct, { maxAttempts: 2, baseDelayMs: 500 });
   } catch (e) {
     console.warn('Supabase fetch failed, using mock data:', e);
     return mockProducts.find(p => p.slug === slug) || null;
@@ -136,14 +145,18 @@ export async function getReviews(productId: string): Promise<Review[]> {
   }
 
   try {
-    const { data, error } = await supabase
-      .from('reviews')
-      .select('*')
-      .eq('product_id', productId)
-      .order('created_at', { ascending: false });
+    const fetchReviews = async () => {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('product_id', productId)
+        .order('created_at', { ascending: false });
 
-    if (error) throw error;
-    return (data || []).map(mapReview);
+      if (error) throw error;
+      return (data || []).map(mapReview);
+    };
+
+    return await withRetry(fetchReviews, { maxAttempts: 2, baseDelayMs: 500 });
   } catch (e) {
     console.warn('Supabase fetch failed, using mock data:', e);
     return mockReviews.filter(r => r.productId === productId);
@@ -155,17 +168,21 @@ export async function getCategories(): Promise<Category[]> {
   if (!isSupabaseConfigured()) return mockCategories;
 
   try {
-    const { data, error } = await supabase
-      .from('categories')
-      .select('*')
-      .order('product_count', { ascending: false });
+    const fetchCategories = async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('product_count', { ascending: false });
 
-    if (error) throw error;
-    return (data || []).map(row => ({
-      id: row.id, name: row.name, slug: row.slug,
-      description: row.description, imageUrl: row.image_url,
-      icon: row.icon, parentId: row.parent_id, productCount: row.product_count,
-    }));
+      if (error) throw error;
+      return (data || []).map(row => ({
+        id: row.id, name: row.name, slug: row.slug,
+        description: row.description, imageUrl: row.image_url,
+        icon: row.icon, parentId: row.parent_id, productCount: row.product_count,
+      }));
+    };
+
+    return await withRetry(fetchCategories, { maxAttempts: 2, baseDelayMs: 500 });
   } catch {
     return mockCategories;
   }
@@ -176,17 +193,21 @@ export async function getBrands(): Promise<Brand[]> {
   if (!isSupabaseConfigured()) return mockBrands;
 
   try {
-    const { data, error } = await supabase
-      .from('brands')
-      .select('*')
-      .order('name');
+    const fetchBrands = async () => {
+      const { data, error } = await supabase
+        .from('brands')
+        .select('*')
+        .order('name');
 
-    if (error) throw error;
-    return (data || []).map(row => ({
-      id: row.id, name: row.name, slug: row.slug,
-      logoUrl: row.logo_url, description: row.description,
-      isPremium: row.is_premium,
-    }));
+      if (error) throw error;
+      return (data || []).map(row => ({
+        id: row.id, name: row.name, slug: row.slug,
+        logoUrl: row.logo_url, description: row.description,
+        isPremium: row.is_premium,
+      }));
+    };
+
+    return await withRetry(fetchBrands, { maxAttempts: 2, baseDelayMs: 500 });
   } catch {
     return mockBrands;
   }

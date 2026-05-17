@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "catalog:generate": "node ./scripts/generate-image-catalog.mjs",
+    "dev": "npm run catalog:generate && next dev",
+    "build": "npm run catalog:generate && next build",
+    "start": "npm run catalog:generate && next start",
     "lint": "eslint"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.13",
+    "@studio-freight/react-lenis": "^0.0.47",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.4",
     "date-fns": "^4.1.0",

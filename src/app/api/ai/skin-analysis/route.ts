@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { products } from '@/data/products';
+import { withRetry } from '@/utils/retry';
 
 const ANALYSIS_PROMPT = `You are an AI dermatology assistant for the Glow Addict beauty app. Analyze the uploaded selfie image and provide a skin analysis.
 
@@ -48,25 +49,29 @@ export async function POST(req: NextRequest) {
 
     // Use Llama with vision capabilities or fall back to text-based analysis
     try {
-      const completion = await client.chat.completions.create({
-        model: 'meta/llama-4-maverick-17b-128e-instruct',
-        messages: [
-          {
-            role: 'user',
-            content: [
-              { type: 'text', text: ANALYSIS_PROMPT },
+      const completion = await withRetry(
+        () =>
+          client.chat.completions.create({
+            model: 'meta/llama-4-maverick-17b-128e-instruct',
+            messages: [
               {
-                type: 'image_url',
-                image_url: {
-                  url: `data:${mimeType};base64,${base64}`,
-                },
+                role: 'user',
+                content: [
+                  { type: 'text', text: ANALYSIS_PROMPT },
+                  {
+                    type: 'image_url',
+                    image_url: {
+                      url: `data:${mimeType};base64,${base64}`,
+                    },
+                  },
+                ],
               },
             ],
-          },
-        ],
-        temperature: 0.3,
-        max_tokens: 1000,
-      });
+            temperature: 0.3,
+            max_tokens: 1000,
+          }),
+        { maxAttempts: 3, baseDelayMs: 1000 },
+      );
 
       const text = completion.choices[0]?.message?.content || '';
 
@@ -94,21 +99,25 @@ export async function POST(req: NextRequest) {
       // If vision model fails, use text-only analysis
       console.warn('Vision model unavailable, using text-based analysis:', visionError);
 
-      const completion = await client.chat.completions.create({
-        model: 'meta/llama-3.3-70b-instruct',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an AI dermatology assistant. The user has uploaded a selfie for skin analysis. Since you cannot see the image, provide a general but helpful skin analysis for Indian skin. Be realistic and give actionable advice.',
-          },
-          {
-            role: 'user',
-            content: ANALYSIS_PROMPT + '\n\nNote: Provide a realistic analysis for a typical Indian user with combination skin.',
-          },
-        ],
-        temperature: 0.5,
-        max_tokens: 1000,
-      });
+      const completion = await withRetry(
+        () =>
+          client.chat.completions.create({
+            model: 'meta/llama-3.3-70b-instruct',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are an AI dermatology assistant. The user has uploaded a selfie for skin analysis. Since you cannot see the image, provide a general but helpful skin analysis for Indian skin. Be realistic and give actionable advice.',
+              },
+              {
+                role: 'user',
+                content: ANALYSIS_PROMPT + '\n\nNote: Provide a realistic analysis for a typical Indian user with combination skin.',
+              },
+            ],
+            temperature: 0.5,
+            max_tokens: 1000,
+          }),
+        { maxAttempts: 3, baseDelayMs: 1000 },
+      );
 
       const text = completion.choices[0]?.message?.content || '';
       let analysis;
@@ -139,7 +148,7 @@ export async function POST(req: NextRequest) {
 function matchProductsToConcerns(skinType: string, concerns: string[]) {
   const matched = products.filter(p => {
     const matchesSkinType = p.skinTypes.includes(skinType);
-    const matchesConcern = p.concerns.some(c =>
+    const matchesConcern = p.concerns.some((c: string) =>
       concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()) || dc.toLowerCase().includes(c.toLowerCase()))
     );
     return matchesSkinType || matchesConcern;
@@ -147,9 +156,9 @@ function matchProductsToConcerns(skinType: string, concerns: string[]) {
 
   matched.sort((a, b) => {
     const aScore = (a.skinTypes.includes(skinType) ? 2 : 0) +
-      a.concerns.filter(c => concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()))).length;
+      a.concerns.filter((c: string) => concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()))).length;
     const bScore = (b.skinTypes.includes(skinType) ? 2 : 0) +
-      b.concerns.filter(c => concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()))).length;
+      b.concerns.filter((c: string) => concerns.some(dc => c.toLowerCase().includes(dc.toLowerCase()))).length;
     return bScore - aScore;
   });
 

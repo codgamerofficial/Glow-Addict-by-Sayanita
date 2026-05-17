@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { products } from '@/data/products';
+import { withRetry } from '@/utils/retry';
 
 const SYSTEM_PROMPT = `You are "Glow", the AI Beauty Assistant for Glow Addict by Sayanita — India's smartest beauty platform.
 
@@ -55,13 +56,24 @@ export async function POST(req: NextRequest) {
     // Add current message
     chatHistory.push({ role: 'user', content: message });
 
-    const completion = await client.chat.completions.create({
-      model: 'meta/llama-3.3-70b-instruct',
-      messages: chatHistory,
-      temperature: 0.7,
-      top_p: 0.9,
-      max_tokens: 800,
-    });
+    const completion = await withRetry(() => 
+      client.chat.completions.create({
+        model: 'meta/llama-3.3-70b-instruct',
+        messages: chatHistory,
+        temperature: 0.7,
+        top_p: 0.9,
+        max_tokens: 800,
+      }),
+      {
+        maxAttempts: 3,
+        baseDelayMs: 1000,
+        maxDelayMs: 5000,
+        jitter: true,
+        onRetry: (error, attempt) => {
+          console.warn(`OpenAI API attempt ${attempt} failed:`, error);
+        }
+      }
+    );
 
     const text = completion.choices[0]?.message?.content || '';
 
@@ -117,7 +129,7 @@ function matchProducts(aiText: string): typeof products {
   for (const [keyword, tags] of Object.entries(keywordMap)) {
     if (text.includes(keyword)) {
       const matches = products.filter(p =>
-        p.tags.some(t => tags.includes(t))
+        p.tags.some((t: string) => tags.includes(t))
       );
       for (const m of matches) {
         if (!matched.find(x => x.id === m.id)) matched.push(m);

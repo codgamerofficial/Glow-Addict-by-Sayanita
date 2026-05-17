@@ -56,7 +56,7 @@ export default function EditProductPage() {
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
             <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Media</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              {product.images.map((img, i) => (
+              {product.images.map((img: string, i: number) => (
                 <div key={i} style={{ aspectRatio: '1', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
                   <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
@@ -85,7 +85,7 @@ export default function EditProductPage() {
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20 }}>
             <h3 style={{ fontFamily: 'Outfit', fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Tags & Flags</h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-              {product.tags.map(t => <span key={t} style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, background: 'rgba(233,30,140,0.1)', color: '#F5B7C5' }}>{t}</span>)}
+              {product.tags.map((t: string) => <span key={t} style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, background: 'rgba(233,30,140,0.1)', color: '#F5B7C5' }}>{t}</span>)}
               {product.isBestseller && <span style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, background: 'rgba(245,158,11,0.1)', color: '#F59E0B' }}>⭐ Bestseller</span>}
               {product.isNew && <span style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, background: 'linear-gradient(135deg, #E91E8C, #7C3AED)', color: '#fff' }}>✨ New</span>}
             </div>
