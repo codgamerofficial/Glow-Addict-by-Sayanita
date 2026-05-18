@@ -14,7 +14,7 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
   const heroImage =
     activeBanner?.image_url ||
     activeBanner?.imageUrl ||
-    'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1000&h=1200&fit=crop';
+    '/images/hero-banner-1.jpeg';
 
   return (
     <section className="hero-shell">
@@ -58,8 +58,8 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           <div className="hero-trust-row" aria-label="Store benefits">
             {[
               { icon: ShieldCheck, label: '100% authentic' },
-              { icon: Truck, label: 'Free ship above 499' },
-              { icon: CheckCircle2, label: '15-day returns' },
+              { icon: Truck, label: 'Free ship above 799' },
+              { icon: CheckCircle2, label: 'No return or exchange' },
             ].map(({ icon: Icon, label }) => (
               <span key={label}>
                 <Icon size={16} /> {label}
@@ -74,12 +74,6 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.12, ease: [0.2, 0.9, 0.2, 1] }}
         >
-          <div className="hero-offer-card">
-            <span>EXTRA</span>
-            <strong>20% OFF</strong>
-            <small>Code: EXTRA20</small>
-          </div>
-
           <div className="hero-phone">
             <div className="hero-phone-notch" />
             <div className="hero-phone-screen">
@@ -89,11 +83,6 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
                   <span>ADDICT</span>
                 </span>
                 <span className="hero-phone-bag">3</span>
-              </div>
-              <div className="hero-phone-banner">
-                <span className="sale-type">UP TO</span>
-                <strong>80%</strong>
-                <span>OFF</span>
               </div>
               <div className="hero-product-stack">
                 {heroProducts.map((product, index) => (
@@ -324,30 +313,6 @@ export function HeroBanner({ banners }: { banners: AdminBanner[] }) {
           color: #fff;
           background: var(--primary);
           font-size: 12px;
-          font-weight: 900;
-        }
-
-        .hero-phone-banner {
-          margin: 0 18px 18px;
-          padding: 16px;
-          border-radius: 22px;
-          color: #fff;
-          text-align: center;
-          background: linear-gradient(135deg, #ff2b7d, #ff763b);
-          box-shadow: 0 18px 34px rgba(245, 31, 123, 0.24);
-        }
-
-        .hero-phone-banner strong {
-          display: block;
-          font-family: var(--font-display);
-          font-size: 56px;
-          font-weight: 900;
-          line-height: 0.9;
-        }
-
-        .hero-phone-banner span {
-          font-family: var(--font-display);
-          font-size: 16px;
           font-weight: 900;
         }
 

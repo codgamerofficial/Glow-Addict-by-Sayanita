@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { Smartphone, Banknote, Shield, Check, ArrowLeft, PartyPopper, Copy, CheckCircle, Upload, X, MapPin } from 'lucide-react';
+import { Smartphone, Shield, Check, ArrowLeft, Copy, CheckCircle, Upload, X, Gift } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/features/cart/cartStore';
@@ -8,11 +8,11 @@ import { useAuthStore } from '@/features/auth/authStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageTransition from '@/components/shared/PageTransition';
 import { ShippingAddress } from '@/types/order';
-import { getPartialCodDeposit, isPincodeServiceable, UPI_ID, UPI_QR_URL } from '@/lib/commerce';
+import { DELIVERY_WINDOW_DAYS, getEligibleFreebies, MANUAL_PAYMENT_NOTE, PAYMENT_POLICY, UPI_ID, UPI_QR_URL } from '@/lib/commerce';
+import PolicyNotice from '@/components/shared/PolicyNotice';
 
 const paymentMethods = [
   { id: 'upi', label: 'UPI', desc: 'Manual scan-and-pay only', icon: Smartphone },
-  { id: 'cod', label: 'Cash on Delivery', desc: 'Pay on delivery or book a partial deposit', icon: Banknote },
 ];
 
 import Image from 'next/image';
@@ -64,9 +64,7 @@ import Image from 'next/image';
    const { isAuthenticated, isInitialized } = useAuthStore();
    const { items, getSubtotal, getTotal, getShipping, clearCart } = useCartStore();
    const [step, setStep] = useState(1);
-   const [payment, setPayment] = useState<'upi' | 'cod'>('upi');
-  const [codPartial, setCodPartial] = useState(true);
-  const [codAvailable, setCodAvailable] = useState<boolean | null>(null);
+  const [payment, setPayment] = useState<'upi'>('upi');
    const [isPlacing, setIsPlacing] = useState(false);
    const [upiCopied, setUpiCopied] = useState(false);
    const [transactionId, setTransactionId] = useState('');
@@ -89,13 +87,7 @@ import Image from 'next/image';
    const subtotal = getSubtotal();
    const shipping = getShipping();
    const total = getTotal();
-   const codDepositAmount = useMemo(() => {
-     if (payment !== 'cod' || !codPartial) {
-       return 0;
-     }
-
-     return getPartialCodDeposit(total);
-   }, [codPartial, payment, total]);
+   const freebies = useMemo(() => getEligibleFreebies(subtotal), [subtotal]);
 
    useEffect(() => {
      if (isInitialized && !isAuthenticated) {
@@ -107,16 +99,6 @@ import Image from 'next/image';
      await navigator.clipboard.writeText(UPI_ID);
      setUpiCopied(true);
      setTimeout(() => setUpiCopied(false), 2000);
-   };
-
-   const handleCheckCOD = () => {
-     if (!address.pincode.trim()) {
-       setCodAvailable(null);
-       alert('Enter a pincode first');
-       return;
-     }
-
-     setCodAvailable(isPincodeServiceable(address.pincode));
    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,10 +118,6 @@ import Image from 'next/image';
       const missing = required.filter(key => !address[key]?.trim());
       if (missing.length > 0) {
         alert('Please fill in all required fields');
-        return;
-      }
-      if (codAvailable === false && payment === 'cod') {
-        alert('COD is not available for this pincode. Please choose UPI.');
         return;
       }
       setStep(2);
@@ -175,7 +153,6 @@ import Image from 'next/image';
            total,
            shippingFee: shipping,
            paymentMethod: payment,
-           codDepositAmount: codDepositAmount || undefined,
            transactionId: transactionId || undefined,
            screenshotUrl: screenshotUrl,
            shippingAddress,
@@ -187,7 +164,7 @@ import Image from 'next/image';
        if (data.success) {
          clearCart();
          // Redirect to confirmation page
-         router.push(`/order/confirmation?orderId=${data.orderId}&payment=${payment}&deposit=${codDepositAmount}`);
+         router.push(`/order/confirmation?orderId=${data.orderId}&payment=${payment}`);
        } else {
          alert(data.error || 'Failed to place order');
        }
@@ -197,7 +174,7 @@ import Image from 'next/image';
      } finally {
        setIsPlacing(false);
      }
-  }, [items, subtotal, total, shipping, payment, transactionId, screenshotPreview, address, clearCart, router, codDepositAmount]);
+  }, [items, subtotal, total, shipping, payment, transactionId, screenshotPreview, address, clearCart, router]);
 
    if (items.length === 0) {
     return (
@@ -311,30 +288,6 @@ import Image from 'next/image';
                    onChange={(e) => setAddress({...address, pincode: e.target.value})}
                    required
                  />
-                 <motion.button
-                   type="button"
-                   whileTap={{ scale: 0.97 }}
-                   onClick={handleCheckCOD}
-                   className="btn-outline"
-                   style={{ gridColumn: 'span 2', padding: '12px 14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-                 >
-                   <MapPin size={16} /> Check COD availability
-                 </motion.button>
-                 {codAvailable !== null && (
-                   <div
-                     style={{
-                       gridColumn: 'span 2',
-                       padding: '12px 14px',
-                       borderRadius: '10px',
-                       background: codAvailable ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
-                       color: codAvailable ? 'var(--success)' : '#F59E0B',
-                       fontSize: '13px',
-                       fontWeight: 600,
-                     }}
-                   >
-                     {codAvailable ? 'COD is available for this area.' : 'COD is not available here. Please use UPI.'}
-                   </div>
-                 )}
                  <input
                    className="input-glass"
                    placeholder="Country *"
@@ -360,30 +313,18 @@ import Image from 'next/image';
                      <motion.button
                        key={pm.id}
                        whileTap={{ scale: 0.98 }}
-                       onClick={() => {
-                         if (pm.id === 'cod' && codAvailable === false) {
-                           alert('COD is not available for this pincode.');
-                           return;
-                         }
-
-                         setPayment(pm.id as 'upi' | 'cod');
-                       }}
+                       onClick={() => setPayment(pm.id as 'upi')}
                        style={{
                          display: 'flex', alignItems: 'center', gap: '14px', padding: '16px',
-                         opacity: pm.id === 'cod' && codAvailable === false ? 0.45 : 1,
                          background: payment === pm.id ? 'rgba(233,30,140,0.08)' : 'var(--bg-glass)',
                          border: `1.5px solid ${payment === pm.id ? 'var(--primary)' : 'var(--border-glass)'}`,
                          borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s', textAlign: 'left', width: '100%',
                        }}
-                       disabled={pm.id === 'cod' && codAvailable === false}
                      >
                        <Icon size={22} style={{ color: payment === pm.id ? 'var(--primary)' : 'var(--text-muted)' }} />
                        <div style={{ flex: 1 }}>
                          <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>{pm.label}</div>
                          <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{pm.desc}</div>
-                         {pm.id === 'cod' && codAvailable === false && (
-                           <div style={{ fontSize: '11px', color: '#F59E0B', marginTop: '4px' }}>Unavailable for this pincode</div>
-                         )}
                        </div>
                        <motion.div
                          animate={{ scale: payment === pm.id ? 1 : 0.8, borderColor: payment === pm.id ? 'var(--primary)' : 'var(--border-glass)' }}
@@ -517,36 +458,12 @@ import Image from 'next/image';
                      background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)',
                      borderRadius: '10px', padding: '12px', fontSize: '12px', color: '#F59E0B'
                    }}>
-                     <strong>Note:</strong> After payment, your order will be manually verified within 24 hours.
+                     <strong>Note:</strong> {MANUAL_PAYMENT_NOTE}
                    </div>
-                 </motion.div>
-               )}
 
-               {payment === 'cod' && (
-                 <motion.div
-                   initial={{ opacity: 0, height: 0 }}
-                   animate={{ opacity: 1, height: 'auto' }}
-                   exit={{ opacity: 0, height: 0 }}
-                   style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid var(--border-glass)', textAlign: 'center' }}
-                 >
-                   <div style={{
-                     background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)',
-                     borderRadius: '10px', padding: '12px', fontSize: '13px', color: 'var(--success)'
-                   }}>
-                     {codPartial ? (
-                       <>
-                         Pay a deposit of ₹{codDepositAmount.toLocaleString('en-IN')} now and the remaining amount in cash on delivery.
-                       </>
-                     ) : (
-                       <>
-                         Pay ₹{total.toLocaleString('en-IN')} in cash when your order arrives.
-                       </>
-                     )}
+                   <div style={{ marginTop: '12px' }}>
+                     <PolicyNotice compact />
                    </div>
-                   <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                     <input type="checkbox" checked={codPartial} onChange={(e) => setCodPartial(e.target.checked)} />
-                     Enable partial COD deposit
-                   </label>
                  </motion.div>
                )}
 
@@ -591,6 +508,16 @@ import Image from 'next/image';
                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
                    <span style={{ color: 'var(--text-secondary)' }}>Shipping</span><span style={{ color: shipping === 0 ? 'var(--success)' : 'var(--text-primary)' }}>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
                  </div>
+                 <div style={{ borderRadius: '10px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '10px 12px' }}>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#065F46' }}>
+                     <Gift size={14} /> Freebies applied
+                   </div>
+                   <ul style={{ margin: '6px 0 0', paddingLeft: '18px', color: '#065F46', fontSize: '12px' }}>
+                     {freebies.map((freebie) => (
+                       <li key={freebie}>{freebie}</li>
+                     ))}
+                   </ul>
+                 </div>
                  <div style={{ borderTop: '1px solid var(--border-glass)', paddingTop: '8px', display: 'flex', justifyContent: 'space-between', fontFamily: 'Outfit', fontWeight: 700, fontSize: '18px' }}>
                    <span>Total</span><span className="gradient-text">₹{total.toLocaleString()}</span>
                  </div>
@@ -613,19 +540,18 @@ import Image from 'next/image';
                <div style={{ marginTop: '12px', padding: '16px', background: 'var(--bg-glass)', borderRadius: '12px' }}>
                  <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '8px' }}>Payment Method</div>
                  <div style={{ fontSize: '13px', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                   {payment === 'upi' ? <Smartphone size={14} /> : <Banknote size={14} />}
-                   {payment === 'upi' ? `UPI (${UPI_ID})` : codPartial ? 'Partial COD deposit + cash on delivery' : 'Cash on Delivery'}
+                   <Smartphone size={14} />
+                   {`UPI (${UPI_ID})`}
                  </div>
-                 {payment === 'upi' && transactionId && (
+                 {transactionId && (
                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
                      Transaction ID: {transactionId}
                    </div>
                  )}
-                 {payment === 'cod' && codPartial && (
-                   <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                     COD deposit: ₹{codDepositAmount.toLocaleString('en-IN')}
-                   </div>
-                 )}
+               </div>
+
+               <div style={{ marginTop: '12px', padding: '12px', borderRadius: '12px', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.18)', fontSize: '12px', color: '#1D4ED8' }}>
+                 Delivery window: {DELIVERY_WINDOW_DAYS} days. {PAYMENT_POLICY}
                </div>
 
                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '16px 0', fontSize: '12px', color: 'var(--text-muted)' }}>
@@ -638,12 +564,12 @@ import Image from 'next/image';
                    onClick={handlePlaceOrder}
                    className="btn-gradient"
                    style={{ flex: 1, padding: '14px', fontSize: '15px' }}
-                   disabled={isPlacing || (payment === 'upi' && !screenshotFile)}
+                   disabled={isPlacing || !screenshotFile}
                  >
                    <span>{isPlacing ? 'Processing...' : `Place Order — ₹${total.toLocaleString()}`}</span>
                  </motion.button>
                </div>
-               {payment === 'upi' && !screenshotFile && (
+               {!screenshotFile && (
                  <div style={{ fontSize: '12px', color: '#F59E0B', textAlign: 'center', marginTop: '8px' }}>
                    Please upload a payment screenshot to complete your order
                  </div>

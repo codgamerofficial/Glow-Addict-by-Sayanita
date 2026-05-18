@@ -2,10 +2,9 @@ export interface Order {
   id: string;
   orderNumber: string;
   userId?: string; // null for guest
-  status: 'pending' | 'pending_payment' | 'cod_pending' | 'confirmed' | 'processing' | 'packed' | 'shipped' | 'delivered' | 'cancelled' | 'returned';
+  status: 'pending' | 'pending_payment' | 'confirmed' | 'processing' | 'packed' | 'shipped' | 'delivered' | 'cancelled' | 'returned';
   paymentStatus: 'pending' | 'verified' | 'failed';
-  paymentMethod: 'upi' | 'cod';
-  codDepositAmount?: number;
+  paymentMethod: 'upi';
   transactionId?: string;
   screenshotUrl?: string;
   subtotal: number;
@@ -50,8 +49,7 @@ export interface CreateOrderRequest {
   subtotal: number;
   total: number;
   shippingFee: number;
-  paymentMethod: 'upi' | 'cod';
-  codDepositAmount?: number;
+  paymentMethod: 'upi';
   transactionId?: string;
   screenshotUrl?: string;
   shippingAddress: ShippingAddress;

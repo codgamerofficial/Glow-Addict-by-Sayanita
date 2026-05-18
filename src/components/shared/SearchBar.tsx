@@ -1,29 +1,136 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Search, TrendingUp, X } from 'lucide-react';
-import { products } from '@/data/products';
+import { useRouter } from 'next/navigation';
+import { Mic, Search, TrendingUp, X } from 'lucide-react';
+import type { Product } from '@/types/product';
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition?: new () => {
+      lang: string;
+      continuous: boolean;
+      interimResults: boolean;
+      onresult: (event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void;
+      onerror: () => void;
+      onend: () => void;
+      start: () => void;
+    };
+    SpeechRecognition?: new () => {
+      lang: string;
+      continuous: boolean;
+      interimResults: boolean;
+      onresult: (event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void;
+      onerror: () => void;
+      onend: () => void;
+      start: () => void;
+    };
+  }
+}
 
 export function SearchBar({ onClose }: { onClose?: () => void }) {
+  const router = useRouter();
   const [query, setQuery] = useState('');
+  const [results, setResults] = useState<Product[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [trending, setTrending] = useState<string[]>([]);
+  const [recent, setRecent] = useState<string[]>([]);
+  const [didYouMean, setDidYouMean] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
 
-  const results = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
-    return products
-      .filter(
-        (product) =>
-          product.name.toLowerCase().includes(q) ||
-          product.brandName.toLowerCase().includes(q) ||
-          product.categoryName.toLowerCase().includes(q) ||
-          product.tags.some((tag) => tag.includes(q)),
-      )
-      .slice(0, 6);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('ga-recent-searches');
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as string[];
+      if (Array.isArray(parsed)) {
+        setRecent(parsed.slice(0, 6));
+      }
+    } catch {
+      // noop
+    }
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const mode = query.trim() ? 'suggest' : 'trending';
+        const response = await fetch(`/api/search?mode=${mode}&q=${encodeURIComponent(query.trim())}&limit=8`, {
+          signal: controller.signal,
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        setResults(Array.isArray(data.products) ? data.products : []);
+        setSuggestions(Array.isArray(data.suggestions) ? data.suggestions.slice(0, 6) : []);
+        setTrending(Array.isArray(data.trending) ? data.trending.slice(0, 8) : []);
+        setDidYouMean(typeof data.didYouMean === 'string' ? data.didYouMean : null);
+      } catch {
+        // ignore aborted/temporary failures
+      } finally {
+        setLoading(false);
+      }
+    }, 220);
+
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
   }, [query]);
 
-  const trending = ['Vitamin C Serum', 'Sunscreen', 'Niacinamide', 'Lipstick', 'Retinol'];
+  const saveRecent = (value: string) => {
+    const normalized = value.trim();
+    if (!normalized) return;
+    const next = [normalized, ...recent.filter((item) => item.toLowerCase() !== normalized.toLowerCase())].slice(0, 6);
+    setRecent(next);
+    try {
+      localStorage.setItem('ga-recent-searches', JSON.stringify(next));
+    } catch {
+      // noop
+    }
+  };
+
+  const openSearchResults = (value: string) => {
+    const normalized = value.trim();
+    if (!normalized) return;
+    saveRecent(normalized);
+    router.push(`/products?q=${encodeURIComponent(normalized)}`);
+    onClose?.();
+  };
+
+  const startVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0]?.[0]?.transcript || '';
+      if (transcript) {
+        setQuery(transcript);
+        openSearchResults(transcript);
+      }
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+
+    setListening(true);
+    recognition.start();
+  };
+
+  const quickPills = useMemo(() => {
+    if (query.trim()) {
+      return suggestions.length > 0 ? suggestions : [query.trim()];
+    }
+    return [...recent, ...trending].filter((value, index, arr) => arr.indexOf(value) === index).slice(0, 8);
+  }, [query, suggestions, recent, trending]);
 
   return (
     <div className="search-shell">
@@ -35,9 +142,18 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
           placeholder="Search products, brands, concerns..."
           value={query}
           onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              openSearchResults(query);
+            }
+          }}
           autoFocus
           className="input-glass"
         />
+        <button type="button" aria-label="Voice search" onClick={startVoiceSearch} style={{ right: onClose ? 48 : 10 }}>
+          <Mic size={18} color={listening ? 'var(--primary)' : 'currentColor'} />
+        </button>
         {onClose && (
           <button type="button" aria-label="Close search" onClick={onClose}>
             <X size={18} />
@@ -45,12 +161,14 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
         )}
       </div>
 
-      {query.trim() && (
+      {(query.trim() || quickPills.length > 0) && (
         <div className="search-results">
-          {results.length > 0 ? (
+          {loading ? (
+            <div style={{ padding: '16px', fontSize: '13px', color: 'var(--text-muted)' }}>Searching...</div>
+          ) : results.length > 0 ? (
             <div className="search-result-list">
               {results.map((product) => (
-                <Link key={product.id} href={`/products/${product.slug}`} onClick={onClose} className="search-result">
+                <Link key={product.id} href={`/products/${product.slug}`} onClick={() => saveRecent(product.name)} className="search-result">
                   <div className="search-thumb">
                     <Image src={product.images[0]} alt={product.name} fill sizes="44px" />
                   </div>
@@ -61,15 +179,23 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
                   <em>&#8377;{(product.salePrice || product.price).toLocaleString()}</em>
                 </Link>
               ))}
+              <button type="button" className="search-view-all" onClick={() => openSearchResults(query)}>
+                View all results for "{query.trim()}"
+              </button>
             </div>
           ) : (
             <div className="search-trending">
               <div>
-                <TrendingUp size={14} /> Trending searches
+                <TrendingUp size={14} /> {query.trim() ? 'Suggestions' : 'Trending searches'}
               </div>
+              {didYouMean && query.trim() && didYouMean !== query.trim().toLowerCase() && (
+                <button type="button" className="search-did-you-mean" onClick={() => setQuery(didYouMean)}>
+                  Did you mean: {didYouMean}
+                </button>
+              )}
               <div>
-                {trending.map((item) => (
-                  <button key={item} type="button" onClick={() => setQuery(item)}>
+                {quickPills.map((item) => (
+                  <button key={item} type="button" onClick={() => (query.trim() ? setQuery(item) : openSearchResults(item))}>
                     {item}
                   </button>
                 ))}
@@ -102,7 +228,7 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
 
         .search-input-wrap input {
           padding-left: 46px;
-          padding-right: 44px;
+          padding-right: 84px;
           font-size: 15px;
         }
 
@@ -219,6 +345,30 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
+        }
+
+        .search-did-you-mean {
+          margin-bottom: 10px;
+          border: none;
+          background: transparent;
+          color: var(--primary);
+          font-size: 12px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .search-view-all {
+          width: 100%;
+          margin-top: 6px;
+          border: 0;
+          border-top: 1px solid var(--line);
+          background: transparent;
+          color: var(--primary);
+          padding: 12px;
+          font-size: 13px;
+          font-weight: 800;
+          cursor: pointer;
+          text-align: center;
         }
 
         .search-trending button {

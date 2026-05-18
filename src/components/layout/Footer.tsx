@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Camera, Mail, MessageCircle, Phone, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { PAYMENT_POLICY, SUPPORT_EMAIL, SUPPORT_PHONE, UPI_ID } from '@/lib/commerce';
 
 const columns = [
   {
@@ -43,8 +44,8 @@ export default function Footer() {
         <div className="footer-promise">
           {[
             { icon: ShieldCheck, label: '100% authentic products' },
-            { icon: Truck, label: 'Free shipping events' },
-            { icon: Sparkles, label: 'AI beauty matching' },
+            { icon: Truck, label: 'Free shipping above ₹799' },
+            { icon: Sparkles, label: 'No return / exchange / refund' },
           ].map(({ icon: Icon, label }) => (
             <span key={label}>
               <Icon size={18} /> {label}
@@ -62,14 +63,18 @@ export default function Footer() {
             <p>
               A polished beauty destination for premium skincare, makeup and AI-personalized routines, built for fast, confident shopping.
             </p>
+            <p style={{ marginTop: '10px', fontSize: '13px', color: 'rgba(255,255,255,0.86)' }}>
+              {PAYMENT_POLICY}<br />
+              UPI: {UPI_ID}
+            </p>
             <div className="footer-social">
               <a href="https://www.instagram.com/glow_addict_by_sayanita" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <Camera size={19} />
               </a>
-              <a href="mailto:support@glowaddict.in" aria-label="Email support">
+              <a href={`mailto:${SUPPORT_EMAIL}`} aria-label="Email support">
                 <Mail size={19} />
               </a>
-              <a href="tel:+919876543210" aria-label="Phone support">
+              <a href="tel:+918509326600" aria-label="Phone support">
                 <Phone size={19} />
               </a>
               <a href="/contact" aria-label="Contact support">
@@ -91,10 +96,11 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2026 Glow Addict by Sayanita. All rights reserved.</p>
+          <p>&copy; 2026 Glow Addict by Sayanita. Support: {SUPPORT_PHONE}</p>
           <div>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
+            <Link href="/returns">Policy</Link>
           </div>
         </div>
       </div>

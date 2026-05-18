@@ -1,12 +1,13 @@
 'use client';
 import { Truck, Clock, MapPin, AlertCircle } from 'lucide-react';
 import PageTransition from '@/components/shared/PageTransition';
+import { DELIVERY_WINDOW_DAYS, PAYMENT_POLICY, SHIPPING_FLAT_FEE, SHIPPING_FREE_THRESHOLD } from '@/lib/commerce';
 
 const policies = [
-  { icon: Truck, title: 'Free Shipping', desc: 'Free delivery on orders above ₹499 across India.' },
+  { icon: Truck, title: 'Shipping Charges', desc: `Free delivery above ₹${SHIPPING_FREE_THRESHOLD}. Flat ₹${SHIPPING_FLAT_FEE} below that.` },
   { icon: Clock, title: 'Processing Time', desc: 'Orders are processed within 1-2 business days.' },
-  { icon: MapPin, title: 'Delivery Time', desc: 'Standard delivery takes 5-7 business days. Metro cities may receive orders in 3-5 days.' },
-  { icon: AlertCircle, title: 'Cash on Delivery', desc: 'COD available for orders up to ₹5,000. Additional ₹49 handling fee applies.' },
+  { icon: MapPin, title: 'Delivery Time', desc: `Standard delivery takes ${DELIVERY_WINDOW_DAYS} days based on location.` },
+  { icon: AlertCircle, title: 'Payment Rule', desc: PAYMENT_POLICY },
 ];
 
 export default function ShippingPage() {
@@ -31,8 +32,8 @@ export default function ShippingPage() {
           <div style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
             <p style={{ marginBottom: '12px' }}>• We ship to all serviceable pin codes across India via trusted courier partners.</p>
             <p style={{ marginBottom: '12px' }}>• Tracking information will be sent to your registered email and phone number once your order is dispatched.</p>
-            <p style={{ marginBottom: '12px' }}>• Orders placed before 2 PM IST on business days are dispatched the same day.</p>
-            <p style={{ marginBottom: '12px' }}>• For remote areas, delivery may take up to 10 business days.</p>
+            <p style={{ marginBottom: '12px' }}>• Orders placed before 2 PM IST on business days are usually dispatched on priority.</p>
+            <p style={{ marginBottom: '12px' }}>• Delivery may take up to 15 days for remote areas.</p>
             <p>• International shipping is not available at this time.</p>
           </div>
         </div>

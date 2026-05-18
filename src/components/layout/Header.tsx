@@ -81,10 +81,10 @@ export default function Header() {
         <div className="top-ribbon-track">
           {[...Array(2)].map((_, group) => (
             <div key={group} className="top-ribbon-group">
-              <span>Pink Summer Sale live</span>
-              <span>Extra 20% off first order</span>
-              <span>Free gift above &#8377;749</span>
-              <span>15-day easy returns</span>
+              <span>100% authentic products</span>
+              <span>Fast delivery across India</span>
+              <span>Free scrunchies in every order</span>
+              <span>No COD, prepaid UPI only</span>
             </div>
           ))}
         </div>

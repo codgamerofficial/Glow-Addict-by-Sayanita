@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Product, CartItem } from '@/types/product';
+import { getShippingFee } from '@/lib/commerce';
 
 interface CartState {
   items: CartItem[];
@@ -63,7 +64,7 @@ export const useCartStore = create<CartState>()(
        },
        getShipping: () => {
          const subtotal = get().getSubtotal();
-         return subtotal > 499 ? 0 : 49;
+         return getShippingFee(subtotal);
        },
       getItemCount: () => {
         return get().items.reduce((sum, item) => sum + item.quantity, 0);

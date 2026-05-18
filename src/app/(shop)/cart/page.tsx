@@ -7,13 +7,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/components/shared/Toast';
 import PageTransition from '@/components/shared/PageTransition';
 import CartWhatsAppShare from '@/components/cart/CartWhatsAppShare';
+import PolicyNotice from '@/components/shared/PolicyNotice';
+import { getEligibleFreebies, getRemainingForFreeShipping, getShippingFee, SHIPPING_FREE_THRESHOLD } from '@/lib/commerce';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getSubtotal, getTotal, getItemCount } = useCartStore();
   const { isAuthenticated, isInitialized } = useAuthStore();
   const subtotal = getSubtotal();
   const total = getTotal();
-  const shipping = subtotal > 499 ? 0 : 49;
+  const shipping = getShippingFee(subtotal);
+  const remainingForShipping = getRemainingForFreeShipping(subtotal);
+  const freebies = getEligibleFreebies(subtotal);
   const itemCount = getItemCount();
   const { showToast } = useToast();
 
@@ -160,10 +164,18 @@ export default function CartPage() {
               {shipping > 0 && (
                 <div style={{ background: 'rgba(233,30,140,0.06)', borderRadius: '8px', padding: '8px 12px' }}>
                   <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                    <Truck size={12} style={{ marginRight: '4px' }} /> Add ₹{499 - subtotal} more for free shipping
+                    <Truck size={12} style={{ marginRight: '4px' }} /> Add ₹{remainingForShipping} more for free shipping above ₹{SHIPPING_FREE_THRESHOLD}
                   </p>
                 </div>
               )}
+              <div style={{ borderRadius: '10px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '10px 12px' }}>
+                <p style={{ margin: 0, fontSize: '12px', color: '#065F46', fontWeight: 600 }}>Freebies in your order</p>
+                <ul style={{ margin: '6px 0 0', paddingLeft: '18px', color: '#065F46', fontSize: '12px' }}>
+                  {freebies.map((freebie) => (
+                    <li key={freebie}>{freebie}</li>
+                  ))}
+                </ul>
+              </div>
               <div style={{ borderTop: '1px solid var(--border-glass)', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontFamily: 'Outfit', fontWeight: 700 }}>
                 <span>Total</span>
                 <motion.span
@@ -194,7 +206,11 @@ export default function CartPage() {
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '12px', justifyContent: 'center' }}>
               <Truck size={14} style={{ color: 'var(--success)' }} />
-              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Estimated delivery: 3-5 business days</span>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Estimated delivery: 4-15 business days</span>
+            </div>
+
+            <div style={{ marginTop: '12px' }}>
+              <PolicyNotice compact />
             </div>
           </motion.div>
 

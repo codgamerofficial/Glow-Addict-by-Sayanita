@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
       total,
       shippingFee,
       paymentMethod,
-      codDepositAmount,
       transactionId,
       screenshotUrl,
       shippingAddress
@@ -24,9 +23,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!paymentMethod || !['upi', 'cod'].includes(paymentMethod)) {
+    if (paymentMethod !== 'upi') {
       return NextResponse.json(
-        { success: false, error: 'Valid payment method is required' },
+        { success: false, error: 'Only UPI prepaid orders are accepted' },
         { status: 400 }
       );
     }
@@ -52,16 +51,8 @@ export async function POST(request: NextRequest) {
     // Generate order number
     const orderNumber = `GA-${Math.floor(100000 + Math.random() * 900000)}`;
 
-   // Determine payment status and order status based on method
-   let paymentStatus = 'pending';
-   let orderStatus: string = 'pending';
-
-   if (paymentMethod === 'cod') {
-     orderStatus = codDepositAmount ? 'cod_pending' : 'pending';
-   } else {
-     // UPI payment - awaiting verification
-     orderStatus = 'pending_payment';
-   }
+   const paymentStatus = 'pending';
+   const orderStatus = 'pending_payment';
 
    // Create the order
    const { data: order, error: orderError } = await supabase
@@ -74,7 +65,6 @@ export async function POST(request: NextRequest) {
        total: total,
        payment_method: paymentMethod,
        payment_status: paymentStatus,
-      cod_deposit_amount: codDepositAmount || 0,
        transaction_id: transactionId || null,
        screenshot_url: screenshotUrl || null,
        shipping_fee: shippingFee,

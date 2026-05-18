@@ -63,7 +63,7 @@ export async function POST() {
       brand_name: p.brandName,
       category_id: p.categoryId,
       category_name: p.categoryName,
-      subcategory_name: p.subcategoryName,
+      subcategory_name: p.subcategoryName || null,
       price: p.price,
       mrp: p.mrp ?? p.price,
       sale_price: p.salePrice,

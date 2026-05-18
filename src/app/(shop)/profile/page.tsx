@@ -9,6 +9,7 @@ import { getUserOrders } from '@/actions/shop';
 import { useState } from 'react';
 import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
+import PolicyNotice from '@/components/shared/PolicyNotice';
 
 interface Order {
   id: string;
@@ -235,6 +236,10 @@ export default function ProfilePage() {
       </div>
 
       {/* Menu */}
+      <div style={{ marginBottom: '14px' }}>
+        <PolicyNotice />
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         <Link href="#" className="glass-card" style={{ padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-primary)', borderRadius: '12px' }}>
           <Settings size={18} />

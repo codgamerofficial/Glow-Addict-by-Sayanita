@@ -7,13 +7,13 @@ import Image from 'next/image';
 import { CheckCircle, Smartphone, Copy, Check, PartyPopper, ArrowRight } from 'lucide-react';
 import PageTransition from '@/components/shared/PageTransition';
 import { MANUAL_PAYMENT_NOTE, UPI_ID, UPI_QR_URL } from '@/lib/commerce';
+import PolicyNotice from '@/components/shared/PolicyNotice';
 
 function OrderConfirmationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId') || '';
-  const paymentMethod = searchParams.get('payment') as 'upi' | 'cod' || 'cod';
-  const codDeposit = Number(searchParams.get('deposit') || '0');
+  const paymentMethod = searchParams.get('payment') as 'upi' || 'upi';
   const [upiCopied, setUpiCopied] = useState(false);
 
   useEffect(() => {
@@ -157,22 +157,9 @@ function OrderConfirmationContent() {
         </motion.div>
       )}
 
-      {paymentMethod === 'cod' && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="glass-card"
-          style={{ padding: '24px', marginBottom: '24px' }}
-        >
-          <h3 style={{ fontFamily: 'Outfit', fontSize: '18px', fontWeight: 600, marginBottom: '12px' }}>Cash on Delivery</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '14px', lineHeight: 1.6 }}>
-            {codDeposit > 0
-              ? `A partial COD deposit of ₹${codDeposit.toLocaleString('en-IN')} has been reserved. The balance will be collected at delivery.`
-              : 'Please keep exact change ready. Our delivery partner will collect the payment at the time of delivery.'}
-          </p>
-        </motion.div>
-      )}
+      <div style={{ marginBottom: '18px' }}>
+        <PolicyNotice compact />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

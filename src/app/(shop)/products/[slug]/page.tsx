@@ -11,6 +11,7 @@ import { useCartStore } from '@/features/cart/cartStore';
 import { useWishlistStore } from '@/features/wishlist/wishlistStore';
 import ProductCard from '@/components/product/ProductCard';
 import WhatsAppShare from '@/components/product/WhatsAppShare';
+import PolicyNotice from '@/components/shared/PolicyNotice';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -149,15 +150,19 @@ export default function ProductDetailPage() {
 
             <div className="detail-perks">
               {[
-                { icon: Truck, text: 'Free delivery above 499' },
+                { icon: Truck, text: 'Free delivery above 799' },
                 { icon: Shield, text: 'Authentic product guarantee' },
-                { icon: RotateCcw, text: 'Easy 15-day returns' },
+                { icon: RotateCcw, text: 'No return, exchange or refund' },
               ].map(({ icon: Icon, text }) => (
                 <div key={text}>
                   <Icon size={19} />
                   <span>{text}</span>
                 </div>
               ))}
+            </div>
+
+            <div style={{ marginTop: '16px' }}>
+              <PolicyNotice compact />
             </div>
 
             {/* WhatsApp Share Section */}

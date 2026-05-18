@@ -402,10 +402,10 @@ export function LoyaltyBanner() {
               </p>
               <div className="loyalty-benefits">
                 {[
-                  { icon: Gift, label: 'Free gift over 749' },
-                  { icon: Truck, label: 'Unlimited free shipping events' },
+                  { icon: Gift, label: 'Free scrunchies every order' },
+                  { icon: Truck, label: 'Free shipping above 799' },
                   { icon: ShieldCheck, label: 'Authentic beauty assurance' },
-                  { icon: TimerReset, label: 'Easy returns support' },
+                  { icon: TimerReset, label: 'No return / exchange / refund' },
                 ].map(({ icon: Icon, label }) => (
                   <span key={label}>
                     <Icon size={16} /> {label}
