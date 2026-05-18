@@ -55,8 +55,8 @@ export default function ProfilePage() {
       });
       if (error) throw error;
       alert('Verification email sent! Please check your inbox.');
-    } catch (err: any) {
-      alert('Failed to resend verification email: ' + err.message);
+    } catch (err: unknown) {
+      alert('Failed to resend verification email: ' + (err as Error).message);
     } finally {
       setIsResendingEmail(false);
     }

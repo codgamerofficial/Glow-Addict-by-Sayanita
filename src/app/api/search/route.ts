@@ -608,7 +608,7 @@ export async function GET(request: NextRequest) {
         .join(' & ');
 
       if (tsQuery) {
-        queryBuilder = (queryBuilder as unknown as { textSearch: Function }).textSearch('search_vector', tsQuery, { type: 'raw', config: 'simple' }) as typeof queryBuilder;
+        queryBuilder = (queryBuilder as unknown as { textSearch: (col: string, q: string, opts: { type: string; config: string }) => typeof queryBuilder }).textSearch('search_vector', tsQuery, { type: 'raw', config: 'simple' });
       }
     }
 

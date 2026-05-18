@@ -7,7 +7,29 @@ import { DataTable } from '@/components/admin/shared/DataTable';
 import { StatusBadge } from '@/components/admin/shared/StatusBadge';
 import Link from 'next/link';
 
-export default function OrdersClient({ initialOrders }: { initialOrders: any[] }) {
+interface NormalizedOrder extends Record<string, unknown> {
+  id: string;
+  orderNumber: string;
+  status: string;
+  userId: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  codDepositAmount?: number;
+  transactionId?: string;
+  screenshotUrl?: string;
+  subtotal: number;
+  shippingFee: number;
+  tax: number;
+  total: number;
+  shippingAddress: Record<string, unknown>;
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  trackingNumber?: string;
+  createdAt: string;
+}
+
+export default function OrdersClient({ initialOrders }: { initialOrders: NormalizedOrder[] }) {
   const router = useRouter();
 
   // Calculate counts based on initialOrders
@@ -44,14 +66,14 @@ export default function OrdersClient({ initialOrders }: { initialOrders: any[] }
     return order.status === activeTab;
   });
 
-  const columns = [
-    { key: 'orderNumber', label: 'Order #', sortable: true, render: (item: any) => (
+  const columns: Array<{ key: string; label: string; sortable?: boolean; render?: (item: NormalizedOrder) => React.ReactNode }> = [
+    { key: 'orderNumber', label: 'Order #', sortable: true, render: (item: NormalizedOrder) => (
       <div>
         <div style={{ fontWeight: 600, fontSize: 13 }}>{item.orderNumber}</div>
         <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{new Date(item.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</div>
       </div>
     )},
-    { key: 'customerName', label: 'Customer Name', sortable: true, render: (item: any) => (
+    { key: 'customerName', label: 'Customer Name', sortable: true, render: (item: NormalizedOrder) => (
       <div>
         <div style={{ fontWeight: 500 }}>{item.customerName || 'Guest Customer'}</div>
         {item.customerEmail && (
@@ -59,10 +81,10 @@ export default function OrdersClient({ initialOrders }: { initialOrders: any[] }
         )}
       </div>
     )},
-    { key: 'total', label: 'Total', sortable: true, render: (item: any) => (
+    { key: 'total', label: 'Total', sortable: true, render: (item: NormalizedOrder) => (
       <span style={{ fontWeight: 600 }}>₹{(item.total || 0).toLocaleString('en-IN')}</span>
     )},
-    { key: 'paymentMethod', label: 'Payment Method', render: (item: any) => (
+    { key: 'paymentMethod', label: 'Payment Method', render: (item: NormalizedOrder) => (
       <span style={{
         fontSize: 12,
         padding: '3px 10px',
@@ -73,13 +95,13 @@ export default function OrdersClient({ initialOrders }: { initialOrders: any[] }
         {item.paymentMethod === 'cod' ? 'COD' : 'UPI'}
       </span>
     )},
-    { key: 'paymentStatus', label: 'Payment Status', render: (item: any) => (
+    { key: 'paymentStatus', label: 'Payment Status', render: (item: NormalizedOrder) => (
       <StatusBadge status={item.paymentStatus} variant="payment" />
     )},
-    { key: 'status', label: 'Order Status', render: (item: any) => (
+    { key: 'status', label: 'Order Status', render: (item: NormalizedOrder) => (
       <StatusBadge status={item.status} />
     )},
-    { key: 'actions', label: 'Actions', render: (item: any) => (
+    { key: 'actions', label: 'Actions', render: (item: NormalizedOrder) => (
       <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
         {/* Row click handles navigation, this is just a visual indicator */}
         <div style={{ width: 24, height: 24, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.04)', color: 'var(--text-secondary)' }}>
@@ -132,9 +154,9 @@ export default function OrdersClient({ initialOrders }: { initialOrders: any[] }
       </div>
 
       {/* Orders table */}
-      <DataTable
+      <DataTable<NormalizedOrder>
         data={filteredOrders}
-        columns={columns as any}
+        columns={columns}
         searchPlaceholder="Search by order number, customer name..."
         onRowClick={(item) => router.push(`/admin/orders/${item.id}`)}
       />

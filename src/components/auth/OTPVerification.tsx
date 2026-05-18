@@ -109,7 +109,7 @@ export function OTPVerification({
           Verify Your Email
         </h2>
         <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)' }}>
-          We've sent a 6-digit code to <strong>{email}</strong>
+          We&apos;ve sent a 6-digit code to <strong>{email}</strong>
         </p>
       </div>
 
@@ -212,7 +212,7 @@ export function OTPVerification({
       {/* Resend Option */}
       <div style={{ textAlign: 'center' }}>
         <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '12px' }}>
-          Didn't receive the code?
+          Didn&apos;t receive the code?
         </p>
         <motion.button
           whileHover={resendTimer === 0 ? { scale: 1.05 } : {}}

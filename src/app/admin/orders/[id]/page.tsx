@@ -125,7 +125,7 @@ export default async function OrderDetailPage({
                   {order.paymentMethod === 'cod' ? 'COD' : 'UPI'}
                 </span>
               </div>
-              {order.codDepositAmount > 0 && (
+              {order.codDepositAmount && order.codDepositAmount > 0 && (
                 <div>
                   <h3>COD Deposit</h3>
                   <p>₹{formatINR(order.codDepositAmount)}</p>
@@ -263,7 +263,7 @@ export default async function OrderDetailPage({
               <div style={{ marginTop: 16 }}>
                 <p>
                   Please verify the UPI payment screenshot below. Once verified, the
-                  order status will be updated to 'Confirmed'.
+                  order status will be updated to &quot;Confirmed&quot;.
                 </p>
                 {order.screenshotUrl && (
                   <div style={{ marginTop: 16, textAlign: 'center' }}>
@@ -292,8 +292,8 @@ export default async function OrderDetailPage({
             <OrderActionsClient
               orderId={order.id}
               status={order.status}
-              paymentMethod={order.paymentMethod}
-              paymentStatus={order.paymentStatus}
+              paymentMethod={order.paymentMethod as 'upi' | 'cod'}
+              paymentStatus={order.paymentStatus as 'verified' | 'pending' | 'failed'}
             />
           </GlassCard>
         </div>

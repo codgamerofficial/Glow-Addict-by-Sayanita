@@ -42,16 +42,20 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
   const [listening, setListening] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('ga-recent-searches');
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as string[];
-      if (Array.isArray(parsed)) {
-        setRecent(parsed.slice(0, 6));
+    const load = () => {
+      try {
+        const raw = localStorage.getItem('ga-recent-searches');
+        if (!raw) return;
+        const parsed = JSON.parse(raw) as string[];
+        if (Array.isArray(parsed)) {
+          setRecent(parsed.slice(0, 6));
+        }
+      } catch {
+        // noop
       }
-    } catch {
-      // noop
-    }
+    };
+    const timeout = setTimeout(load, 0);
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -180,7 +184,7 @@ export function SearchBar({ onClose }: { onClose?: () => void }) {
                 </Link>
               ))}
               <button type="button" className="search-view-all" onClick={() => openSearchResults(query)}>
-                View all results for "{query.trim()}"
+                View all results for &quot;{query.trim()}&quot;
               </button>
             </div>
           ) : (

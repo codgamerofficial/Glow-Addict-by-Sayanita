@@ -99,28 +99,49 @@ export async function deleteProduct(id: string) {
 }
 
 // -- Orders --
-function normalizeOrderRecord(order: Record<string, any>) {
+interface NormalizedOrder extends Record<string, unknown> {
+  id: string;
+  orderNumber: string;
+  status: string;
+  userId: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  codDepositAmount?: number;
+  transactionId?: string;
+  screenshotUrl?: string;
+  subtotal: number;
+  shippingFee: number;
+  tax: number;
+  total: number;
+  shippingAddress: Record<string, unknown>;
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  trackingNumber?: string;
+  createdAt: string;
+}
+
+function normalizeOrderRecord(order: Record<string, unknown>): NormalizedOrder {
   return {
-    ...order,
-    id: order.id,
-    orderNumber: order.order_number,
-    status: order.status,
-    userId: order.user_id,
-    paymentMethod: order.payment_method,
-    paymentStatus: order.payment_status,
-    codDepositAmount: order.cod_deposit_amount,
-    transactionId: order.transaction_id,
-    screenshotUrl: order.screenshot_url,
-    subtotal: order.subtotal,
-    shippingFee: order.shipping_fee,
-    tax: order.tax,
-    total: order.total,
-    shippingAddress: order.shipping_address,
-    customerName: order.customer_name,
-    customerEmail: order.customer_email,
-    customerPhone: order.customer_phone,
-    trackingNumber: order.tracking_number,
-    createdAt: order.created_at,
+    id: String(order.id ?? ''),
+    orderNumber: String(order.order_number ?? ''),
+    status: String(order.status ?? ''),
+    userId: String(order.user_id ?? ''),
+    paymentMethod: String(order.payment_method ?? ''),
+    paymentStatus: String(order.payment_status ?? ''),
+    codDepositAmount: order.cod_deposit_amount != null ? Number(order.cod_deposit_amount) : undefined,
+    transactionId: order.transaction_id != null ? String(order.transaction_id) : undefined,
+    screenshotUrl: order.screenshot_url != null ? String(order.screenshot_url) : undefined,
+    subtotal: Number(order.subtotal ?? 0),
+    shippingFee: Number(order.shipping_fee ?? 0),
+    tax: Number(order.tax ?? 0),
+    total: Number(order.total ?? 0),
+    shippingAddress: order.shipping_address as Record<string, unknown>,
+    customerName: order.customer_name != null ? String(order.customer_name) : undefined,
+    customerEmail: order.customer_email != null ? String(order.customer_email) : undefined,
+    customerPhone: order.customer_phone != null ? String(order.customer_phone) : undefined,
+    trackingNumber: order.tracking_number != null ? String(order.tracking_number) : undefined,
+    createdAt: String(order.created_at ?? ''),
   };
 }
 
@@ -161,20 +182,56 @@ export async function getOrderById(id: string) {
     console.error('Failed to fetch order items:', itemsError);
   }
 
+  const normalized = normalizeOrderRecord(order);
+
   return {
-    ...normalizeOrderRecord(order),
+    ...normalized,
     items: (orderItems || []).map((item) => ({
-      id: item.id,
+      id: item.id as string,
       product: {
-        id: item.product_id,
-        name: item.product_name,
-        images: item.product_image ? [item.product_image] : [],
+        id: item.product_id as string,
+        name: item.product_name as string,
+        images: item.product_image ? [item.product_image as string] : [],
         price: Number(item.price || 0),
       },
-      quantity: item.quantity,
+      quantity: item.quantity as number,
       price: Number(item.price || 0),
       total: Number(item.total || 0),
     })),
+  } as {
+    id: string;
+    orderNumber: string;
+    status: string;
+    paymentMethod: string;
+    paymentStatus: string;
+    codDepositAmount?: number;
+    transactionId?: string;
+    screenshotUrl?: string;
+    subtotal: number;
+    shippingFee: number;
+    tax: number;
+    total: number;
+    shippingAddress: {
+      fullName?: string;
+      line1?: string;
+      line2?: string;
+      city?: string;
+      state?: string;
+      pincode?: string;
+      country?: string;
+    };
+    customerName?: string;
+    customerEmail?: string;
+    customerPhone?: string;
+    trackingNumber?: string;
+    createdAt: string;
+    items: Array<{
+      id: string;
+      product: { id: string; name: string; images: string[]; price: number };
+      quantity: number;
+      price: number;
+      total: number;
+    }>;
   };
 }
 

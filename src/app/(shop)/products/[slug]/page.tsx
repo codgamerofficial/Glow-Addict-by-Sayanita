@@ -20,13 +20,8 @@ export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'description' | 'ingredients' | 'reviews'>('description');
-  const [productUrl, setProductUrl] = useState('');
   const addItem = useCartStore((s) => s.addItem);
   const { isInWishlist, toggleItem } = useWishlistStore();
-
-  useEffect(() => {
-    setProductUrl(window.location.origin + '/products/' + slug);
-  }, [slug]);
 
   if (!product) {
     return (
@@ -167,13 +162,11 @@ export default function ProductDetailPage() {
 
             {/* WhatsApp Share Section */}
             <div style={{ marginTop: '18px' }}>
-              {productUrl && (
-                <WhatsAppShare
-                  productName={product.name}
-                  productUrl={productUrl}
-                  price={price}
-                />
-              )}
+              <WhatsAppShare
+                productName={product.name}
+                productUrl={`/products/${slug}`}
+                price={price}
+              />
             </div>
           </div>
         </section>

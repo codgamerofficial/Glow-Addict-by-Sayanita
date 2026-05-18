@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function LoginPage() {
   return (
     <div style={{
@@ -21,7 +23,7 @@ export default function LoginPage() {
         <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '24px' }}>
           Authentication is currently disabled. Please check back later.
         </p>
-        <a href="/" style={{
+        <Link href="/" style={{
           display: 'inline-block',
           padding: '12px 24px',
           borderRadius: '12px',
@@ -32,7 +34,7 @@ export default function LoginPage() {
           textDecoration: 'none'
         }}>
           Return to Home
-        </a>
+        </Link>
       </div>
     </div>
   );

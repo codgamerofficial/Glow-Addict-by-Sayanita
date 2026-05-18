@@ -64,9 +64,12 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     const controller = new AbortController();
-
-    void loadSearchAnalytics(controller.signal);
-    return () => controller.abort();
+    const load = () => loadSearchAnalytics(controller.signal).catch(() => {});
+    const timeout = setTimeout(load, 0);
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
   }, []);
 
   const updateRecoveryTask = async (taskId: string, status: 'open' | 'in_progress' | 'resolved' | 'ignored') => {

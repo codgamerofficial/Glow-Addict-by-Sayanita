@@ -150,7 +150,7 @@ function OrderConfirmationContent() {
             <ol style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
               <li>Complete payment using any UPI app</li>
               <li>Your order will be verified within 24 hours</li>
-              <li>You'll receive shipping confirmation via email</li>
+              <li>You&apos;ll receive shipping confirmation via email</li>
             </ol>
             <div style={{ marginTop: '10px' }}>{MANUAL_PAYMENT_NOTE}</div>
           </div>

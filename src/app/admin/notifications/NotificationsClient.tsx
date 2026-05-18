@@ -67,7 +67,7 @@ export default function NotificationsClient({ initialNotifications }: { initialN
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 12, color: 'var(--text-muted)', background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: 10 }}>
                   <div>🎯 Target: <span style={{ color: 'var(--text-primary)', textTransform: 'capitalize' }}>{n.targetSegment || n.target || 'All'}</span></div>
-                  <div>📅 {n.status === 'scheduled' ? `Scheduled: ${new Date(n.scheduledAt || n.scheduled_at || Date.now()).toLocaleString('en-IN')}` : n.status === 'sent' ? `Sent: ${new Date(n.sentAt || n.sent_at || Date.now()).toLocaleString('en-IN')}` : `Created: ${new Date(n.createdAt || n.created_at || Date.now()).toLocaleDateString()}`}</div>
+                  <div>📅 {n.status === 'scheduled' ? `Scheduled: ${new Date(n.scheduledAt || n.scheduled_at || 0).toLocaleString('en-IN')}` : n.status === 'sent' ? `Sent: ${new Date(n.sentAt || n.sent_at || 0).toLocaleString('en-IN')}` : `Created: ${new Date(n.createdAt || n.created_at || 0).toLocaleDateString()}`}</div>
                   {n.status === 'sent' && (
                     <>
                       <div>👁️ Open Rate: <span style={{ color: '#10B981', fontWeight: 600 }}>{n.openRate || n.open_rate}%</span></div>

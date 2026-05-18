@@ -35,8 +35,8 @@ export function PasswordReset({ onClose }: PasswordResetProps) {
       });
       if (error) throw error;
       setStep('check-email');
-    } catch (err: any) {
-      setError(err.message || 'Failed to send recovery email');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Failed to send recovery email');
     } finally {
       setLoading(false);
     }
@@ -51,8 +51,8 @@ export function PasswordReset({ onClose }: PasswordResetProps) {
       });
       if (error) throw error;
       setStep('success');
-    } catch (err: any) {
-      setError(err.message || 'Failed to reset password');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Failed to reset password');
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ export function PasswordReset({ onClose }: PasswordResetProps) {
                 Reset Your Password
               </h2>
               <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)' }}>
-                Enter your email address and we'll send you a code
+                Enter your email address and we&apos;ll send you a code
               </p>
             </div>
 
@@ -205,10 +205,10 @@ export function PasswordReset({ onClose }: PasswordResetProps) {
                 Check Your Email
               </h2>
               <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '16px' }}>
-                We've sent a password recovery link to <strong>{email}</strong>
+                We&apos;ve sent a password recovery link to <strong>{email}</strong>
               </p>
               <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)', marginBottom: '24px', lineHeight: '1.5' }}>
-                Click the link in your email to reset your password. If you don't see the email, check your spam folder.
+                Click the link in your email to reset your password. If you don&apos;t see the email, check your spam folder.
               </p>
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }}

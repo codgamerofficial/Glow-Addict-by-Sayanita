@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ChevronDown, SlidersHorizontal, Sparkles, X } from 'lucide-react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { products } from '@/data/products';
 import { brands } from '@/data/brands';
@@ -288,9 +289,9 @@ function ProductsPage() {
                 <button type="button" onClick={clearFilters} className="btn-gradient">
                   <span>Explore all categories</span>
                 </button>
-                <a href="/products" className="btn-outline">
+                <Link href="/products" className="btn-outline">
                   Browse all products
-                </a>
+                </Link>
               </div>
               {recoverySuggestions.length > 0 && (
                 <div style={{ marginTop: '28px', textAlign: 'left', width: '100%' }}>

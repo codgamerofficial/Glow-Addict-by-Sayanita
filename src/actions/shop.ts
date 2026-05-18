@@ -3,7 +3,13 @@
 import { createClient } from '@/lib/supabase-server';
 import { revalidatePath } from 'next/cache';
 
-export async function placeOrder(orderData: any) {
+export async function placeOrder(orderData: {
+  subtotal: number;
+  total: number;
+  paymentMethod: string;
+  shippingAddress: Record<string, unknown>;
+  items: Array<{ id: string; quantity: number; product: { name: string; images: string[]; salePrice?: number; price: number } }>;
+}) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -34,7 +40,7 @@ export async function placeOrder(orderData: any) {
   }
 
   // 2. Create order items
-  const orderItems = orderData.items.map((item: any) => ({
+  const orderItems = orderData.items.map((item) => ({
     order_id: order.id,
     product_id: item.id,
     product_name: item.product.name,
@@ -83,6 +89,6 @@ export async function getUserOrders() {
     date: new Date(o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     status: o.status.charAt(0).toUpperCase() + o.status.slice(1),
     total: o.total,
-    items: o.order_items.reduce((acc: number, item: any) => acc + item.quantity, 0)
+    items: o.order_items.reduce((acc: number, item: Record<string, unknown>) => acc + (item.quantity as number), 0)
   }));
 }
